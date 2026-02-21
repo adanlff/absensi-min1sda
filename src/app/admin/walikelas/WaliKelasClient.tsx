@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, Plus, User, AtSign, Building2, Pencil, Trash2, Loader2 } from 'lucide-react'
+import { Check, X, Plus, User, AtSign, Building2, Pencil, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
 
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
@@ -119,16 +120,15 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
             <h3 className="text-2xl font-black text-gray-900 mb-1">Daftar Wali Kelas</h3>
             <p className="text-gray-500 text-sm font-medium">Total {walikelasList.length} wali kelas terdaftar</p>
           </div>
-          <button 
+          <Button 
             onClick={() => {
               setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
               setIsCreateModalOpen(true)
-            }} 
-            className="bg-primary text-white px-6 py-3 rounded-2xl font-bold transition-all hover:shadow-lg hover:shadow-primary/20 flex items-center space-x-2 w-full sm:w-auto justify-center"
+            }}
+            icon={<Plus className="h-5 w-5" />}
           >
-            <Plus className="h-5 w-5" />
-            <span>Tambah Wali Kelas</span>
-          </button>
+            Tambah Wali Kelas
+          </Button>
         </div>
         
         {/* Desktop Table */}
@@ -172,20 +172,12 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   </td>
                   <td className="px-6 py-5 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      <button 
-                        onClick={() => openEditModal(wk)} 
-                        className="inline-flex items-center px-4 py-2 bg-primary/10 text-primary font-bold rounded-xl hover:bg-primary hover:text-white transition-all text-sm"
-                      >
-                        <Pencil className="h-4 w-4 mr-2" />
+                      <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3.5 w-3.5" />}>
                         Edit
-                      </button>
-                      <button 
-                        onClick={() => openDeleteModal(wk)} 
-                        className="inline-flex items-center px-4 py-2 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all text-sm"
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
+                      </Button>
+                      <Button size="sm" variant="ghost-danger" onClick={() => openDeleteModal(wk)} icon={<Trash2 className="h-3.5 w-3.5" />}>
                         Hapus
-                      </button>
+                      </Button>
                     </div>
                   </td>
                 </motion.tr>
@@ -225,14 +217,12 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                 </div>
                 
                 <div className="flex justify-end pt-3 border-t border-gray-100 gap-2">
-                  <button onClick={() => openEditModal(wk)} className="inline-flex items-center px-4 py-2 bg-primary/10 text-primary text-xs font-bold rounded-xl">
-                    <Pencil className="h-3 w-3 mr-1.5" />
+                  <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3 w-3" />}>
                     Edit
-                  </button>
-                  <button onClick={() => openDeleteModal(wk)} className="inline-flex items-center px-4 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-xl">
-                    <Trash2 className="h-3 w-3 mr-1.5" />
+                  </Button>
+                  <Button size="sm" variant="ghost-danger" onClick={() => openDeleteModal(wk)} icon={<Trash2 className="h-3 w-3" />}>
                     Hapus
-                  </button>
+                  </Button>
                 </div>
               </div>
             </motion.div>
@@ -290,11 +280,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <button type="button" onClick={() => setIsCreateModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                  <button type="submit" disabled={loading} className="px-8 py-4 bg-primary text-white rounded-2xl hover:bg-primary/90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center justify-center flex-1 disabled:opacity-50">
-                    {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : null}
-                    {loading ? 'Menyimpan...' : 'Simpan'}
-                  </button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsCreateModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
                 </div>
               </form>
             </motion.div>
@@ -349,11 +336,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <button type="button" onClick={() => setIsEditModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                  <button type="submit" disabled={loading} className="px-8 py-4 bg-primary text-white rounded-2xl hover:bg-primary/90 transition-all font-bold shadow-lg shadow-primary/20 flex items-center justify-center flex-1 disabled:opacity-50">
-                    {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : null}
-                    {loading ? 'Menyimpan...' : 'Update'}
-                  </button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsEditModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Update</Button>
                 </div>
               </form>
             </motion.div>
@@ -376,10 +360,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
               <h3 className="text-3xl font-black text-gray-900 mb-3">Hapus Wali Kelas?</h3>
               <p className="text-gray-500 mb-10 font-bold leading-relaxed">Wali kelas <span className="text-red-500">{selectedItem?.nama}</span> akan dihapus dari daftar.</p>
               <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                <button onClick={() => setIsDeleteModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                <button onClick={() => handleAction({ action: 'delete', id: selectedItem?.id })} disabled={loading} className="px-8 py-4 bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-all font-bold shadow-lg shadow-red-200 flex items-center justify-center flex-1 disabled:opacity-50">
-                  {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : 'Ya, Hapus'}
-                </button>
+                <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete', id: selectedItem?.id })} className="flex-1">Ya, Hapus</Button>
               </div>
             </motion.div>
           </div>

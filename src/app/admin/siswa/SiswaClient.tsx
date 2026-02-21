@@ -21,6 +21,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { DataTable } from '@/components/ui/DataTable'
+import { Button } from '@/components/ui/Button'
 
 export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const router = useRouter()
@@ -197,13 +198,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
     { 
       header: 'Aksi', 
       accessor: (item: any) => (
-        <button 
-          onClick={() => { setSelectedStudent(item); setIsDeleteStudentModalOpen(true) }} 
-          className="inline-flex items-center px-5 py-2.5 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all text-sm"
-        >
-          <Trash2 className="h-4 w-4 mr-2" />
+        <Button size="sm" variant="ghost-danger" onClick={() => { setSelectedStudent(item); setIsDeleteStudentModalOpen(true) }} icon={<Trash2 className="h-3.5 w-3.5" />}>
           Hapus
-        </button>
+        </Button>
       ),
       width: '140px'
     }
@@ -291,16 +288,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
           </div>
           
           <div className="flex justify-end pt-2">
-            <motion.button 
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit" 
-              disabled={loading}
-              className="bg-primary text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-primary/20 flex items-center space-x-3 disabled:opacity-50"
-            >
-              {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : <CloudUpload className="h-6 w-6" />}
-              <span>{loading ? 'Memproses...' : 'Upload Data'}</span>
-            </motion.button>
+            <Button type="submit" size="lg" loading={loading} icon={<CloudUpload className="h-5 w-5" />}>
+              {loading ? 'Memproses...' : 'Upload Data'}
+            </Button>
           </div>
           
           <div className="bg-primary/5 p-6 rounded-3xl border border-primary/10">
@@ -326,15 +316,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             <h3 className="text-2xl font-black text-gray-900 mb-1 border-l-4 border-primary pl-4">Data Per Kelas</h3>
             <p className="text-gray-500 text-sm font-medium">Pilih kelas untuk mengelola data siswa</p>
           </div>
-          <motion.button 
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsAddClassModalOpen(true)} 
-            className="inline-flex items-center justify-center px-6 py-4 bg-primary text-white font-bold rounded-2xl shadow-lg shadow-primary/20 transition-all"
-          >
-            <Plus className="h-5 w-5 mr-2" />
+          <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
             Tambah Kelas Baru
-          </motion.button>
+          </Button>
         </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
@@ -391,15 +375,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                     </h3>
                     <p className="text-gray-500 text-sm font-bold">Total {students.length} Siswa Terdaftar</p>
                   </div>
-                  <motion.button 
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsAddStudentModalOpen(true)} 
-                    className="inline-flex items-center justify-center px-6 py-4 bg-primary text-white font-bold rounded-2xl shadow-lg shadow-primary/20 transition-all"
-                  >
-                    <Plus className="h-5 w-5 mr-2" />
+                  <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
                     Tambah Siswa
-                  </motion.button>
+                  </Button>
                 </div>
 
                 <DataTable 
@@ -421,11 +399,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                         </div>
                       </div>
                       <div className="flex justify-end pt-5 mt-5 border-t border-gray-100">
-                          <button onClick={() => { setSelectedStudent(student); setIsDeleteStudentModalOpen(true) }} 
-                            className="inline-flex items-center px-6 py-2.5 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all text-xs">
-                            <Trash2 className="h-4 w-4 mr-2" />
+                          <Button size="sm" variant="ghost-danger" onClick={() => { setSelectedStudent(student); setIsDeleteStudentModalOpen(true) }} icon={<Trash2 className="h-3 w-3" />}>
                             Hapus
-                          </button>
+                          </Button>
                       </div>
                     </div>
                   )}
@@ -464,11 +440,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                   </div>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row sm:justify-end sm:space-x-4 space-y-3 sm:space-y-0 mt-8 pt-4">
-                  <button type="button" onClick={() => setIsAddClassModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                  <button type="submit" disabled={loading} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 transition-all disabled:opacity-50 flex items-center justify-center flex-1">
-                    {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : 'Simpan'}
-                  </button>
+                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddClassModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
                 </div>
               </form>
             </motion.div>
@@ -521,11 +495,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                   </div>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row sm:justify-end sm:space-x-4 space-y-3 sm:space-y-0 mt-8 pt-4">
-                  <button type="button" onClick={() => setIsAddStudentModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                  <button type="submit" disabled={loading} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 transition-all disabled:opacity-50 flex items-center justify-center flex-1">
-                    {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : 'Simpan'}
-                  </button>
+                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddStudentModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
                 </div>
               </form>
             </motion.div>
@@ -542,10 +514,8 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                <h3 className="text-3xl font-black text-gray-900 mb-3">Hapus Data?</h3>
                <p className="text-gray-500 mb-10 font-bold leading-relaxed">Siswa <span className="text-red-500">{selectedStudent?.nama}</span> akan dihapus permanen dari sistem.</p>
                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <button onClick={() => setIsDeleteStudentModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                  <button type="button" onClick={() => handleAction({ action: 'delete_student', id: selectedStudent?.id })} disabled={loading} className="px-8 py-4 bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-all font-bold shadow-lg shadow-red-200 flex items-center justify-center flex-1">
-                    {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : 'Ya, Hapus'}
-                  </button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteStudentModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete_student', id: selectedStudent?.id })} className="flex-1">Ya, Hapus</Button>
                </div>
             </motion.div>
           </div>
@@ -561,10 +531,8 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                <h3 className="text-3xl font-black text-gray-900 mb-3">Hapus Kelas?</h3>
                <p className="text-gray-500 mb-10 font-bold leading-relaxed">Kelas <span className="text-red-500">{classToDelete?.nama_kelas}</span> akan dihapus dari daftar.</p>
                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <button onClick={() => setIsDeleteClassModalOpen(false)} className="px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl hover:bg-gray-200 transition-all font-bold flex-1">Batal</button>
-                  <button type="button" onClick={() => handleAction({ action: 'delete_class', id: classToDelete?.id })} disabled={loading} className="px-8 py-4 bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-all font-bold shadow-lg shadow-red-200 flex items-center justify-center flex-1">
-                    {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : 'Ya, Hapus'}
-                  </button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteClassModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete_class', id: classToDelete?.id })} className="flex-1">Ya, Hapus</Button>
                </div>
             </motion.div>
           </div>

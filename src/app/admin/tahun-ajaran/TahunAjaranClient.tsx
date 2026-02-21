@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, Plus, Calendar, CheckCircle2, XCircle, Loader2, Zap } from 'lucide-react'
+import { Check, X, Plus, Calendar, CheckCircle2, XCircle, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
 
 export default function TahunAjaranClient({ data }: { data: any[] }) {
   const router = useRouter()
@@ -114,14 +115,9 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
             <p className="text-xs text-gray-400 mt-2 px-1">Format: YYYY/YYYY (contoh: 2024/2025)</p>
           </div>
           <div className="w-full md:w-auto">
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="bg-primary text-white w-full md:w-auto px-8 py-4 rounded-2xl font-bold transition-all hover:shadow-lg hover:shadow-primary/20 flex items-center justify-center space-x-2 disabled:opacity-50"
-            >
-              {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />}
-              <span>{loading ? 'Memproses...' : 'Buat & Aktifkan'}</span>
-            </button>
+            <Button type="submit" size="lg" loading={loading} icon={<Zap className="h-5 w-5" />} fullWidth className="md:w-auto">
+              {loading ? 'Memproses...' : 'Buat & Aktifkan'}
+            </Button>
           </div>
         </form>
       </Card>
@@ -165,24 +161,15 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                         <XCircle className="h-4 w-4 mr-2" />
                         Non-aktif
                       </span>
-                      <button 
-                        onClick={() => handleAction({ action: 'activate', id: ta.id })} 
-                        disabled={loading}
-                        className="inline-flex items-center justify-center px-4 py-2 bg-emerald-500 text-white text-sm font-bold rounded-xl hover:bg-emerald-600 transition-all disabled:opacity-50"
-                      >
-                        {loading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Zap className="h-4 w-4 mr-2" />}
+                      <Button size="sm" variant="success" loading={loading} onClick={() => handleAction({ action: 'activate', id: ta.id })} icon={<Zap className="h-4 w-4" />}>
                         Aktifkan
-                      </button>
+                      </Button>
                     </>
                   )}
                   
-                  <button 
-                    onClick={() => toggleSemesterForm(ta.id)} 
-                    className="inline-flex items-center justify-center px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary/90 transition-all"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
+                  <Button size="sm" onClick={() => toggleSemesterForm(ta.id)} icon={<Plus className="h-4 w-4" />}>
                     Tambah Semester
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -227,14 +214,9 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       </div>
 
                       <div className="flex items-end">
-                        <button 
-                          type="submit" 
-                          disabled={loading} 
-                          className="w-full bg-primary text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-primary/90 transition-all disabled:opacity-50 flex items-center justify-center"
-                        >
-                          {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                        <Button type="submit" size="sm" fullWidth loading={loading}>
                           {loading ? 'Memproses...' : 'Buat Semester'}
-                        </button>
+                        </Button>
                       </div>
                     </form>
                   </motion.div>
@@ -276,14 +258,9 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                   Aktif
                                 </span>
                              ) : (
-                                <button 
-                                  onClick={() => handleAction({ action: 'activate_semester', id: semester.id })} 
-                                  disabled={loading}
-                                  className="px-3 py-1.5 bg-emerald-500 text-white text-xs font-bold rounded-lg hover:bg-emerald-600 transition-all disabled:opacity-50 whitespace-nowrap flex items-center"
-                                >
-                                    {loading ? <Loader2 className="h-3 w-3 mr-1 animate-spin" /> : <Zap className="h-3 w-3 mr-1" />}
-                                    Aktifkan
-                                </button>
+                                <Button size="sm" variant="success" loading={loading} onClick={() => handleAction({ action: 'activate_semester', id: semester.id })} icon={<Zap className="h-3 w-3" />}>
+                                  Aktifkan
+                                </Button>
                              )}
                            </div>
                          </div>

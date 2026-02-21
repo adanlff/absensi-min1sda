@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, User, AtSign, Mail, Phone, MapPin, Lock, Loader2 } from 'lucide-react'
+import { Check, X, User, AtSign, Mail, Phone, MapPin, Lock } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
 
 interface AdminData {
   nama: string
@@ -109,7 +110,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
       <Card>
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8 mb-10">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-3xl flex items-center justify-center bg-primary shadow-lg shadow-primary/20 flex-shrink-0">
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-3xl flex items-center justify-center bg-primary flex-shrink-0">
             <span className="text-2xl md:text-3xl font-black text-white">
               {formData.nama.substring(0, 2).toUpperCase()}
             </span>
@@ -210,18 +211,9 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
 
           {/* Submit Button */}
           <div className="flex justify-end pt-4">
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="bg-primary text-white px-10 py-4 rounded-2xl font-bold transition-all hover:shadow-lg hover:shadow-primary/20 flex items-center space-x-3 w-full md:w-auto justify-center disabled:opacity-50"
-            >
-              {loading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <Check className="h-5 w-5" />
-              )}
-              <span>{loading ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
-            </button>
+            <Button type="submit" size="lg" loading={loading} icon={<Check className="h-5 w-5" />} fullWidth className="md:w-auto">
+              {loading ? 'Menyimpan...' : 'Simpan Perubahan'}
+            </Button>
           </div>
         </form>
       </Card>
