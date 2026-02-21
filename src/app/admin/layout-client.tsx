@@ -12,21 +12,28 @@ export default function AdminLayout({
   tahunAjaran: string
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+
+  const sidebarWidth = isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-[280px]'
 
   return (
-    <>
-      <Header onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
-      <div className="flex">
-        <Sidebar 
-          isOpen={isSidebarOpen} 
-          setIsOpen={setIsSidebarOpen} 
-          role="admin" 
-          tahunAjaran={tahunAjaran} 
+    <div className="min-h-screen bg-[#f8fafc]">
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        setIsOpen={setIsSidebarOpen} 
+        isCollapsed={isSidebarCollapsed}
+        setIsCollapsed={setIsSidebarCollapsed}
+        role="admin" 
+        tahunAjaran={tahunAjaran} 
+      />
+      <div className={`transition-all duration-500 ease-in-out ${sidebarWidth}`}>
+        <Header 
+          onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} 
         />
-        <main className="flex-1 lg:ml-64 p-4 md:p-8">
+        <main className="p-4 md:p-8">
           {children}
         </main>
       </div>
-    </>
+    </div>
   )
 }

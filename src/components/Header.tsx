@@ -34,7 +34,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
   }, [])
 
   return (
-    <header className="relative lg:ml-64">
+    <header className="relative">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="lg:hidden">
