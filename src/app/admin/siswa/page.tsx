@@ -27,17 +27,6 @@ export default async function SiswaPage() {
   }))
 
   return (
-    <div className="max-w-7xl mx-auto md:max-w-none">
-      <div className="mb-8 md:mb-12 animate-fadeIn">
-        <div className="flex flex-col gap-4">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Kelola Siswa</h2>
-            <p className="text-gray-600 text-sm md:text-base">Upload dan kelola data siswa dengan sistem yang terintegrasi dan mudah digunakan</p>
-          </div>
-        </div>
-      </div>
-
-      <SiswaClient kelasList={kelasList} />
-    </div>
+    <SiswaClient kelasList={kelasList} />
   )
 }

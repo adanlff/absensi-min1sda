@@ -15,39 +15,27 @@ interface MenuCardProps {
 }
 
 export function MenuCard({ href, label, description, icon: Icon, color }: MenuCardProps) {
-  const colorMap = {
-    blue: 'blue',
-    emerald: 'emerald',
-    purple: 'purple',
-    orange: 'orange',
-    amber: 'amber',
-    red: 'red'
-  }
-
-  const selectedColor = colorMap[color]
-
   return (
-    <Link href={href} className="group block">
+    <Link href={href} className="group block h-full">
       <Card 
-        whileHover={{ y: -5, scale: 1.02 }}
+        whileHover={{ y: -4 }}
         whileTap={{ scale: 0.98 }}
-        className="hover:border-primary/50 relative overflow-hidden h-full"
+        className="hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 relative overflow-hidden h-full flex flex-col"
       >
-        <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-all duration-600 group-hover:left-[100%] z-10" />
-        <div className="flex items-start space-x-4 md:space-x-6">
-          <div className={`p-3 md:p-4 rounded-xl md:rounded-2xl bg-${selectedColor}-50 group-hover:bg-${selectedColor}-100 transition-colors`}>
-            <Icon className={`h-5 w-5 md:h-6 md:w-6 text-${selectedColor}-600 group-hover:scale-110 transition-transform`} />
+        <div className="flex items-start space-x-4 md:space-x-5 flex-1">
+          <div className="p-3 md:p-4 rounded-2xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+            <Icon size={24} className="transition-transform group-hover:scale-110" />
           </div>
-          <div className="flex-1 relative z-20">
-            <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+          <div className="flex-1">
+            <h4 className="text-xl font-black text-gray-900 mb-2 group-hover:text-primary transition-colors">
               {label}
             </h4>
-            <p className="text-gray-600 mb-4 text-sm md:text-base leading-relaxed">{description}</p>
-            <div className="flex items-center text-primary font-semibold text-sm md:text-base">
-              <span>Kelola Sekarang</span>
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
-            </div>
+            <p className="text-gray-500 mb-6 text-sm md:text-base font-medium leading-relaxed">{description}</p>
           </div>
+        </div>
+        <div className="flex items-center text-primary font-bold text-sm mt-4 pt-4 border-t border-gray-50">
+          <span>Kelola Sekarang</span>
+          <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
         </div>
       </Card>
     </Link>
