@@ -45,9 +45,9 @@ export default function DashboardClient({
             <div className="p-2 rounded-xl bg-primary">
               <Zap className="h-5 w-5 md:h-6 md:w-6 text-white" />
             </div>
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">Menu Utama</h3>
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">Menu Utama</h3>
           </div>
-          <p className="text-gray-600 text-base md:text-lg">Akses cepat ke fitur-fitur utama sistem</p>
+          <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg">Akses cepat ke fitur-fitur utama sistem</p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
@@ -63,8 +63,8 @@ export default function DashboardClient({
           <div className="p-4 md:p-6 lg:p-8">
             <div className="flex items-center justify-between mb-6 md:mb-8">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-1 md:mb-2 border-l-4 border-primary pl-3">Siswa Terbaru</h3>
-                <p className="text-gray-600 text-sm md:text-base">5 siswa yang baru ditambahkan</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 md:mb-2 border-l-4 border-primary pl-3">Siswa Terbaru</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">5 siswa yang baru ditambahkan</p>
               </div>
               <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
@@ -74,8 +74,8 @@ export default function DashboardClient({
             <div className="space-y-3 md:space-y-4">
               {recentStudents.length === 0 ? (
                 <div className="text-center py-6 md:py-8">
-                  <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                  <p className="text-gray-500 text-sm md:text-base">Belum ada siswa yang ditambahkan</p>
+                  <Users className="h-12 w-12 mx-auto mb-4 text-gray-300 dark:text-slate-700" />
+                  <p className="text-gray-500 dark:text-gray-500 text-sm md:text-base">Belum ada siswa yang ditambahkan</p>
                 </div>
               ) : (
                 recentStudents.map((student, index) => (
@@ -84,15 +84,15 @@ export default function DashboardClient({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="group flex items-center space-x-3 md:space-x-4 p-3 md:p-4 rounded-xl hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100"
+                    className="group flex items-center space-x-3 md:space-x-4 p-3 md:p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-gray-100 dark:hover:border-slate-700"
                   >
                     <div className="flex-1 min-w-0 flex flex-col md:flex-row md:items-center">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 text-sm md:text-base truncate">{student.nama}</p>
-                        <p className="text-gray-500 text-xs md:text-sm truncate font-medium">{student.Kelas?.nama_kelas || 'Belum ada kelas'}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white text-sm md:text-base truncate">{student.nama}</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm truncate font-medium">{student.Kelas?.nama_kelas || 'Belum ada kelas'}</p>
                       </div>
                       <div className="text-left md:text-right flex-shrink-0 mt-2 md:mt-0">
-                        <p className="text-gray-400 text-xs font-medium">{new Date(student.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                        <p className="text-gray-400 dark:text-gray-500 text-xs font-medium">{new Date(student.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -107,8 +107,8 @@ export default function DashboardClient({
           <div className="p-4 md:p-6 lg:p-8">
             <div className="flex items-center justify-between mb-6 md:mb-8">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-1 md:mb-2 border-l-4 border-primary pl-3">Distribusi Kelas</h3>
-                <p className="text-gray-600 text-sm md:text-base">5 kelas dengan siswa terbanyak</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 md:mb-2 border-l-4 border-primary pl-3">Distribusi Kelas</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">5 kelas dengan siswa terbanyak</p>
               </div>
               <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10">
                 <Building2 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
@@ -118,8 +118,8 @@ export default function DashboardClient({
             <div className="space-y-3 md:space-y-4">
               {classDistribution.length === 0 ? (
                 <div className="text-center py-6 md:py-8">
-                  <Building2 className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                  <p className="text-gray-500 text-sm md:text-base">Belum ada data kelas</p>
+                  <Building2 className="h-12 w-12 mx-auto mb-4 text-gray-300 dark:text-slate-700" />
+                  <p className="text-gray-500 dark:text-gray-500 text-sm md:text-base">Belum ada data kelas</p>
                 </div>
               ) : (
                 classDistribution.map((kls, index) => {
@@ -131,7 +131,7 @@ export default function DashboardClient({
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="group p-3 md:p-4 rounded-xl hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100"
+                      className="group p-3 md:p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-gray-100 dark:hover:border-slate-700"
                     >
                       <div className="flex flex-col md:flex-row md:items-center justify-between mb-3">
                          <div className="flex items-center space-x-3">
@@ -140,14 +140,14 @@ export default function DashboardClient({
                                 {kls.nama_kelas.slice(0, 2).toUpperCase()}
                               </span>
                             </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="font-semibold text-gray-900 text-sm md:text-base truncate group-hover:text-primary transition-colors">{kls.nama_kelas}</p>
-                              <p className="text-gray-500 text-xs md:text-sm font-medium">{kls.jumlah_siswa} siswa</p>
-                            </div>
+                             <div className="flex-1 min-w-0">
+                               <p className="font-semibold text-gray-900 dark:text-white text-sm md:text-base truncate group-hover:text-primary transition-colors">{kls.nama_kelas}</p>
+                               <p className="text-gray-500 text-xs md:text-sm font-medium">{kls.jumlah_siswa} siswa</p>
+                             </div>
                          </div>
-                         <span className="text-sm font-bold text-gray-900 mt-2 md:mt-0">{kls.jumlah_siswa} Siswa</span>
+                          <span className="text-sm font-bold text-gray-900 dark:text-white mt-2 md:mt-0">{kls.jumlah_siswa} Siswa</span>
                       </div>
-                      <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                       <div className="w-full bg-gray-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${percentage}%` }}

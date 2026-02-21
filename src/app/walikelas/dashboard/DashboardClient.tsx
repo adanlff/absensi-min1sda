@@ -70,18 +70,18 @@ export default function DashboardClient({
     },
     { 
       header: 'NIS', 
-      accessor: (item: any) => <span className="font-mono text-gray-500 font-bold tracking-wider text-sm">{item.Siswa?.nis}</span>,
+      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{item.Siswa?.nis}</span>,
       width: '120px'
     },
     { 
       header: 'Nama Siswa', 
-      accessor: (item: any) => <p className="font-black text-gray-900 text-base">{item.Siswa?.nama}</p> 
+      accessor: (item: any) => <p className="font-black text-gray-900 dark:text-white text-base">{item.Siswa?.nama}</p> 
     },
     { 
       header: 'Tanggal', 
       accessor: (item: any) => (
-        <span className="text-gray-500 font-bold flex items-center text-sm">
-          <Calendar className="h-3.5 w-3.5 mr-1.5 text-gray-400" />
+        <span className="text-gray-500 dark:text-gray-400 font-bold flex items-center text-sm">
+          <Calendar className="h-3.5 w-3.5 mr-1.5 text-gray-400 dark:text-slate-600" />
           {formatDate(item.tanggal)}
         </span>
       ),
@@ -98,7 +98,7 @@ export default function DashboardClient({
     },
     { 
       header: 'Keterangan', 
-      accessor: (item: any) => <span className="text-gray-500 font-medium truncate max-w-[150px] inline-block text-sm">{item.keterangan || '-'}</span> 
+      accessor: (item: any) => <span className="text-gray-500 dark:text-gray-400 font-medium truncate max-w-[150px] inline-block text-sm">{item.keterangan || '-'}</span> 
     }
   ]
 
@@ -126,17 +126,17 @@ export default function DashboardClient({
         <div className="p-4 md:p-6 lg:p-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
             <div>
-               <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-1">
+               <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-1">
                   Data Ketidakhadiran Siswa
                </h3>
-               <p className="text-gray-500 text-sm font-medium flex items-center">
-                  <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+               <p className="text-gray-500 dark:text-gray-400 text-sm font-medium flex items-center">
+                  <Calendar className="h-4 w-4 mr-2 text-gray-400 dark:text-slate-600" />
                   7 hari terakhir - {waliKelas.Kelas?.nama_kelas || 'Kelas Anda'}
                </p>
             </div>
-            <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-50 rounded-full w-fit">
+            <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-50 dark:bg-slate-950 rounded-full w-fit">
                <div className="w-2 h-2 bg-emerald-500 rounded-full" />
-               <span className="text-sm font-bold text-gray-700">Live Data</span>
+               <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Live Data</span>
             </div>
           </div>
 
@@ -146,24 +146,24 @@ export default function DashboardClient({
             keyExtractor={(item) => item.id}
             emptyMessage="Tidak ada data ketidakhadiran dalam 7 hari terakhir"
             renderMobileCard={(absence, index) => (
-              <div className="bg-gray-50/50 rounded-2xl p-4">
+              <div className="bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent dark:border-slate-800">
                 <div className="flex flex-col gap-4">
                     <div className="flex items-start gap-3 flex-1">
                         <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
                             <span className="text-primary font-black text-sm">{absence.Siswa?.no}</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                            <h4 className="font-black text-gray-900 text-sm leading-tight mb-1 truncate">{absence.Siswa?.nama}</h4>
-                            <div className="flex items-center text-xs text-gray-500 font-medium">
+                            <h4 className="font-black text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{absence.Siswa?.nama}</h4>
+                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
                                 <FileText className="h-3 w-3 mr-1.5 flex-shrink-0" />
                                 <span className="font-mono">{absence.Siswa?.nis}</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div className="flex flex-col gap-3 pt-3 border-t border-gray-100">
+                    <div className="flex flex-col gap-3 pt-3 border-t border-gray-100 dark:border-slate-800">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center text-xs text-gray-500 font-bold">
+                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-bold">
                                 <Calendar className="h-3 w-3 mr-1.5 flex-shrink-0" />
                                 <span>{formatDate(absence.tanggal)}</span>
                             </div>
@@ -173,8 +173,8 @@ export default function DashboardClient({
                         </div>
                         
                         {absence.keterangan && (
-                        <div className="text-xs text-gray-500 p-3 bg-white rounded-xl border border-gray-100">
-                            <p className="font-black text-[10px] uppercase text-gray-400 mb-1">Keterangan:</p>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 p-3 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+                            <p className="font-black text-[10px] uppercase text-gray-400 dark:text-gray-500 mb-1">Keterangan:</p>
                             <p className="font-medium">{absence.keterangan}</p>
                         </div>
                         )}

@@ -188,12 +188,12 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
     },
     { 
       header: 'NIS', 
-      accessor: (item: any) => <span className="font-mono text-gray-500 font-bold tracking-wider text-sm">{item.nis}</span>,
+      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{item.nis}</span>,
       width: '200px'
     },
     { 
       header: 'Nama', 
-      accessor: (item: any) => <p className="font-black text-gray-900 text-base">{item.nama}</p> 
+      accessor: (item: any) => <p className="font-black text-gray-900 dark:text-white text-base">{item.nama}</p> 
     },
     { 
       header: 'Aksi', 
@@ -250,21 +250,21 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             <CloudUpload className="h-6 w-6" />
           </div>
           <div>
-            <h3 className="text-2xl font-black text-gray-900 leading-tight">Upload Data Siswa</h3>
-            <p className="text-gray-500 text-sm font-medium mt-1">Gunakan file Excel untuk menambah data siswa secara massal</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white leading-tight">Upload Data Siswa</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Gunakan file Excel untuk menambah data siswa secara massal</p>
           </div>
         </div>
         
         <form onSubmit={handleFileUpload} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Pilih Kelas</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Kelas</label>
                 <div className="relative h-[58px] flex items-center border border-gray-100 bg-gray-50/50 rounded-2xl focus-within:bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <Building2 className="h-5 w-5" />
                   </div>
                   <select required value={uploadClassId} onChange={e => setUploadClassId(e.target.value)}
-                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 font-medium appearance-none">
+                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none">
                     <option value="">Pilih Kelas</option>
                     {kelasList.map(k => (
                       <option key={k.id} value={k.id}>{k.nama_kelas}</option>
@@ -274,14 +274,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
               </div>
             
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2 px-1">File Excel</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">File Excel</label>
               <div className="relative">
                 <div className="relative h-[58px] flex items-center border border-gray-100 bg-gray-50/50 rounded-2xl focus-within:bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <FileSpreadsheet className="h-5 w-5" />
                   </div>
                   <input type="file" ref={fileInputRef} accept=".xlsx,.xls" required 
-                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 font-medium file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                 </div>
               </div>
             </div>
@@ -293,14 +293,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             </Button>
           </div>
           
-          <div className="bg-primary/5 p-6 rounded-3xl border border-primary/10">
+          <div className="bg-primary/5 dark:bg-primary/10 p-6 rounded-3xl border border-primary/10 dark:border-primary/20">
             <h4 className="font-bold text-primary mb-3 flex items-center">
               <Info className="h-5 w-5 mr-2" />
               Format Excel yang Disarankan
             </h4>
-            <div className="text-sm text-gray-600 space-y-3 font-medium">
-              <p>Pastikan file Anda memiliki kolom: <code className="bg-white px-2 py-0.5 rounded border border-primary/10 text-primary">NO</code> | <code className="bg-white px-2 py-0.5 rounded border border-primary/10 text-primary">NIS</code> | <code className="bg-white px-2 py-0.5 rounded border border-primary/10 text-primary">NAMA</code></p>
-              <div className="bg-white/80 p-4 rounded-2xl border border-primary/5 font-mono text-xs overflow-x-auto shadow-inner">
+            <div className="text-sm text-gray-600 dark:text-gray-400 space-y-3 font-medium">
+              <p>Pastikan file Anda memiliki kolom: <code className="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-primary/10 text-primary">NO</code> | <code className="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-primary/10 text-primary">NIS</code> | <code className="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-primary/10 text-primary">NAMA</code></p>
+              <div className="bg-white/80 dark:bg-slate-800/80 p-4 rounded-2xl border border-primary/5 font-mono text-xs overflow-x-auto shadow-inner">
                 <div className="text-gray-400 mb-1 whitespace-nowrap">NO | NIS                | NAMA (Header)</div>
                 <div className="text-primary mb-1 whitespace-nowrap">1  | 111135150001250003 | ACHMAD ARVINO XAVIER WIJAYA</div>
                 <div className="text-primary mb-1 whitespace-nowrap">2  | 111135150001250004 | ADERA YUMNA AZKAYRA</div>
@@ -313,8 +313,8 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       <Card className="mb-8 md:mb-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
           <div>
-            <h3 className="text-2xl font-black text-gray-900 mb-1 border-l-4 border-primary pl-4">Data Per Kelas</h3>
-            <p className="text-gray-500 text-sm font-medium">Pilih kelas untuk mengelola data siswa</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1 border-l-4 border-primary pl-4">Data Per Kelas</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Pilih kelas untuk mengelola data siswa</p>
           </div>
           <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
             Tambah Kelas Baru
@@ -332,7 +332,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             >
               <button 
                 onClick={() => handleClassClick(kelas.id)} 
-                className={`w-full p-4 md:p-6 rounded-3xl text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 hover:bg-white text-gray-700 border-transparent hover:border-primary/20 hover:shadow-md'}`}
+                className={`w-full p-4 md:p-6 rounded-3xl text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent dark:border-slate-800 hover:border-primary/20 hover:shadow-md'}`}
               >
                 <div className="flex flex-col items-center space-y-3">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${selectedClassId === kelas.id ? 'bg-white/20' : 'bg-primary/5'}`}>
@@ -340,7 +340,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                   </div>
                   <div>
                     <p className="font-black text-sm md:text-base leading-tight truncate w-full">{kelas.nama_kelas}</p>
-                    <p className={`text-xs mt-1 font-bold ${selectedClassId === kelas.id ? 'text-white/80' : 'text-gray-400'}`}>{kelas.jumlah_siswa} Siswa</p>
+                    <p className={`text-xs mt-1 font-bold ${selectedClassId === kelas.id ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'}`}>{kelas.jumlah_siswa} Siswa</p>
                   </div>
                 </div>
               </button>
@@ -370,10 +370,10 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
               <div className="p-6 md:p-8">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
                   <div>
-                    <h3 className="text-2xl font-black text-gray-900 mb-1 border-l-4 border-primary pl-4">
+                    <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1 border-l-4 border-primary pl-4">
                       Siswa {selectedClassInfo?.nama_kelas}
                     </h3>
-                    <p className="text-gray-500 text-sm font-bold">Total {students.length} Siswa Terdaftar</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm font-bold">Total {students.length} Siswa Terdaftar</p>
                   </div>
                   <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
                     Tambah Siswa
@@ -386,19 +386,19 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                   keyExtractor={(item) => item.id}
                   emptyMessage={`Belum ada data siswa di kelas ${selectedClassInfo?.nama_kelas}`}
                   renderMobileCard={(student, index) => (
-                    <div className="bg-gray-50/50 p-6 rounded-3xl border border-transparent hover:border-primary/20 hover:bg-white transition-all shadow-sm mb-4">
+                    <div className="bg-gray-50/50 dark:bg-slate-900/50 p-6 rounded-3xl border border-transparent dark:border-slate-800 hover:border-primary/20 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm mb-4">
                       <div className="flex items-center gap-5">
                         <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-2xl flex-shrink-0 text-primary font-black">
                             {student.no}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <h4 className="font-black text-gray-900 text-base mb-1">{student.nama}</h4>
-                            <div className="flex items-center text-xs font-bold text-gray-400">
+                            <h4 className="font-black text-gray-900 dark:text-white text-base mb-1">{student.nama}</h4>
+                            <div className="flex items-center text-xs font-bold text-gray-400 dark:text-gray-500">
                               <span className="font-mono tracking-wider">{student.nis}</span>
                             </div>
                         </div>
                       </div>
-                      <div className="flex justify-end pt-5 mt-5 border-t border-gray-100">
+                      <div className="flex justify-end pt-5 mt-5 border-t border-gray-100 dark:border-slate-800">
                           <Button size="sm" variant="ghost-danger" onClick={() => { setSelectedStudent(student); setIsDeleteStudentModalOpen(true) }} icon={<Trash2 className="h-3 w-3" />}>
                             Hapus
                           </Button>
@@ -417,11 +417,11 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         {isAddClassModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAddClassModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10">
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10 border border-gray-100 dark:border-slate-800">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-3xl font-black text-gray-900">Tambah Kelas</h3>
-                  <p className="text-gray-500 mt-2 font-bold mb-0">Buat kelas baru</p>
+                  <h3 className="text-3xl font-black text-gray-900 dark:text-white">Tambah Kelas</h3>
+                  <p className="text-gray-500 dark:text-gray-400 mt-2 font-bold mb-0">Buat kelas baru</p>
                 </div>
                 <button onClick={() => setIsAddClassModalOpen(false)} className="p-3 hover:bg-gray-100 rounded-2xl transition-all">
                   <X className="h-6 w-6 text-gray-400" />
@@ -430,18 +430,18 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
               
               <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'add_class', nama_kelas: namaKelas }) }} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nama Kelas</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nama Kelas</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <Building2 className="h-5 w-5" />
                     </div>
                     <input type="text" placeholder="Contoh: KELAS 1A" required value={namaKelas} onChange={e => setNamaKelas(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-bold" />
                   </div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddClassModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddClassModalOpen(false)} type="button" className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
                   <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
                 </div>
               </form>
@@ -452,11 +452,11 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         {isAddStudentModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAddStudentModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10">
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10 border border-gray-100 dark:border-slate-800">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-3xl font-black text-gray-900">Tambah Siswa</h3>
-                  <p className="text-primary mt-2 font-black uppercase tracking-widest text-xs">Kelas {selectedClassInfo?.nama_kelas}</p>
+                  <h3 className="text-3xl font-black text-gray-900 dark:text-white">Tambah Siswa</h3>
+                  <p className="text-primary dark:text-primary-light mt-2 font-black uppercase tracking-widest text-xs">Kelas {selectedClassInfo?.nama_kelas}</p>
                 </div>
                 <button onClick={() => setIsAddStudentModalOpen(false)} className="p-3 hover:bg-gray-100 rounded-2xl transition-all">
                   <X className="h-6 w-6 text-gray-400" />
@@ -465,38 +465,38 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
               
               <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'add_student', ...studentForm, kelas_id: selectedClassId }) }} className="space-y-5">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nomor Urut</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nomor Urut</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <Hash className="h-5 w-5" />
                     </div>
                     <input type="number" required value={studentForm.no} onChange={e => setStudentForm({ ...studentForm, no: e.target.value })}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">NIS</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">NIS</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <FileSpreadsheet className="h-5 w-5" />
                     </div>
                     <input type="text" required value={studentForm.nis} onChange={e => setStudentForm({ ...studentForm, nis: e.target.value })}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nama Lengkap</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nama Lengkap</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <User className="h-5 w-5" />
                     </div>
                     <input type="text" required value={studentForm.nama} onChange={e => setStudentForm({ ...studentForm, nama: e.target.value })}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
                   </div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddStudentModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddStudentModalOpen(false)} type="button" className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
                   <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
                 </div>
               </form>
@@ -507,14 +507,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         {isDeleteStudentModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeleteStudentModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center">
-               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
+             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center border border-gray-100 dark:border-slate-800">
+               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 dark:bg-red-900/20 rounded-[30px] flex items-center justify-center text-red-500">
                   <Trash2 className="h-10 w-10" />
                </div>
-               <h3 className="text-3xl font-black text-gray-900 mb-3">Hapus Data?</h3>
-               <p className="text-gray-500 mb-10 font-bold leading-relaxed">Siswa <span className="text-red-500">{selectedStudent?.nama}</span> akan dihapus permanen dari sistem.</p>
+               <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Hapus Data?</h3>
+               <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">Siswa <span className="text-red-500">{selectedStudent?.nama}</span> akan dihapus permanen dari sistem.</p>
                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteStudentModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteStudentModalOpen(false)} className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
                   <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete_student', id: selectedStudent?.id })} className="flex-1">Ya, Hapus</Button>
                </div>
             </motion.div>
@@ -524,14 +524,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         {isDeleteClassModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeleteClassModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center">
-               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
+             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center border border-gray-100 dark:border-slate-800">
+               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 dark:bg-red-900/20 rounded-[30px] flex items-center justify-center text-red-500">
                   <Trash2 className="h-10 w-10" />
                </div>
-               <h3 className="text-3xl font-black text-gray-900 mb-3">Hapus Kelas?</h3>
-               <p className="text-gray-500 mb-10 font-bold leading-relaxed">Kelas <span className="text-red-500">{classToDelete?.nama_kelas}</span> akan dihapus dari daftar.</p>
+               <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Hapus Kelas?</h3>
+               <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">Kelas <span className="text-red-500">{classToDelete?.nama_kelas}</span> akan dihapus dari daftar.</p>
                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteClassModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteClassModalOpen(false)} className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
                   <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete_class', id: classToDelete?.id })} className="flex-1">Ya, Hapus</Button>
                </div>
             </motion.div>

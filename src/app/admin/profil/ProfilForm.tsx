@@ -116,10 +116,10 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
             </span>
           </div>
           <div className="text-center md:text-left">
-            <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-1">
+            <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-1">
               {formData.nama}
             </h3>
-            <p className="text-base text-gray-500 font-medium mb-2">
+            <p className="text-base text-gray-500 dark:text-gray-400 font-medium mb-2">
               Administrator MIN 1 Sidoarjo
             </p>
             <div className="flex items-center justify-center md:justify-start space-x-2">
@@ -134,50 +134,50 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Nama Lengkap */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nama Lengkap</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nama Lengkap</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                   <User className="h-5 w-5" />
                 </div>
                 <input type="text" name="nama" value={formData.nama} onChange={handleChange} required 
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
               </div>
             </div>
 
             {/* Username */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Username</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Username</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                   <AtSign className="h-5 w-5" />
                 </div>
                 <input type="text" name="username" value={formData.username} onChange={handleChange} required 
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Email</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Email</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                   <Mail className="h-5 w-5" />
                 </div>
                 <input type="email" name="email" value={formData.email} onChange={handleChange}
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium"
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                        placeholder="admin@min1sidoarjo.sch.id" />
               </div>
             </div>
 
             {/* Telepon */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nomor Telepon</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nomor Telepon</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                   <Phone className="h-5 w-5" />
                 </div>
                 <input type="tel" name="telepon" value={formData.telepon} onChange={handleChange}
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium"
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                        placeholder="08123456789" />
               </div>
             </div>
@@ -185,26 +185,26 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
 
           {/* Alamat */}
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Alamat</label>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Alamat</label>
             <div className="relative">
               <div className="absolute top-4 left-4 pointer-events-none text-gray-400">
                 <MapPin className="h-5 w-5" />
               </div>
               <textarea name="alamat" rows={4} value={formData.alamat} onChange={handleChange}
-                        className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium resize-none"
+                        className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium resize-none"
                         placeholder="Masukkan alamat lengkap..."></textarea>
             </div>
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Password Baru <span className="text-xs font-normal text-gray-400">(kosongkan jika tidak diubah)</span></label>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Password Baru <span className="text-xs font-normal text-gray-400 dark:text-gray-500">(kosongkan jika tidak diubah)</span></label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                 <Lock className="h-5 w-5" />
               </div>
               <input type="password" name="password" value={formData.password} onChange={handleChange}
-                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium"
+                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                      placeholder="Masukkan password baru..." />
             </div>
           </div>

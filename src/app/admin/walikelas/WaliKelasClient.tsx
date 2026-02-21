@@ -117,8 +117,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
       <Card>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
           <div>
-            <h3 className="text-2xl font-black text-gray-900 mb-1">Daftar Wali Kelas</h3>
-            <p className="text-gray-500 text-sm font-medium">Total {walikelasList.length} wali kelas terdaftar</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Total {walikelasList.length} wali kelas terdaftar</p>
           </div>
           <Button 
             onClick={() => {
@@ -135,14 +135,14 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
         <div className="hidden md:block overflow-x-auto">
           <table className="min-w-full">
             <thead>
-              <tr className="border-b border-gray-100">
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-500 uppercase tracking-wider">Nama</th>
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-500 uppercase tracking-wider">Username</th>
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-500 uppercase tracking-wider">Kelas</th>
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-500 uppercase tracking-wider">Aksi</th>
+              <tr className="border-b border-gray-100 dark:border-slate-800">
+                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Nama</th>
+                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Username</th>
+                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Kelas</th>
+                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:divide-slate-800/50">
               {walikelasList.map((wk, index) => (
                 <motion.tr 
                   key={wk.id} 
@@ -152,19 +152,19 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   className="hover:bg-gray-50/50 transition-colors"
                 >
                   <td className="px-6 py-5 whitespace-nowrap">
-                    <p className="font-black text-gray-900 text-base">{wk.nama}</p>
+                    <p className="font-black text-gray-900 dark:text-white text-base">{wk.nama}</p>
                   </td>
                   <td className="px-6 py-5 whitespace-nowrap">
-                    <span className="font-mono text-gray-500 font-bold tracking-wider text-sm">{wk.username}</span>
+                    <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{wk.username}</span>
                   </td>
                   <td className="px-6 py-5 whitespace-nowrap">
                     {wk.Kelas ? (
-                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-primary/5 text-primary">
+                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light">
                         <Building2 className="h-4 w-4 mr-2" />
                         {wk.Kelas.nama_kelas}
                       </span>
                     ) : (
-                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-gray-100 text-gray-500">
+                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400">
                         <X className="h-4 w-4 mr-2" />
                         Tidak ada kelas
                       </span>
@@ -194,7 +194,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03 }}
-              className="bg-gray-50/50 rounded-2xl p-4"
+              className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-2xl p-4 transition-all"
             >
               <div className="flex flex-col gap-3">
                 <div className="flex items-start gap-3">
@@ -202,13 +202,13 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                     <User className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-black text-gray-900 text-sm truncate">{wk.nama}</h4>
+                    <h4 className="font-black text-gray-900 dark:text-white text-sm truncate">{wk.nama}</h4>
                     <div className="space-y-1 mt-1">
                       <div className="flex items-center text-xs text-gray-500 font-medium">
                         <AtSign className="h-3 w-3 mr-1.5 flex-shrink-0" />
                         <span className="truncate">{wk.username}</span>
                       </div>
-                      <div className="flex items-center text-xs text-gray-500 font-medium">
+                      <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
                         <Building2 className="h-3 w-3 mr-1.5 flex-shrink-0" />
                         <span className="truncate">{wk.Kelas ? wk.Kelas.nama_kelas : 'Tidak ada kelas'}</span>
                       </div>
@@ -216,7 +216,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   </div>
                 </div>
                 
-                <div className="flex justify-end pt-3 border-t border-gray-100 gap-2">
+                <div className="flex justify-end pt-3 border-t border-gray-100 dark:border-slate-800 gap-2">
                   <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3 w-3" />}>
                     Edit
                   </Button>
@@ -247,8 +247,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <Plus className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black text-gray-900">Tambah Wali Kelas</h3>
-                  <p className="text-gray-500 text-sm font-medium mt-1">Buat akun baru untuk wali kelas</p>
+                  <h3 className="text-2xl font-black text-gray-900 dark:text-white">Tambah Wali Kelas</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Buat akun baru untuk wali kelas</p>
                 </div>
               </div>
               
@@ -280,7 +280,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsCreateModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
+                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsCreateModalOpen(false)} type="button" className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">Batal</Button>
                   <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
                 </div>
               </form>
@@ -303,8 +303,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <Pencil className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black text-gray-900">Edit Wali Kelas</h3>
-                  <p className="text-gray-500 text-sm font-medium mt-1">Perbarui informasi wali kelas</p>
+                  <h3 className="text-2xl font-black text-gray-900 dark:text-white">Edit Wali Kelas</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Perbarui informasi wali kelas</p>
                 </div>
               </div>
               
@@ -352,13 +352,13 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center"
+              className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center border border-gray-100 dark:border-slate-800"
             >
               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
                 <Trash2 className="h-10 w-10" />
               </div>
-              <h3 className="text-3xl font-black text-gray-900 mb-3">Hapus Wali Kelas?</h3>
-              <p className="text-gray-500 mb-10 font-bold leading-relaxed">Wali kelas <span className="text-red-500">{selectedItem?.nama}</span> akan dihapus dari daftar.</p>
+              <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Hapus Wali Kelas?</h3>
+              <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">Wali kelas <span className="text-red-500">{selectedItem?.nama}</span> akan dihapus dari daftar.</p>
               <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
                 <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete', id: selectedItem?.id })} className="flex-1">Ya, Hapus</Button>

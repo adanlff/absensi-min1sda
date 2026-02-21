@@ -39,8 +39,8 @@ export default function CetakAbsenClient({
           <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
             <X className="h-10 w-10" />
           </div>
-          <h3 className="text-2xl font-black text-gray-900 mb-2">Belum Ada Kelas</h3>
-          <p className="text-gray-500 font-medium">Anda belum ditugaskan ke kelas manapun. Silakan hubungi admin.</p>
+          <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Belum Ada Kelas</h3>
+          <p className="text-gray-500 dark:text-gray-400 font-medium">Anda belum ditugaskan ke kelas manapun. Silakan hubungi admin.</p>
         </Card>
       </div>
     )
@@ -82,18 +82,18 @@ export default function CetakAbsenClient({
           <div className="p-3 rounded-2xl bg-primary/10 text-primary">
             <Filter className="h-6 w-6" />
           </div>
-          <div>
-            <h3 className="text-xl md:text-2xl font-black text-gray-900">Pilih Periode Laporan</h3>
-            <p className="text-gray-500 mt-1 text-sm font-medium">Pilih jenis dan periode laporan yang ingin dicetak</p>
+           <div>
+            <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">Pilih Periode Laporan</h3>
+            <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm font-medium">Pilih jenis dan periode laporan yang ingin dicetak</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-3 px-1">Jenis Laporan</label>
+             <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 px-1">Jenis Laporan</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-              <label 
-                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'monthly' ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-primary/20'}`}
+               <label 
+                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'monthly' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-gray-100 dark:border-slate-800 hover:border-primary/20'}`}
               >
                 <input type="radio" checked={reportType === 'monthly'} onChange={() => setReportType('monthly')}
                   className="w-4 h-4 text-primary focus:ring-primary cursor-pointer" />
@@ -101,15 +101,15 @@ export default function CetakAbsenClient({
                   <div className="p-2 rounded-xl bg-primary/10">
                     <Calendar className="h-5 w-5 text-primary" />
                   </div>
-                  <div>
-                    <p className="font-bold text-gray-900">Laporan Bulanan</p>
-                    <p className="text-xs text-gray-500 font-medium">Cetak per bulan</p>
+                   <div>
+                    <p className="font-bold text-gray-900 dark:text-white">Laporan Bulanan</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Cetak per bulan</p>
                   </div>
                 </div>
               </label>
 
-              <label 
-                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'semester' ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-primary/20'}`}
+               <label 
+                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'semester' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-gray-100 dark:border-slate-800 hover:border-primary/20'}`}
               >
                 <input type="radio" checked={reportType === 'semester'} onChange={() => setReportType('semester')}
                   className="w-4 h-4 text-primary focus:ring-primary cursor-pointer" />
@@ -117,9 +117,9 @@ export default function CetakAbsenClient({
                   <div className="p-2 rounded-xl bg-primary/10">
                     <BookOpen className="h-5 w-5 text-primary" />
                   </div>
-                  <div>
-                    <p className="font-bold text-gray-900">Laporan Semester</p>
-                    <p className="text-xs text-gray-500 font-medium">Cetak per semester</p>
+                   <div>
+                    <p className="font-bold text-gray-900 dark:text-white">Laporan Semester</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Cetak per semester</p>
                   </div>
                 </div>
               </label>
@@ -136,13 +136,13 @@ export default function CetakAbsenClient({
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
               >
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Bulan</label>
+                   <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Bulan</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <Calendar className="h-5 w-5" />
                     </div>
-                    <select value={bulan} onChange={e => setBulan(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer">
+                     <select value={bulan} onChange={e => setBulan(e.target.value)}
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
                       {months.map((m, i) => (
                         <option key={i} value={(i + 1).toString()}>{m}</option>
                       ))}
@@ -150,13 +150,13 @@ export default function CetakAbsenClient({
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Tahun</label>
+                   <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Tahun</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <Calendar className="h-5 w-5" />
                     </div>
-                    <select value={tahun} onChange={e => setTahun(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer">
+                     <select value={tahun} onChange={e => setTahun(e.target.value)}
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
                       {years.map(y => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
@@ -170,13 +170,13 @@ export default function CetakAbsenClient({
                 exit={{ opacity: 0, height: 0 }}
               >
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Pilih Semester</label>
+                   <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Semester</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                       <BookOpen className="h-5 w-5" />
                     </div>
-                    <select value={semesterId} onChange={e => setSemesterId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer" required>
+                     <select value={semesterId} onChange={e => setSemesterId(e.target.value)}
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer" required>
                       <option value="">Pilih Semester</option>
                       {availableSemesters.map(s => (
                         <option key={s.id} value={s.id}>
@@ -204,9 +204,9 @@ export default function CetakAbsenClient({
              <div className="p-4 md:p-8 print:p-0">
                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0 print:hidden">
                      <div>
-                         <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-1">{reportTitle}</h3>
-                         <p className="text-gray-500 text-sm font-medium flex items-center">
-                            <Building2 className="h-4 w-4 mr-2 text-gray-400" />
+                          <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-1">{reportTitle}</h3>
+                         <p className="text-gray-500 dark:text-gray-400 text-sm font-medium flex items-center">
+                            <Building2 className="h-4 w-4 mr-2 text-gray-400 dark:text-gray-500" />
                             {waliKelas.Kelas?.nama_kelas}
                          </p>
                      </div>
@@ -216,36 +216,36 @@ export default function CetakAbsenClient({
                  </div>
 
                  <div className="print-area">
-                    <div className="text-center mb-6 md:mb-8 border-b-2 border-black pb-6">
-                       <h1 className="text-xl md:text-2xl font-bold mb-2 uppercase print:text-sm print:mb-1">MIN 1 SIDOARJO</h1>
-                       <h2 className="text-lg md:text-xl font-semibold mb-2 print:text-xs print:mb-1">{reportTitle}</h2>
-                       <p className="text-sm md:text-base print:text-[10px] print:mb-0">Kelas: {waliKelas.Kelas?.nama_kelas}</p>
-                       <p className="text-xs md:text-sm print:text-[10px] print:mb-2">Wali Kelas: {waliKelas.nama}</p>
+                     <div className="text-center mb-6 md:mb-8 border-b-2 border-black dark:border-slate-700 pb-6">
+                       <h1 className="text-xl md:text-2xl font-bold mb-2 uppercase print:text-sm print:mb-1 dark:text-white">MIN 1 SIDOARJO</h1>
+                       <h2 className="text-lg md:text-xl font-semibold mb-2 print:text-xs print:mb-1 dark:text-white">{reportTitle}</h2>
+                       <p className="text-sm md:text-base print:text-[10px] print:mb-0 dark:text-gray-400">Kelas: {waliKelas.Kelas?.nama_kelas}</p>
+                       <p className="text-xs md:text-sm print:text-[10px] print:mb-2 dark:text-gray-400">Wali Kelas: {waliKelas.nama}</p>
                     </div>
 
                     <div className="overflow-x-auto print:overflow-visible">
                        <table className="w-full text-left print:table-fixed print:text-[10px] border-collapse">
                           <thead>
                              <tr>
-                                <th className="border border-black p-2 bg-gray-50 text-center font-bold print:w-[5%]">No</th>
-                                <th className="border border-black p-2 bg-gray-50 text-center font-bold print:w-[15%]">NIS</th>
-                                <th className="border border-black p-2 bg-gray-50 text-left font-bold print:w-[40%]">Nama Siswa</th>
-                                <th className="border border-black p-2 bg-gray-50 text-center font-bold print:w-[10%]">Hadir</th>
-                                <th className="border border-black p-2 bg-gray-50 text-center font-bold print:w-[10%]">Sakit</th>
-                                <th className="border border-black p-2 bg-gray-50 text-center font-bold print:w-[10%]">Izin</th>
-                                <th className="border border-black p-2 bg-gray-50 text-center font-bold print:w-[10%]">Alpa</th>
+                                 <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[5%] dark:text-white">No</th>
+                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[15%] dark:text-white">NIS</th>
+                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-left font-bold print:w-[40%] dark:text-white">Nama Siswa</th>
+                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Hadir</th>
+                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Sakit</th>
+                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Izin</th>
+                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Alpa</th>
                              </tr>
                           </thead>
                           <tbody>
                              {attendanceData.map((student, i) => (
-                                <tr key={student.id} className="transition-colors hover:bg-gray-50 print:break-inside-avoid">
-                                   <td className="border border-black p-2 text-center">{student.no}</td>
-                                   <td className="border border-black p-2 text-center font-mono">{student.nis}</td>
-                                   <td className="border border-black p-2 font-medium">{student.nama}</td>
-                                   <td className="border border-black p-2 text-center">{student.hadir}</td>
-                                   <td className="border border-black p-2 text-center">{student.sakit}</td>
-                                   <td className="border border-black p-2 text-center">{student.izin}</td>
-                                   <td className="border border-black p-2 text-center">{student.alpa}</td>
+                                 <tr key={student.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-slate-800 print:break-inside-avoid">
+                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.no}</td>
+                                   <td className="border border-black dark:border-slate-700 p-2 text-center font-mono dark:text-gray-300">{student.nis}</td>
+                                   <td className="border border-black dark:border-slate-700 p-2 font-medium dark:text-gray-300">{student.nama}</td>
+                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.hadir}</td>
+                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.sakit}</td>
+                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.izin}</td>
+                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.alpa}</td>
                                 </tr>
                              ))}
                           </tbody>
@@ -253,10 +253,10 @@ export default function CetakAbsenClient({
                     </div>
 
                     <div className="mt-8 print:mt-10 font-sans break-inside-avoid">
-                        <div className="ml-auto w-48 text-right print:w-[200px]">
-                            <p className="text-sm print:text-[10px] mb-8 print:mb-12">Sidoarjo, {new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}<br/>Wali Kelas,</p>
-                            <div className="border-b border-black w-full mb-1" />
-                            <p className="text-sm print:text-[10px] font-semibold text-center">{waliKelas.nama}</p>
+                         <div className="ml-auto w-48 text-right print:w-[200px]">
+                            <p className="text-sm print:text-[10px] mb-8 print:mb-12 dark:text-gray-400">Sidoarjo, {new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}<br/>Wali Kelas,</p>
+                            <div className="border-b border-black dark:border-slate-700 w-full mb-1" />
+                            <p className="text-sm print:text-[10px] font-semibold text-center dark:text-white">{waliKelas.nama}</p>
                         </div>
                     </div>
                  </div>
@@ -268,11 +268,11 @@ export default function CetakAbsenClient({
       <AnimatePresence>
         {hasSubmitted && attendanceData.length === 0 && (
            <Card className="p-8 md:p-16 text-center print:hidden">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 rounded-[30px] flex items-center justify-center">
-                  <BarChart3 className="h-10 w-10 text-gray-400" />
+            <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 dark:bg-slate-800 rounded-[30px] flex items-center justify-center">
+                  <BarChart3 className="h-10 w-10 text-gray-400 dark:text-slate-600" />
               </div>
-              <h4 className="text-xl font-black text-gray-900 mb-2">Tidak ada data kehadiran</h4>
-              <p className="text-gray-500 text-sm font-medium">Belum ada data kehadiran untuk periode yang dipilih.</p>
+              <h4 className="text-xl font-black text-gray-900 dark:text-white mb-2">Tidak ada data kehadiran</h4>
+              <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Belum ada data kehadiran untuk periode yang dipilih.</p>
            </Card>
         )}
       </AnimatePresence>

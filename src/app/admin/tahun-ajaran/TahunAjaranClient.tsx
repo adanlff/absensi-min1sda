@@ -96,20 +96,20 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
             <Plus className="h-6 w-6" />
           </div>
           <div>
-            <h3 className="text-2xl font-black text-gray-900 leading-tight">Buat Tahun Ajaran Baru</h3>
-            <p className="text-gray-500 text-sm font-medium mt-1">Tambahkan periode akademik baru dan aktifkan secara otomatis</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white leading-tight">Buat Tahun Ajaran Baru</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Tambahkan periode akademik baru dan aktifkan secara otomatis</p>
           </div>
         </div>
 
         <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'create', tahun }) }} className="flex flex-col md:flex-row items-start gap-4 flex-wrap">
           <div className="flex-1 w-full md:w-auto">
-            <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Tahun Ajaran</label>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Tahun Ajaran</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                 <Calendar className="h-5 w-5" />
               </div>
               <input type="text" value={tahun} onChange={(e) => setTahun(e.target.value)} placeholder="Contoh: 2024/2025"
-                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium"
+                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium shadow-sm"
                      required pattern="[0-9]{4}/[0-9]{4}" />
             </div>
             <p className="text-xs text-gray-400 mt-2 px-1">Format: YYYY/YYYY (contoh: 2024/2025)</p>
@@ -125,8 +125,8 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
       {/* Daftar Tahun Ajaran */}
       <Card>
         <div className="mb-8">
-          <h3 className="text-2xl font-black text-gray-900 mb-1">Daftar Tahun Ajaran & Semester</h3>
-          <p className="text-gray-500 text-sm font-medium">Total {data.length} tahun ajaran terdaftar</p>
+          <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1">Daftar Tahun Ajaran & Semester</h3>
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Total {data.length} tahun ajaran terdaftar</p>
         </div>
 
         <div className="space-y-6">
@@ -136,7 +136,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03 }}
-              className="border border-gray-100 rounded-2xl p-6 hover:shadow-sm transition-all"
+              className="border border-gray-100 dark:border-slate-800 rounded-2xl p-6 hover:shadow-sm transition-all"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-4">
                 <div className="flex items-center space-x-4 w-full md:w-auto">
@@ -144,8 +144,8 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                     <span className="text-white font-black text-lg">{index + 1}</span>
                   </div>
                   <div>
-                    <h4 className="text-xl font-black text-gray-900">{ta.tahun}</h4>
-                    <p className="text-sm text-gray-500 font-medium">{ta.semesters.length} semester</p>
+                    <h4 className="text-xl font-black text-gray-900 dark:text-white">{ta.tahun}</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{ta.semesters.length} semester</p>
                   </div>
                 </div>
 
@@ -179,9 +179,9 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="bg-gray-50/50 border border-gray-100 rounded-2xl p-6 mt-4 overflow-hidden"
+                    className="bg-gray-50/50 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 mt-4 overflow-hidden"
                   >
-                    <h5 className="text-lg font-black text-gray-900 mb-4">Tambah Semester Baru</h5>
+                    <h5 className="text-lg font-black text-gray-900 dark:text-white mb-4">Tambah Semester Baru</h5>
                     <form onSubmit={(e) => {
                       e.preventDefault();
                       const fd = new FormData(e.currentTarget);
@@ -195,8 +195,8 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                     }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Jenis Semester</label>
-                        <select name="jenis_semester" className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none text-sm text-gray-900 font-medium appearance-none" required>
+                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Jenis Semester</label>
+                        <select name="jenis_semester" className="w-full px-4 py-3 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none text-sm text-gray-900 dark:text-white font-medium appearance-none" required>
                           <option value="">Pilih Semester</option>
                           <option value="ganjil">Ganjil</option>
                           <option value="genap">Genap</option>
@@ -204,13 +204,13 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none text-sm text-gray-900 font-medium" required />
+                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Tanggal Mulai</label>
+                        <input type="date" name="tanggal_mulai" className="w-full px-4 py-3 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none text-sm text-gray-900 dark:text-white font-medium shadow-sm" required />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Tanggal Selesai</label>
-                        <input type="date" name="tanggal_selesai" className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none text-sm text-gray-900 font-medium" required />
+                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Tanggal Selesai</label>
+                        <input type="date" name="tanggal_selesai" className="w-full px-4 py-3 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none text-sm text-gray-900 dark:text-white font-medium shadow-sm" required />
                       </div>
 
                       <div className="flex items-end">
@@ -225,7 +225,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
               {ta.semesters.length > 0 && (
                 <div className="mt-6 space-y-3">
-                  <h5 className="text-base font-black text-gray-900">Daftar Semester</h5>
+                  <h5 className="text-base font-black text-gray-900 dark:text-white">Daftar Semester</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {ta.semesters.map((semester: any, sIdx: number) => (
                        <motion.div 
@@ -233,7 +233,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: sIdx * 0.03 }}
-                        className="bg-gray-50/50 border border-gray-100 p-4 rounded-xl hover:shadow-sm transition-all"
+                        className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 p-4 rounded-xl hover:shadow-sm transition-all"
                        >
                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                            <div className="flex items-center space-x-3">
@@ -243,8 +243,8 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                </span>
                              </div>
                              <div className="min-w-0 flex-1">
-                               <h6 className="font-bold text-gray-900 text-sm">Semester {semester.jenis_semester.charAt(0).toUpperCase() + semester.jenis_semester.slice(1)}</h6>
-                               <p className="text-xs text-gray-500 font-medium truncate">
+                               <h6 className="font-bold text-gray-900 dark:text-white text-sm">Semester {semester.jenis_semester.charAt(0).toUpperCase() + semester.jenis_semester.slice(1)}</h6>
+                               <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate">
                                  {new Date(semester.tanggal_mulai).toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'})} - 
                                  {new Date(semester.tanggal_selesai).toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'})}
                                </p>

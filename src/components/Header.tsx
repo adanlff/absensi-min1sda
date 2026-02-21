@@ -42,7 +42,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
               title="Menu"
               type="button"
               onClick={onMenuClick}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:bg-gray-200 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-slate-800 focus:outline-none"
             >
               <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -52,8 +52,8 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
 
           <div className="flex-1 flex justify-end">
             <div className="text-right">
-              <div className="text-lg font-bold text-gray-900">{time}</div>
-              <div className="text-sm text-gray-700">{date}</div>
+              <div className="text-lg font-bold text-gray-900 dark:text-white">{time}</div>
+              <div className="text-sm text-gray-700 dark:text-gray-400">{date}</div>
             </div>
           </div>
         </div>
