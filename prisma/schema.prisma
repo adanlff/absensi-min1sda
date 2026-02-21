@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  nama      String
+  profil    String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("admin")
+}
+
+model Kelas {
+  id         Int         @id @default(autoincrement())
+  nama_kelas String
+  WaliKelas  WaliKelas[]
+  Siswa      Siswa[]
+
+  @@map("kelas")
+}
+
+model WaliKelas {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  nama      String
+  id_kelas  Int?
+  profil    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  Kelas     Kelas?   @relation(fields: [id_kelas], references: [id])
+
+  @@map("wali_kelas")
+}
+
+model Siswa {
+  id        Int         @id @default(autoincrement())
+  no        Int
+  nis       String
+  nama      String
+  id_kelas  Int?
+  createdAt DateTime    @default(now()) @map("created_at")
+  Kelas     Kelas?      @relation(fields: [id_kelas], references: [id])
+  Kehadiran Kehadiran[]
+
+  @@map("siswa")
+}
+
+model TahunAjaran {
+  id        Int        @id @default(autoincrement())
+  tahun     String
+  status    String     @default("non-aktif")
+  createdAt DateTime   @default(now()) @map("created_at")
+  Semester  Semester[]
+
+  @@map("tahun_ajaran")
+}
+
+model Semester {
+  id              Int         @id @default(autoincrement())
+  id_tahun_ajaran Int
+  jenis_semester  String
+  tanggal_mulai   DateTime    @db.Date
+  tanggal_selesai DateTime    @db.Date
+  status          String      @default("non-aktif")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  TahunAjaran     TahunAjaran @relation(fields: [id_tahun_ajaran], references: [id])
+
+  @@map("semester")
+}
+
+model Kehadiran {
+  id         Int      @id @default(autoincrement())
+  id_siswa   Int
+  tanggal    DateTime @db.Date
+  status     String
+  keterangan String?
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  Siswa      Siswa    @relation(fields: [id_siswa], references: [id])
+
+  @@unique([id_siswa, tanggal])
+  @@map("kehadiran")
+}
