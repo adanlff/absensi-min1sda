@@ -142,7 +142,7 @@ export default function DashboardClient({
                             </div>
                              <div className="flex-1 min-w-0">
                                <p className="font-semibold text-gray-900 dark:text-white text-sm md:text-base truncate group-hover:text-primary transition-colors">{kls.nama_kelas}</p>
-                               <p className="text-gray-500 text-xs md:text-sm font-medium">{kls.jumlah_siswa} siswa</p>
+                               <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm font-medium">{kls.jumlah_siswa} siswa</p>
                              </div>
                          </div>
                           <span className="text-sm font-bold text-gray-900 dark:text-white mt-2 md:mt-0">{kls.jumlah_siswa} Siswa</span>

@@ -20,11 +20,11 @@ export function PageHeader({ title, description, children, centered = false, cla
     >
       <div className={`flex flex-col ${centered ? 'items-center' : 'md:flex-row md:items-center md:justify-between'} gap-4 md:gap-6`}>
         <div>
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 md:mb-4">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 md:mb-4">
             {title}
           </h2>
           {description && (
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl">
               {description}
             </p>
           )}

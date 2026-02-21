@@ -52,12 +52,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="h-screen w-full bg-[#f8fafc] flex items-center justify-center p-4 lg:p-6 overflow-hidden">
+    <div className="h-screen w-full bg-[#f8fafc] dark:bg-slate-950 flex items-center justify-center p-4 lg:p-6 overflow-hidden transition-colors duration-300">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-[2.5rem] border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-6xl h-full max-h-[92vh] grid lg:grid-cols-2 overflow-hidden"
+        className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-6xl h-full max-h-[92vh] grid lg:grid-cols-2 overflow-hidden"
       >
           {/* Left Hero Section (Landscape Split) */}
           <div className="hidden lg:flex bg-gradient-to-br from-primary via-[#40513B] to-secondary relative overflow-hidden items-center justify-center p-12">
@@ -92,7 +92,7 @@ export default function LoginPage() {
           </div>
           
           {/* Right Form Section */}
-          <div className="p-8 lg:p-12 flex flex-col justify-center bg-white overflow-y-auto lg:overflow-hidden">
+          <div className="p-8 lg:p-12 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto lg:overflow-hidden">
               <div className="w-full max-w-sm mx-auto space-y-6">
                   
                   {/* Mobile Logo Only */}
@@ -103,19 +103,19 @@ export default function LoginPage() {
                   </div>
                   
                   <div>
-                      <h1 className="text-2xl font-bold text-gray-900 tracking-tight mb-1">Login ke Sistem</h1>
-                      <p className="text-gray-500 text-sm font-medium">Pilih peran dan gunakan akun Anda</p>
+                      <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight mb-1">Login ke Sistem</h1>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Pilih peran dan gunakan akun Anda</p>
                   </div>
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Role Tabs Style */}
                       <div className="space-y-2">
                         <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em] ml-1">Kategori Akses</span>
-                        <div className="grid grid-cols-2 gap-2 bg-gray-50/50 p-1 rounded-2xl border border-gray-100">
+                        <div className="grid grid-cols-2 gap-2 bg-gray-50/50 dark:bg-slate-950 p-1 rounded-2xl border border-gray-100 dark:border-slate-800">
                           <button 
                             type="button"
                             onClick={() => selectRole('admin')}
-                            className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl transition-all duration-300 font-bold text-[10px] ${selectedRole === 'admin' ? 'bg-white text-primary shadow-sm hover:shadow-md border border-gray-100 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl transition-all duration-300 font-bold text-[10px] ${selectedRole === 'admin' ? 'bg-white dark:bg-slate-800 text-primary shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-700 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                           >
                             <ShieldCheck className={`w-3.5 h-3.5 ${selectedRole === 'admin' ? 'text-primary' : 'text-gray-300'}`} />
                             <span>ADMIN</span>
@@ -123,7 +123,7 @@ export default function LoginPage() {
                           <button 
                             type="button"
                             onClick={() => selectRole('walikelas')}
-                            className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl transition-all duration-300 font-bold text-[10px] ${selectedRole === 'walikelas' ? 'bg-white text-primary shadow-sm hover:shadow-md border border-gray-100 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl transition-all duration-300 font-bold text-[10px] ${selectedRole === 'walikelas' ? 'bg-white dark:bg-slate-800 text-primary shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-700 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                           >
                             <GraduationCap className={`w-3.5 h-3.5 ${selectedRole === 'walikelas' ? 'text-primary' : 'text-gray-300'}`} />
                             <span>WALI KELAS</span>
@@ -142,7 +142,7 @@ export default function LoginPage() {
                             required 
                             value={username}
                             onChange={e => setUsername(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-2xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none text-xs font-semibold placeholder:text-gray-300 placeholder:font-normal" 
+                            className="w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none text-xs font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
                             placeholder="Username" 
                           />
                         </div>
@@ -156,7 +156,7 @@ export default function LoginPage() {
                             required 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-2xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none text-xs font-semibold placeholder:text-gray-300 placeholder:font-normal" 
+                            className="w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none text-xs font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
                             placeholder="Password" 
                           />
                         </div>
@@ -197,7 +197,7 @@ export default function LoginPage() {
                   </form>
                   
                   {/* Footer links */}
-                  <div className="flex flex-col items-center pt-5 border-t border-gray-50">
+                  <div className="flex flex-col items-center pt-5 border-t border-gray-50 dark:border-slate-800">
                       <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-3">Lupa Password / Butuh Bantuan?</p>
                       <a 
                         href="https://wa.me/08123456789" 
