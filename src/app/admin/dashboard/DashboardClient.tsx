@@ -2,10 +2,11 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Users, Building2, UserCheck, Clock, Zap, GraduationCap, Calendar } from 'lucide-react'
+import { Users, Building2, UserCheck, Clock, Zap, GraduationCap, Calendar, FileText } from 'lucide-react'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatCard } from '@/components/ui/StatCard'
 import { MenuCard } from '@/components/ui/MenuCard'
+import { QuickActionCard } from '@/components/ui/QuickActionCard'
 import { Card } from '@/components/ui/Card'
 
 export default function DashboardClient({ 
@@ -39,25 +40,7 @@ export default function DashboardClient({
         <StatCard label="Siswa Hari Ini" value={stats.siswaHariIni} icon={Clock} color="emerald" subValue="Baru Ditambah" delay={0.4} />
       </div>
 
-      <div className="mb-8 md:mb-16">
-        <div className="text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center space-x-3 mb-4">
-            <div className="p-2 rounded-xl bg-primary">
-              <Zap className="h-5 w-5 md:h-6 md:w-6 text-white" />
-            </div>
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">Menu Utama</h3>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg">Akses cepat ke fitur-fitur utama sistem</p>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-          <MenuCard href="/admin/siswa" label="Kelola Siswa" icon={GraduationCap} color="emerald" description="Upload dan kelola data siswa dengan sistem yang terintegrasi dan mudah digunakan" />
-          <MenuCard href="/admin/walikelas" label="Kelola Wali Kelas" icon={UserCheck} color="emerald" description="Buat dan kelola akun wali kelas serta atur hak akses sesuai kebutuhan" />
-          <MenuCard href="/admin/tahun-ajaran" label="Tahun Ajaran" icon={Calendar} color="emerald" description="Kelola tahun ajaran sekolah dan atur periode akademik dengan sistematis" />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-16">
         {/* Recent Students */}
         <Card noPadding>
           <div className="p-4 md:p-6 lg:p-8">
@@ -163,6 +146,27 @@ export default function DashboardClient({
           </div>
         </Card>
       </div>
+
+      <Card noPadding className="mb-8 md:mb-16 bg-gray-50/50 dark:bg-slate-900/50 border-gray-100 dark:border-slate-800">
+        <div className="p-4 md:p-6 lg:p-8">
+          <div className="flex items-center space-x-4 mb-6 md:mb-8">
+            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+               <Zap className="h-5 w-5 md:h-6 md:w-6 text-primary fill-primary/10" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Aksi Cepat</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Akses platform dengan cepat</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <QuickActionCard href="/admin/siswa" label="Kelola Siswa" icon={GraduationCap} color="blue" description="Kelola semua data siswa" />
+            <QuickActionCard href="/admin/walikelas" label="Kelola Wali Kelas" icon={UserCheck} color="amber" description="Kelola semua wali kelas" />
+            <QuickActionCard href="/admin/tahun-ajaran" label="Tahun Ajaran" icon={Calendar} color="emerald" description="Atur periode akademik" />
+            <QuickActionCard href="/admin/laporan" label="Lihat Laporan" icon={FileText} color="red" description="Analisis dan laporan" />
+          </div>
+        </div>
+      </Card>
     </div>
   )
 }
