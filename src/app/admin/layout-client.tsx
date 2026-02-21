@@ -17,7 +17,7 @@ export default function AdminLayout({
   const sidebarWidth = isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-[280px]'
 
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 transition-colors duration-300">
       <Sidebar 
         isOpen={isSidebarOpen} 
         setIsOpen={setIsSidebarOpen} 

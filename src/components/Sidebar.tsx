@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { 
@@ -13,9 +13,12 @@ import {
   LogOut, 
   ChevronLeft, 
   ChevronRight,
-  UserCog
+  UserCog,
+  Sun,
+  Moon
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTheme } from '@/components/ThemeProvider'
 
 interface SidebarProps {
   isOpen: boolean
@@ -50,6 +53,13 @@ export default function Sidebar({
   kelasName 
 }: SidebarProps) {
   const pathname = usePathname()
+  const { theme, toggleTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const links = role === 'admin' ? adminLinks : walikelasLinks
   const profilPath = role === 'admin' ? '/admin/profil' : '/walikelas/profil'
 
@@ -58,14 +68,14 @@ export default function Sidebar({
   return (
     <>
       <aside 
-        className={`bg-white shadow-sm h-screen border-r border-gray-100 fixed top-0 left-0 z-50 transition-all duration-500 ease-in-out transform lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarWidth}`}
+        className={`bg-white dark:bg-slate-900 shadow-sm h-screen border-r border-gray-100 dark:border-slate-800 fixed top-0 left-0 z-50 transition-all duration-500 ease-in-out transform lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarWidth}`}
       >
         <div className="flex flex-col h-full relative">
           
           {/* Toggle Button - Desktop Only */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden lg:flex absolute -right-3 top-10 bg-white border border-gray-100 shadow-md w-6 h-6 rounded-full items-center justify-center text-gray-400 hover:text-primary transition-colors z-50"
+            className="hidden lg:flex absolute -right-3 top-10 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md w-6 h-6 rounded-full items-center justify-center text-gray-400 hover:text-primary transition-colors z-50"
           >
             {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
           </button>
@@ -81,7 +91,7 @@ export default function Sidebar({
                 animate={{ opacity: 1, x: 0 }}
                 className="overflow-hidden whitespace-nowrap"
               >
-                <h2 className="font-extrabold text-gray-900 tracking-tight leading-none text-lg">MIN 1</h2>
+                <h2 className="font-extrabold text-gray-900 dark:text-white tracking-tight leading-none text-lg">MIN 1</h2>
                 <p className="text-[10px] font-bold text-primary tracking-widest uppercase mt-1">Sidoarjo</p>
               </motion.div>
             )}
@@ -90,21 +100,21 @@ export default function Sidebar({
           {/* Academic Info - Now always visible but styles change */}
           <div className={`px-6 mb-6 transition-all duration-500 ${isCollapsed ? 'flex justify-center' : ''}`}>
             {isCollapsed ? (
-              <div className="flex flex-col items-center space-y-1 bg-gray-50/50 rounded-xl p-2.5 border border-gray-100">
+              <div className="flex flex-col items-center space-y-1 bg-gray-50/50 dark:bg-slate-800/50 rounded-xl p-2.5 border border-gray-100 dark:border-slate-800">
                 <span className="text-[10px] font-black text-primary leading-none uppercase tracking-tighter">
                   {tahunAjaran ? tahunAjaran.replace(/20/g, '') : '...'}
                 </span>
               </div>
             ) : (
-              <div className="bg-gray-50/50 rounded-2xl p-4 border border-gray-100">
+              <div className="bg-gray-50/50 dark:bg-slate-800/50 rounded-2xl p-4 border border-gray-100 dark:border-slate-800">
                 <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Informasi Akses</p>
                 <div className="space-y-2">
-                  <div className="flex items-center text-xs font-bold text-gray-700">
-                    <Calendar size={13} className="text-secondary mr-2" />
+                  <div className="flex items-center text-xs font-bold text-gray-700 dark:text-gray-300">
+                    <Calendar size={13} className="text-secondary dark:text-secondary/80 mr-2" />
                     <span>TA {tahunAjaran ? tahunAjaran.replace(/20/g, '') : '...'}</span>
                   </div>
                   {role === 'walikelas' && (
-                    <div className="flex items-center text-xs font-bold text-gray-700">
+                    <div className="flex items-center text-xs font-bold text-gray-700 dark:text-gray-300">
                       <UserCircle size={13} className="text-primary mr-2" />
                       <span>{kelasName || '...'}</span>
                     </div>
@@ -151,7 +161,7 @@ export default function Sidebar({
             </ul>
 
             <div className={`my-6 ${isCollapsed ? 'px-2' : ''}`}>
-              <div className="h-px bg-gray-100" />
+              <div className="h-px bg-gray-100 dark:bg-slate-800" />
             </div>
 
             <ul className="space-y-1.5">
@@ -169,6 +179,31 @@ export default function Sidebar({
                     <span className="text-sm font-bold tracking-tight whitespace-nowrap">Edit Profil</span>
                   )}
                 </Link>
+              </li>
+
+              {/* Theme Toggle */}
+              <li>
+                <button 
+                  onClick={toggleTheme}
+                  className={`w-full group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white`}
+                >
+                  <div className="transition-all duration-300 group-hover:rotate-12">
+                    {mounted ? (
+                      theme === 'light' ? (
+                        <Moon size={18} className="text-gray-400 group-hover:text-primary" />
+                      ) : (
+                        <Sun size={18} className="text-yellow-500" />
+                      )
+                    ) : (
+                      <div className="w-[18px] h-[18px]" />
+                    )}
+                  </div>
+                  {!isCollapsed && (
+                    <span className="text-sm font-bold tracking-tight whitespace-nowrap">
+                    {mounted ? (theme === 'light' ? 'Mode Gelap' : 'Mode Terang') : '...'}
+                    </span>
+                  )}
+                </button>
               </li>
 
               {/* Logout Button */}

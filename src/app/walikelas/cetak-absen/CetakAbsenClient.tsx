@@ -1,9 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { X, Filter, Calendar, BookOpen, Building2, ChevronRight, Printer, BarChart3, FileText, Loader2 } from 'lucide-react'
+import { X, Filter, Calendar, BookOpen, Building2, Printer, BarChart3 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
 
 export default function CetakAbsenClient({ 
   waliKelas, 
@@ -30,19 +33,15 @@ export default function CetakAbsenClient({
 
   if (!waliKelas || !waliKelas.id_kelas) {
     return (
-      <div className="max-w-7xl mx-auto p-4 md:p-8">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-red-50 border-l-4 border-red-400 text-red-700 p-4 md:p-6 rounded-xl md:rounded-2xl mb-6 md:mb-8"
-        >
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-red-100 rounded-full flex-shrink-0">
-              <X className="h-4 w-4 md:h-5 md:w-5 text-red-600" />
-            </div>
-            <p className="font-semibold text-sm md:text-base">Anda belum ditugaskan ke kelas manapun. Silakan hubungi admin.</p>
+      <div className="max-w-7xl mx-auto md:max-w-none">
+        <PageHeader title="Cetak Absen" description="Cetak laporan kehadiran siswa" />
+        <Card className="text-center p-8">
+          <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
+            <X className="h-10 w-10" />
           </div>
-        </motion.div>
+          <h3 className="text-2xl font-black text-gray-900 mb-2">Belum Ada Kelas</h3>
+          <p className="text-gray-500 font-medium">Anda belum ditugaskan ke kelas manapun. Silakan hubungi admin.</p>
+        </Card>
       </div>
     )
   }
@@ -58,7 +57,7 @@ export default function CetakAbsenClient({
     } else {
       if (semesterId) params.set('semester_id', semesterId)
     }
-    router.push(`/walikelas/cetak-absen?\${params.toString()}`)
+    router.push(`/walikelas/cetak-absen?${params.toString()}`)
   }
 
   const handlePrint = () => {
@@ -71,78 +70,59 @@ export default function CetakAbsenClient({
 
   return (
     <div className="max-w-7xl mx-auto md:max-w-none">
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8 md:mb-12 print:hidden"
-      >
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">Cetak Absen</h2>
-          <p className="text-gray-600 text-sm md:text-base">
-            Cetak laporan kehadiran siswa {waliKelas.Kelas?.nama_kelas || 'kelas Anda'}
-          </p>
-        </div>
-      </motion.div>
+      <div className="print:hidden">
+        <PageHeader 
+          title="Cetak Absen"
+          description={`Cetak laporan kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'}`}
+        />
+      </div>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-white border border-gray-200 rounded-2xl md:rounded-3xl p-4 md:p-8 mb-6 md:mb-8 shadow-sm print:hidden border-b-primary/50"
-      >
-        <div className="flex items-center space-x-3 mb-4 md:mb-6">
-          <motion.div 
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-gradient-to-br from-primary to-secondary"
-          >
-            <Filter className="h-5 w-5 md:h-6 md:w-6 text-white" />
-          </motion.div>
+      <Card className="mb-6 md:mb-8 print:hidden">
+        <div className="flex items-center space-x-4 mb-6">
+          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
+            <Filter className="h-6 w-6" />
+          </div>
           <div>
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 border-l-4 border-secondary pl-3">Pilih Periode Laporan</h3>
-            <p className="text-gray-600 mt-1 text-sm md:text-base">Pilih jenis dan periode laporan yang ingin dicetak</p>
+            <h3 className="text-xl md:text-2xl font-black text-gray-900">Pilih Periode Laporan</h3>
+            <p className="text-gray-500 mt-1 text-sm font-medium">Pilih jenis dan periode laporan yang ingin dicetak</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 md:mb-3">Jenis Laporan</label>
+            <label className="block text-sm font-bold text-gray-700 mb-3 px-1">Jenis Laporan</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-              <motion.label 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`flex items-center space-x-3 p-3 md:p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 \${reportType === 'monthly' ? 'border-primary bg-primary/5' : 'border-gray-200 hover:border-primary/30'}`}
+              <label 
+                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'monthly' ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-primary/20'}`}
               >
                 <input type="radio" checked={reportType === 'monthly'} onChange={() => setReportType('monthly')}
                   className="w-4 h-4 text-primary focus:ring-primary cursor-pointer" />
-                <div className="flex items-center space-x-2 md:space-x-3">
-                  <div className="p-1.5 md:p-2 rounded-lg bg-primary/10">
-                    <Calendar className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 rounded-xl bg-primary/10">
+                    <Calendar className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm md:text-base">Laporan Bulanan</p>
-                    <p className="text-xs md:text-sm text-gray-500">Cetak per bulan</p>
+                    <p className="font-bold text-gray-900">Laporan Bulanan</p>
+                    <p className="text-xs text-gray-500 font-medium">Cetak per bulan</p>
                   </div>
                 </div>
-              </motion.label>
+              </label>
 
-              <motion.label 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`flex items-center space-x-3 p-3 md:p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 \${reportType === 'semester' ? 'border-primary bg-primary/5' : 'border-gray-200 hover:border-primary/30'}`}
+              <label 
+                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'semester' ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-primary/20'}`}
               >
                 <input type="radio" checked={reportType === 'semester'} onChange={() => setReportType('semester')}
                   className="w-4 h-4 text-primary focus:ring-primary cursor-pointer" />
-                <div className="flex items-center space-x-2 md:space-x-3">
-                  <div className="p-1.5 md:p-2 rounded-lg bg-primary/10">
-                    <BookOpen className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 rounded-xl bg-primary/10">
+                    <BookOpen className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm md:text-base">Laporan Semester</p>
-                    <p className="text-xs md:text-sm text-gray-500">Cetak per semester</p>
+                    <p className="font-bold text-gray-900">Laporan Semester</p>
+                    <p className="text-xs text-gray-500 font-medium">Cetak per semester</p>
                   </div>
                 </div>
-              </motion.label>
+              </label>
             </div>
           </div>
 
@@ -156,13 +136,13 @@ export default function CetakAbsenClient({
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
               >
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2 md:mb-3">Bulan</label>
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
-                      <Calendar className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
+                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Bulan</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                      <Calendar className="h-5 w-5" />
                     </div>
                     <select value={bulan} onChange={e => setBulan(e.target.value)}
-                      className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 focus:border-primary shadow-sm focus:outline-none text-base md:text-lg transition-all appearance-none cursor-pointer bg-white">
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer">
                       {months.map((m, i) => (
                         <option key={i} value={(i + 1).toString()}>{m}</option>
                       ))}
@@ -170,13 +150,13 @@ export default function CetakAbsenClient({
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2 md:mb-3">Tahun</label>
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
-                      <Calendar className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
+                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Tahun</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                      <Calendar className="h-5 w-5" />
                     </div>
                     <select value={tahun} onChange={e => setTahun(e.target.value)}
-                      className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 focus:border-primary shadow-sm focus:outline-none text-base md:text-lg transition-all appearance-none cursor-pointer bg-white">
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer">
                       {years.map(y => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
@@ -188,16 +168,15 @@ export default function CetakAbsenClient({
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="grid grid-cols-1 gap-4 md:gap-6"
               >
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2 md:mb-3">Pilih Semester</label>
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
-                      <BookOpen className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
+                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Pilih Semester</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                      <BookOpen className="h-5 w-5" />
                     </div>
                     <select value={semesterId} onChange={e => setSemesterId(e.target.value)}
-                      className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 focus:border-primary shadow-sm focus:outline-none text-base md:text-lg transition-all appearance-none cursor-pointer bg-white" required>
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer" required>
                       <option value="">Pilih Semester</option>
                       {availableSemesters.map(s => (
                         <option key={s.id} value={s.id}>
@@ -212,48 +191,28 @@ export default function CetakAbsenClient({
           </AnimatePresence>
 
           <div className="flex justify-end pt-4">
-             <motion.button 
-               whileHover={{ scale: 1.02 }}
-               whileTap={{ scale: 0.98 }}
-               type="submit" 
-               className="bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] hover:bg-right text-white px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl text-base md:text-lg font-semibold shadow-lg transition-all duration-500 flex items-center space-x-2 md:space-x-3 w-full md:w-auto justify-center group overflow-hidden relative"
-             >
-                 <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-600 group-hover:left-[100%]" />
-                 <BarChart3 className="h-5 w-5 md:h-6 md:w-6 transition-transform group-hover:scale-110 relative z-10" />
-                 <span className="relative z-10">Tampilkan Laporan</span>
-             </motion.button>
+             <Button type="submit" size="lg" icon={<BarChart3 className="h-5 w-5" />} fullWidth className="md:w-auto">
+               Tampilkan Laporan
+             </Button>
           </div>
         </form>
-      </motion.div>
+      </Card>
 
       <AnimatePresence>
         {hasSubmitted && attendanceData.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="bg-white rounded-2xl md:rounded-3xl shadow-lg mb-6 md:mb-8 print:shadow-none print:rounded-none border border-gray-100 overflow-hidden border-b-primary/50"
-          >
+          <Card noPadding className="mb-6 md:mb-8 print:shadow-none print:rounded-none print:border-none">
              <div className="p-4 md:p-8 print:p-0">
                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0 print:hidden">
                      <div>
-                         <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-1 md:mb-2 border-l-4 border-primary pl-3">{reportTitle}</h3>
-                         <p className="text-gray-600 text-sm md:text-base flex items-center">
+                         <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-1">{reportTitle}</h3>
+                         <p className="text-gray-500 text-sm font-medium flex items-center">
                             <Building2 className="h-4 w-4 mr-2 text-gray-400" />
                             {waliKelas.Kelas?.nama_kelas}
                          </p>
                      </div>
-                     <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-                         <motion.button 
-                           whileHover={{ scale: 1.05 }}
-                           whileTap={{ scale: 0.95 }}
-                           onClick={handlePrint} 
-                           className="bg-gradient-to-r from-primary to-secondary text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-semibold shadow-lg flex items-center space-x-2 justify-center transition-all w-full sm:w-auto"
-                         >
-                             <Printer className="h-4 w-4 md:h-5 md:w-5" />
-                             <span>Cetak Laporan</span>
-                         </motion.button>
-                     </div>
+                     <Button onClick={handlePrint} icon={<Printer className="h-5 w-5" />}>
+                       Cetak Laporan
+                     </Button>
                  </div>
 
                  <div className="print-area">
@@ -302,24 +261,19 @@ export default function CetakAbsenClient({
                     </div>
                  </div>
              </div>
-          </motion.div>
+          </Card>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {hasSubmitted && attendanceData.length === 0 && (
-           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white border border-gray-200 rounded-2xl md:rounded-3xl p-8 md:p-16 text-center shadow-sm print:hidden"
-           >
-              <div className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                  <BarChart3 className="h-8 w-8 md:h-12 md:w-12 text-gray-400" />
+           <Card className="p-8 md:p-16 text-center print:hidden">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 rounded-[30px] flex items-center justify-center">
+                  <BarChart3 className="h-10 w-10 text-gray-400" />
               </div>
-              <h4 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">Tidak ada data kehadiran</h4>
-              <p className="text-gray-500 text-sm md:text-base">Belum ada data kehadiran untuk periode yang dipilih.</p>
-           </motion.div>
+              <h4 className="text-xl font-black text-gray-900 mb-2">Tidak ada data kehadiran</h4>
+              <p className="text-gray-500 text-sm font-medium">Belum ada data kehadiran untuk periode yang dipilih.</p>
+           </Card>
         )}
       </AnimatePresence>
 

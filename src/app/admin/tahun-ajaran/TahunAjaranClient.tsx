@@ -101,7 +101,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
           </div>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'create', tahun }) }} className="flex flex-col md:flex-row items-end gap-4 flex-wrap">
+        <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'create', tahun }) }} className="flex flex-col md:flex-row items-start gap-4 flex-wrap">
           <div className="flex-1 w-full md:w-auto">
             <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Tahun Ajaran</label>
             <div className="relative">
@@ -114,7 +114,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
             </div>
             <p className="text-xs text-gray-400 mt-2 px-1">Format: YYYY/YYYY (contoh: 2024/2025)</p>
           </div>
-          <div className="w-full md:w-auto">
+          <div className="w-full md:w-auto md:mt-[28px]">
             <Button type="submit" size="lg" loading={loading} icon={<Zap className="h-5 w-5" />} fullWidth className="md:w-auto">
               {loading ? 'Memproses...' : 'Buat & Aktifkan'}
             </Button>
@@ -167,7 +167,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                     </>
                   )}
                   
-                  <Button size="sm" onClick={() => toggleSemesterForm(ta.id)} icon={<Plus className="h-4 w-4" />}>
+                  <Button onClick={() => toggleSemesterForm(ta.id)} icon={<Plus className="h-5 w-5" />}>
                     Tambah Semester
                   </Button>
                 </div>

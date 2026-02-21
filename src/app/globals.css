@@ -1,10 +1,29 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+:root {
+  --background: #f8fafc;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --card-border: #f1f5f9;
+  --sidebar: #ffffff;
+  --sidebar-border: #f1f5f9;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-border: #334155;
+  --sidebar: #1e293b;
+  --sidebar-border: #334155;
+}
+
 body {
   font-family: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
-  color: #1f2937;
-  background: #f8fafc;
+  color: var(--foreground);
+  background: var(--background);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom scrollbar */

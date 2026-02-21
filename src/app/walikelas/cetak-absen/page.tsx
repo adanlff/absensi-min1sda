@@ -37,7 +37,7 @@ export default async function WalikelasCetakAbsenPage({
   let reportTitle = ''
 
   if (report_type === 'monthly' && bulan && tahun) {
-    const start_date = new Date(`\${tahun}-\${bulan.padStart(2, '0')}-01T00:00:00Z`)
+    const start_date = new Date(`${tahun}-${bulan.padStart(2, '0')}-01T00:00:00Z`)
     const end_date = new Date(start_date.getFullYear(), start_date.getMonth() + 1, 0, 23, 59, 59, 999)
 
     // Fetch students
@@ -68,7 +68,7 @@ export default async function WalikelasCetakAbsenPage({
     })
 
     const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
-    reportTitle = `Laporan Bulanan - \${monthNames[parseInt(bulan) - 1]} \${tahun}`
+    reportTitle = `Laporan Bulanan - ${monthNames[parseInt(bulan) - 1]} ${tahun}`
 
   } else if (report_type === 'semester' && semester_id) {
     const semesterInfo = await prisma.semester.findUnique({
@@ -104,7 +104,7 @@ export default async function WalikelasCetakAbsenPage({
       })
 
       const semesterName = semesterInfo.jenis_semester.charAt(0).toUpperCase() + semesterInfo.jenis_semester.slice(1)
-      reportTitle = `Laporan Semester \${semesterName} - \${semesterInfo.TahunAjaran.tahun}`
+      reportTitle = `Laporan Semester ${semesterName} - ${semesterInfo.TahunAjaran.tahun}`
     }
   }
 
