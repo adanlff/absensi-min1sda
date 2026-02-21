@@ -61,13 +61,13 @@ export default function DashboardClient({
         {/* Recent Students */}
         <Card noPadding>
           <div className="p-4 md:p-6 lg:p-8">
-            <div className="flex items-center justify-between mb-6 md:mb-8">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 md:mb-2 border-l-4 border-primary pl-3">Siswa Terbaru</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">5 siswa yang baru ditambahkan</p>
-              </div>
-              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10">
+            <div className="flex items-center space-x-4 mb-6 md:mb-8">
+              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Siswa Terbaru</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">5 siswa yang baru ditambahkan</p>
               </div>
             </div>
             
@@ -105,13 +105,13 @@ export default function DashboardClient({
         {/* Class Distribution */}
         <Card noPadding>
           <div className="p-4 md:p-6 lg:p-8">
-            <div className="flex items-center justify-between mb-6 md:mb-8">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 md:mb-2 border-l-4 border-primary pl-3">Distribusi Kelas</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">5 kelas dengan siswa terbanyak</p>
-              </div>
-              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10">
+            <div className="flex items-center space-x-4 mb-6 md:mb-8">
+              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
                 <Building2 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Distribusi Kelas</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">5 kelas dengan siswa terbanyak</p>
               </div>
             </div>
             
