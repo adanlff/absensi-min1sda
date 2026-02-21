@@ -2,6 +2,7 @@ import React from 'react'
 import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/session'
 import WaliKelasClient from '@/app/admin/walikelas/WaliKelasClient'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,6 +25,11 @@ export default async function WaliKelasPage() {
 
   return (
     <div className="max-w-7xl mx-auto md:max-w-none">
+      <PageHeader 
+        title="Kelola Wali Kelas"
+        description="Buat dan kelola akun wali kelas serta atur hak akses sesuai kebutuhan"
+      />
+
       <WaliKelasClient walikelasList={walikelasList} kelasList={kelasList} />
     </div>
   )
