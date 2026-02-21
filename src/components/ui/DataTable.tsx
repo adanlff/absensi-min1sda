@@ -97,7 +97,7 @@ export function DataTable<T>({
                   {renderMobileCard ? (
                     renderMobileCard(item, index)
                   ) : (
-                    <Card className="p-4 hover:border-primary border-l-4 border-l-transparent transition-all shadow-sm">
+                    <Card className="p-4 hover:border-primary border-l-4 border-l-transparent transition-all">
                       <div className="space-y-2">
                         {columns.map((col, i) => (
                           <div key={i} className="flex justify-between items-start gap-4">
