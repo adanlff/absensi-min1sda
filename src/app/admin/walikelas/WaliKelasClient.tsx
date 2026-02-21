@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Check, X, Plus, User, AtSign, Building2, MoreVertical, Pencil, Trash2, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+import { PageHeader } from '@/components/ui/PageHeader'
+
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
   const [message, setMessage] = useState('')
@@ -81,20 +83,24 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
   }
 
   return (
-    <>
+    <div className="pb-20">
+      <PageHeader 
+        title="Kelola Wali Kelas"
+        description="Buat dan kelola akun wali kelas serta atur hak akses sesuai kebutuhan dengan sistem yang terintegrasi"
+        className="mb-8 md:mb-12"
+      />
+
       <AnimatePresence mode="wait">
         {message && (
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 md:px-6 py-4 rounded-xl md:rounded-2xl mb-6 md:mb-8"
+            className="bg-emerald-50 border border-emerald-100 text-emerald-800 px-6 py-4 rounded-2xl mb-8"
           >
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-emerald-100 rounded-full flex-shrink-0">
-                <Check className="h-4 w-4 md:h-5 md:w-5 text-emerald-600" />
-              </div>
-              <p className="font-semibold text-sm md:text-base">{message}</p>
+              <Check className="h-5 w-5 text-emerald-600" />
+              <p className="font-bold">{message}</p>
             </div>
           </motion.div>
         )}
@@ -104,13 +110,11 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-red-50 border border-red-200 text-red-800 px-4 md:px-6 py-4 rounded-xl md:rounded-2xl mb-6 md:mb-8"
+            className="bg-red-50 border border-red-100 text-red-800 px-6 py-4 rounded-2xl mb-8"
           >
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-red-100 rounded-full flex-shrink-0">
-                <X className="h-4 w-4 md:h-5 md:w-5 text-red-600" />
-              </div>
-              <p className="font-semibold text-sm md:text-base">{error}</p>
+              <X className="h-5 w-5 text-red-600" />
+              <p className="font-bold">{error}</p>
             </div>
           </motion.div>
         )}
@@ -119,31 +123,27 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white border border-gray-200 rounded-2xl md:rounded-3xl p-1 shadow-xl"
+        className="bg-white border border-gray-100 rounded-[32px] p-2 shadow-sm"
       >
-        <div className="overflow-hidden rounded-2xl md:rounded-3xl">
-          <div className="p-4 md:p-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-primary mb-1 md:mb-2">Daftar Wali Kelas</h3>
-                <p className="text-gray-600 text-sm md:text-base">Total {walikelasList.length} wali kelas terdaftar</p>
-              </div>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-                <motion.button 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
-                    setIsCreateModalOpen(true)
-                  }} 
-                  className="bg-gradient-to-br from-primary via-secondary to-primary bg-[length:200%_auto] hover:bg-right text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl text-sm font-semibold transition-all duration-500 flex items-center space-x-2 md:space-x-3 w-full sm:w-auto justify-center shadow-lg relative overflow-hidden group"
-                >
-                  <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-all duration-600 group-hover:left-[100%] z-0" />
-                  <Plus className="h-4 w-4 md:h-5 md:w-5 relative z-10" />
-                  <span className="relative z-10">Tambah Wali Kelas</span>
-                </motion.button>
-              </div>
+        <div className="bg-gray-50/50 rounded-[28px] p-6 md:p-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 md:mb-12 gap-6">
+            <div>
+              <h3 className="text-2xl font-black text-gray-900 leading-tight mb-2">Daftar Wali Kelas</h3>
+              <p className="text-gray-500 font-medium">Total <span className="text-primary font-black">{walikelasList.length}</span> wali kelas terdaftar</p>
             </div>
+            <motion.button 
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
+                setIsCreateModalOpen(true)
+              }} 
+              className="bg-primary text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center space-x-3"
+            >
+              <Plus className="h-6 w-6" />
+              <span>Tambah Wali Kelas</span>
+            </motion.button>
+          </div>
             
             <div className="hidden md:block overflow-x-auto">
               <table className="min-w-full">
