@@ -102,7 +102,7 @@ export default function DashboardClient({
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
         title={`Selamat Datang, ${waliKelas.nama}! 👋`}
-        description={`Wali Kelas ${waliKelas.Kelas?.nama_kelas || '...'} — Pantau dan kelola kehadiran siswa dengan efisien pada Tahun Ajaran ${tahunAjaran}`}
+        description={`Wali Kelas ${waliKelas.Kelas?.nama_kelas?.replace(/KELAS\s?/i, '') || '...'}, Pantau dan kelola kehadiran siswa dengan efisien pada Tahun Ajaran ${tahunAjaran}`}
         centered
       />
 
