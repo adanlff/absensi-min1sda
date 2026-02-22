@@ -6,6 +6,7 @@ import { Check, X, User, AtSign, Mail, Phone, MapPin, Lock } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import SweetAlert from '@/components/ui/SweetAlert'
 
 interface AdminData {
   nama: string
@@ -26,19 +27,25 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
     password: ''
   })
   
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  
+  // State for SweetAlert
+  const [alertConfig, setAlertConfig] = useState<{
+    show: boolean;
+    type: 'success' | 'error' | 'warning' | 'info';
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: '',
+  })
 
-  useEffect(() => {
-    if (message || error) {
-      const timer = setTimeout(() => {
-        setMessage('')
-        setError('')
-      }, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [message, error])
+  // Helper to show alert
+  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
+    setAlertConfig({ show: true, type, title, message })
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -47,8 +54,6 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setMessage('')
-    setError('')
 
     try {
       const res = await fetch('/api/admin/profil', {
@@ -62,14 +67,14 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
       const data = await res.json()
 
       if (res.ok) {
-        setMessage(data.message)
         setFormData(prev => ({ ...prev, password: '' }))
         router.refresh()
+        showAlert('success', 'Berhasil', data.message)
       } else {
-        setError(data.error || 'Gagal mengupdate profil')
+        showAlert('error', 'Gagal', data.error || 'Gagal mengupdate profil')
       }
     } catch (err) {
-      setError('Terjadi kesalahan pada jaringan')
+      showAlert('error', 'Error', 'Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -77,35 +82,13 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        {message && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="bg-emerald-50 border border-emerald-100 text-emerald-800 px-6 py-4 rounded-2xl mb-8"
-          >
-            <div className="flex items-center space-x-3">
-              <Check className="h-5 w-5 text-emerald-600" />
-              <p className="font-bold">{message}</p>
-            </div>
-          </motion.div>
-        )}
-
-        {error && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="bg-red-50 border border-red-100 text-red-800 px-6 py-4 rounded-2xl mb-8"
-          >
-            <div className="flex items-center space-x-3">
-              <X className="h-5 w-5 text-red-600" />
-              <p className="font-bold">{error}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <SweetAlert 
+        show={alertConfig.show}
+        type={alertConfig.type}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
+      />
 
       <Card>
         {/* Profile Header */}

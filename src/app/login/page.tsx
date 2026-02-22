@@ -4,30 +4,33 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, AlertCircle, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import SweetAlert from '@/components/ui/SweetAlert'
+import SuccessAlert from '@/components/ui/SuccessAlert'
 
 export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<'admin' | 'walikelas' | ''>('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alertConfig, setAlertConfig] = useState({ show: false, title: '', message: '', type: 'error' as any })
+  const [successConfig, setSuccessConfig] = useState({ show: false, message: '', redirect: '' })
   const router = useRouter()
 
   const selectRole = (role: 'admin' | 'walikelas') => {
     setSelectedRole(role)
-    setError('')
+    setAlertConfig(prev => ({ ...prev, show: false }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (!selectedRole) {
-      setError('Silakan pilih peran terlebih dahulu!')
+      setAlertConfig({ show: true, type: 'warning', title: 'Peringatan', message: 'Silakan pilih peran terlebih dahulu!' })
       return
     }
 
     setLoading(true)
-    setError('')
+    setAlertConfig(prev => ({ ...prev, show: false }))
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -39,20 +42,35 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (res.ok) {
-        router.push(data.redirect)
-        router.refresh()
+        setSuccessConfig({ show: true, message: 'Login berhasil! Selamat datang kembali.', redirect: data.redirect })
       } else {
-        setError(data.error || 'Login gagal')
+        setAlertConfig({ show: true, type: 'error', title: 'Login Gagal', message: data.error || 'Username atau password salah' })
         setLoading(false)
       }
     } catch (error) {
-      setError('Terjadi kesalahan pada server')
+      setAlertConfig({ show: true, type: 'error', title: 'Error', message: 'Terjadi kesalahan pada server' })
       setLoading(false)
     }
   }
 
   return (
     <div className="h-screen w-full bg-[#f8fafc] dark:bg-slate-950 flex items-center justify-center p-4 lg:p-6 overflow-hidden transition-colors duration-300">
+      <SweetAlert 
+        show={alertConfig.show}
+        type={alertConfig.type}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
+      />
+
+      <SuccessAlert 
+        show={successConfig.show}
+        message={successConfig.message}
+        onButtonClick={() => {
+          router.push(successConfig.redirect)
+          router.refresh()
+        }}
+      />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -162,19 +180,7 @@ export default function LoginPage() {
                         </div>
                       </div>
 
-                      <AnimatePresence mode="wait">
-                        {error && (
-                          <motion.div 
-                            initial={{ opacity: 0, y: -4, height: 0 }}
-                            animate={{ opacity: 1, y: 0, height: 'auto' }}
-                            exit={{ opacity: 0, y: -4, height: 0 }}
-                            className="bg-red-50/80 border border-red-100 text-red-600 p-3 rounded-xl flex items-start space-x-2"
-                          >
-                            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                            <span className="text-[10px] font-bold leading-relaxed">{error}</span>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {/* Error message removed as it's now handled by SweetAlert */}
 
                       <motion.button 
                         whileTap={{ scale: 0.97 }}

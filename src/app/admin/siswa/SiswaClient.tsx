@@ -22,11 +22,10 @@ import { Card } from '@/components/ui/Card'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { DataTable } from '@/components/ui/DataTable'
 import { Button } from '@/components/ui/Button'
+import SweetAlert from '@/components/ui/SweetAlert'
 
 export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const router = useRouter()
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const [selectedClassId, setSelectedClassId] = useState<number | null>(null)
@@ -46,15 +45,23 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const [uploadClassId, setUploadClassId] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    if (message || error) {
-      const timer = setTimeout(() => {
-        setMessage('')
-        setError('')
-      }, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [message, error])
+  // State for SweetAlert
+  const [alertConfig, setAlertConfig] = useState<{
+    show: boolean;
+    type: 'success' | 'error' | 'warning' | 'info';
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: '',
+  })
+
+  // Helper to show alert
+  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
+    setAlertConfig({ show: true, type, title, message })
+  }
 
   const fetchStudents = async (kelasId: number) => {
     setLoading(true)
@@ -64,10 +71,10 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       if (res.ok) {
         setStudents(data.students)
       } else {
-        setError(data.error || 'Gagal memuat data siswa')
+        showAlert('error', 'Gagal', data.error || 'Gagal memuat data siswa')
       }
     } catch (err) {
-      setError('Terjadi kesalahan jaringan')
+      showAlert('error', 'Error', 'Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -80,8 +87,6 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
 
   const handleAction = async (payload: any) => {
     setLoading(true)
-    setMessage('')
-    setError('')
     try {
       const res = await fetch('/api/admin/siswa', {
         method: 'POST',
@@ -90,7 +95,6 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message)
         setIsAddClassModalOpen(false)
         setIsAddStudentModalOpen(false)
         setIsDeleteStudentModalOpen(false)
@@ -109,11 +113,12 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
            setSelectedClassId(null)
            setStudents([])
         }
+        showAlert('success', 'Berhasil', result.message)
       } else {
-        setError(result.error || 'Terjadi kesalahan')
+        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      setError('Terjadi kesalahan pada jaringan')
+      showAlert('error', 'Error', 'Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -122,19 +127,17 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!uploadClassId) {
-      setError('Silakan pilih kelas terlebih dahulu')
+      showAlert('error', 'Peringatan', 'Silakan pilih kelas terlebih dahulu')
       return
     }
 
     const file = fileInputRef.current?.files?.[0]
     if (!file) {
-      setError('Silakan pilih file Excel')
+      showAlert('error', 'Peringatan', 'Silakan pilih file Excel')
       return
     }
 
     setLoading(true)
-    setMessage('')
-    setError('')
 
     const reader = new FileReader()
     reader.onload = async (e) => {
@@ -151,7 +154,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         })).filter(row => row.no && row.nis && row.nama)
 
         if (formattedData.length === 0) {
-          setError('File Excel kosong atau format tidak sesuai')
+          showAlert('error', 'Gagal', 'File Excel kosong atau format tidak sesuai')
           setLoading(false)
           return
         }
@@ -166,7 +169,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         setSelectedClassId(parseInt(uploadClassId))
         
       } catch (err) {
-        setError('Gagal membaca file Excel')
+        showAlert('error', 'Gagal', 'Gagal membaca file Excel')
         setLoading(false)
       }
     }
@@ -214,35 +217,13 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         className="mb-8 md:mb-12"
       />
 
-      <AnimatePresence mode="wait">
-        {message && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="bg-emerald-50 border border-emerald-100 text-emerald-800 px-6 py-4 rounded-2xl mb-8"
-          >
-            <div className="flex items-center space-x-3">
-              <Check className="h-5 w-5 text-emerald-600" />
-              <p className="font-bold">{message}</p>
-            </div>
-          </motion.div>
-        )}
-
-        {error && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="bg-red-50 border border-red-100 text-red-800 px-6 py-4 rounded-2xl mb-8"
-          >
-            <div className="flex items-center space-x-3">
-              <AlertCircle className="h-5 w-5 text-red-600" />
-              <p className="font-bold">{error}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <SweetAlert 
+        show={alertConfig.show}
+        type={alertConfig.type}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
+      />
 
       <Card className="mb-8 md:mb-12 relative overflow-hidden">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">

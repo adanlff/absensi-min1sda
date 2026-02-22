@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { SearchBox } from '@/components/ui/SearchBox'
 import { Button } from '@/components/ui/Button'
+import SweetAlert from '@/components/ui/SweetAlert'
 
 export default function AbsenClient({ 
   waliKelas, 
@@ -25,9 +26,20 @@ export default function AbsenClient({
   
   const [search, setSearch] = useState(initialSearch)
   const [tanggal, setTanggal] = useState(initialDate)
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  
+  // State for SweetAlert
+  const [alertConfig, setAlertConfig] = useState<{
+    show: boolean;
+    type: 'success' | 'error' | 'warning' | 'info';
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: '',
+  })
 
   const [attendance, setAttendance] = useState<{ [key: number]: { status: string, keterangan: string } }>({})
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
@@ -61,20 +73,13 @@ export default function AbsenClient({
     return () => clearTimeout(handler)
   }, [search, tanggal, initialSearch, initialDate, router, searchParams])
 
-  useEffect(() => {
-    if (message || error) {
-      const timer = setTimeout(() => {
-        setMessage('')
-        setError('')
-      }, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [message, error])
+  // Helper to show alert
+  const showAlert = (type: 'success' | 'error' | 'warning', title: string, message: string) => {
+    setAlertConfig({ show: true, type, title, message })
+  }
 
   const handleBulkAction = async (status: string) => {
     setLoading(true)
-    setMessage('')
-    setError('')
     try {
       const res = await fetch('/api/walikelas/absen', {
         method: 'POST',
@@ -88,7 +93,6 @@ export default function AbsenClient({
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message)
         const newData = { ...attendance }
         students.forEach(s => {
           if(newData[s.id]) {
@@ -97,11 +101,12 @@ export default function AbsenClient({
         })
         setAttendance(newData)
         router.refresh()
+        showAlert('success', 'Berhasil', result.message)
       } else {
-        setError(result.error || 'Gagal update absen massal')
+        showAlert('error', 'Gagal', result.error || 'Gagal update absen massal')
       }
     } catch (err) {
-      setError('Terjadi kesalahan jaringan')
+      showAlert('error', 'Error', 'Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -109,8 +114,6 @@ export default function AbsenClient({
 
   const handleSaveAttendance = async () => {
     setLoading(true)
-    setMessage('')
-    setError('')
     setIsConfirmModalOpen(false)
     
     const payloadData = Object.keys(attendance).map(id => ({
@@ -131,13 +134,13 @@ export default function AbsenClient({
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message || 'Absen berhasil disimpan!')
         router.refresh()
+        showAlert('success', 'Berhasil', result.message || 'Absen berhasil disimpan!')
       } else {
-        setError(result.error || 'Gagal menyimpan absen')
+        showAlert('error', 'Gagal', result.error || 'Gagal menyimpan absen')
       }
     } catch (err) {
-      setError('Terjadi kesalahan jaringan')
+      showAlert('error', 'Error', 'Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -175,35 +178,13 @@ export default function AbsenClient({
         />
       </PageHeader>
 
-      <AnimatePresence mode="wait">
-        {message && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="bg-emerald-50 border border-emerald-100 text-emerald-800 px-6 py-4 rounded-2xl mb-8"
-          >
-            <div className="flex items-center space-x-3">
-              <Check className="h-5 w-5 text-emerald-600" />
-              <p className="font-bold">{message}</p>
-            </div>
-          </motion.div>
-        )}
-
-        {error && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="bg-red-50 border border-red-100 text-red-800 px-6 py-4 rounded-2xl mb-8"
-          >
-            <div className="flex items-center space-x-3">
-              <X className="h-5 w-5 text-red-600" />
-              <p className="font-bold">{error}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <SweetAlert 
+        show={alertConfig.show}
+        type={alertConfig.type}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
+      />
 
       <Card className="mb-6 md:mb-8">
         <div className="flex items-center space-x-4 mb-6">
