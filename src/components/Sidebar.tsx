@@ -15,7 +15,8 @@ import {
   ChevronRight,
   UserCog,
   Sun,
-  Moon
+  Moon,
+  CloudUpload
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/components/ThemeProvider'
@@ -34,7 +35,8 @@ interface SidebarProps {
 
 const adminLinks = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/siswa', label: 'Kelola Siswa', icon: Users },
+  { href: '/admin/siswa', label: 'Kelola Siswa', icon: CloudUpload },
+  { href: '/admin/kelas', label: 'Kelola Kelas', icon: Users },
   { href: '/admin/walikelas', label: 'Kelola Wali Kelas', icon: UserCircle },
   { href: '/admin/tahun-ajaran', label: 'Tahun Ajaran', icon: Calendar },
 ]
