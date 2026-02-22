@@ -186,13 +186,13 @@ export default function AbsenClient({
       </PageHeader>
 
       <Card className="mb-6 md:mb-8">
-        <div className="flex items-center space-x-4 mb-6">
-          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-            <Calendar className="h-6 w-6" />
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <Calendar className="h-5 w-5 md:h-6 md:w-6 text-primary" />
           </div>
           <div>
-            <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">Pilih Tanggal dan Kelas</h3>
-            <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm font-medium">Pilih tanggal untuk menginput absensi siswa</p>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Pilih Tanggal dan Kelas</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Pilih tanggal untuk menginput absensi siswa</p>
           </div>
         </div>
         
@@ -224,13 +224,13 @@ export default function AbsenClient({
       {students.length > 0 ? (
         <>
           <Card className="mb-6 md:mb-8">
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-                <Zap className="h-6 w-6" />
+            <div className="flex items-center space-x-4 mb-6 md:mb-8">
+              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+                <Zap className="h-5 w-5 md:h-6 md:w-6 text-primary" />
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">Aksi Massal</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm font-medium">Tandai semua siswa dengan status yang sama</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Aksi Massal</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Tandai semua siswa dengan status yang sama</p>
               </div>
             </div>
             
@@ -252,11 +252,16 @@ export default function AbsenClient({
           <Card noPadding>
             <div className="p-4 md:p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-1">Daftar Absensi</h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-                    {waliKelas.Kelas?.nama_kelas} - {new Date(tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}
-                  </p>
+                <div className="flex items-center space-x-4">
+                  <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+                    <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Absensi</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">
+                      {waliKelas.Kelas?.nama_kelas} - {new Date(tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}
+                    </p>
+                  </div>
                 </div>
                 <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-50 dark:bg-slate-950 rounded-full w-fit">
                    <div className="w-2 h-2 bg-emerald-500 rounded-full" />

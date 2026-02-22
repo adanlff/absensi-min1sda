@@ -86,13 +86,13 @@ export default function CetakAbsenClient({
       </div>
 
       <Card className="mb-6 md:mb-8 print:hidden">
-        <div className="flex items-center space-x-4 mb-6">
-          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-            <Filter className="h-6 w-6" />
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <Filter className="h-5 w-5 md:h-6 md:w-6 text-primary" />
           </div>
-           <div>
-            <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">Pilih Periode Laporan</h3>
-            <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm font-medium">Pilih jenis dan periode laporan yang ingin dicetak</p>
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Pilih Periode Laporan</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Pilih jenis dan periode laporan yang ingin dicetak</p>
           </div>
         </div>
 
@@ -211,12 +211,17 @@ export default function CetakAbsenClient({
           <Card noPadding className="mb-6 md:mb-8 print:shadow-none print:rounded-none print:border-none">
              <div className="p-4 md:p-8 print:p-0">
                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0 print:hidden">
-                     <div>
-                          <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-1">{reportTitle}</h3>
-                         <p className="text-gray-500 dark:text-gray-400 text-sm font-medium flex items-center">
+                     <div className="flex items-center space-x-4">
+                        <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+                          <BarChart3 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">{reportTitle}</h3>
+                          <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base flex items-center">
                             <Building2 className="h-4 w-4 mr-2 text-gray-400 dark:text-gray-500" />
                             {waliKelas.Kelas?.nama_kelas}
-                         </p>
+                          </p>
+                        </div>
                      </div>
                      <Button onClick={handlePrint} icon={<Printer className="h-5 w-5" />}>
                        Cetak Laporan

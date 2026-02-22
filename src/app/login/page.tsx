@@ -217,6 +217,7 @@ export default function LoginPage() {
 
       {showSuccessAlert && (
         <SuccessAlert 
+          title="Login Berhasil!"
           message="Anda berhasil masuk ke sistem. Selamat datang!" 
           onButtonClick={handleSuccessRedirect}
         />

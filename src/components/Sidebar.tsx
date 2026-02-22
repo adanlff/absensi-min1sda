@@ -287,6 +287,7 @@ export default function Sidebar({
 
       {showLogoutAlert && (
         <SuccessAlert 
+          title="Logout Berhasil"
           message="Anda telah berhasil keluar dari sistem. Sampai jumpa kembali!" 
           onButtonClick={() => window.location.href = '/login'}
           buttonText="Ke Halaman Login"
