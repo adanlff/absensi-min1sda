@@ -15,6 +15,9 @@ export default async function WalikelasDashboardPage({
 
   const search = typeof searchParams.search === 'string' ? searchParams.search : ''
 
+  const tahunAjaranRow = await prisma.tahunAjaran.findFirst({ where: { status: 'aktif' } })
+  const tahunAjaran = tahunAjaranRow ? tahunAjaranRow.tahun : '.../'
+
   // Get Wali Kelas info with class
   const waliKelas = await prisma.waliKelas.findUnique({
     where: { id: session.user_id },
@@ -93,5 +96,5 @@ export default async function WalikelasDashboardPage({
 
   const stats = { totalSiswa, sakit, izin, alpa }
 
-  return <DashboardClient waliKelas={waliKelas} stats={stats} recentAbsences={recentAbsences} initialSearch="" />
+  return <DashboardClient waliKelas={waliKelas} stats={stats} recentAbsences={recentAbsences} initialSearch="" tahunAjaran={tahunAjaran} />
 }

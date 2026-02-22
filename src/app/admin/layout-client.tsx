@@ -24,7 +24,6 @@ export default function AdminLayout({
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
         role="admin" 
-        tahunAjaran={tahunAjaran} 
       />
       <div className={`transition-all duration-500 ease-in-out ${sidebarWidth}`}>
         <Header 

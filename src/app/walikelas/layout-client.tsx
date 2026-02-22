@@ -26,8 +26,6 @@ export default function WalikelasLayout({
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
         role="walikelas" 
-        tahunAjaran={tahunAjaran}
-        kelasName={kelasName}
       />
       <div className={`transition-all duration-500 ease-in-out ${sidebarWidth}`}>
         <Header 

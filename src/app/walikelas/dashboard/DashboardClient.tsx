@@ -24,12 +24,14 @@ export default function DashboardClient({
   waliKelas, 
   stats, 
   recentAbsences,
-  initialSearch
+  initialSearch,
+  tahunAjaran
 }: { 
   waliKelas: any, 
   stats: any, 
   recentAbsences: any[],
-  initialSearch: string
+  initialSearch: string,
+  tahunAjaran: string
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -100,7 +102,7 @@ export default function DashboardClient({
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
         title={`Selamat Datang, ${waliKelas.nama}! 👋`}
-        description={`Pantau kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'} hari ini`}
+        description={`Wali Kelas ${waliKelas.Kelas?.nama_kelas || '...'} — Pantau dan kelola kehadiran siswa dengan efisien pada Tahun Ajaran ${tahunAjaran}`}
         centered
       />
 

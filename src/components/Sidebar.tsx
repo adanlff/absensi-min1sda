@@ -29,8 +29,6 @@ interface SidebarProps {
   isCollapsed: boolean
   setIsCollapsed: (isCollapsed: boolean) => void
   role: 'admin' | 'walikelas'
-  tahunAjaran?: string
-  kelasName?: string
 }
 
 const adminLinks = [
@@ -52,9 +50,7 @@ export default function Sidebar({
   setIsOpen, 
   isCollapsed, 
   setIsCollapsed, 
-  role, 
-  tahunAjaran, 
-  kelasName 
+  role
 }: SidebarProps) {
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
@@ -103,32 +99,6 @@ export default function Sidebar({
             )}
           </div>
 
-          {/* Academic Info - Now always visible but styles change */}
-          <div className={`px-6 mb-6 transition-all duration-500 ${isCollapsed ? 'flex justify-center' : ''}`}>
-            {isCollapsed ? (
-              <div className="flex flex-col items-center space-y-1 bg-gray-50/50 dark:bg-slate-800/50 rounded-xl p-2.5 border border-gray-100 dark:border-slate-800">
-                <span className="text-[10px] font-bold text-primary leading-none uppercase tracking-tighter">
-                  {tahunAjaran ? tahunAjaran.replace(/20/g, '') : '...'}
-                </span>
-              </div>
-            ) : (
-              <div className="bg-gray-50/50 dark:bg-slate-800/50 rounded-2xl p-4 border border-gray-100 dark:border-slate-800">
-                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Informasi Akses</p>
-                <div className="space-y-2">
-                  <div className="flex items-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                    <Calendar size={13} className="text-primary dark:text-primary/80 mr-2" />
-                    <span>TA {tahunAjaran ? tahunAjaran.replace(/20/g, '') : '...'}</span>
-                  </div>
-                  {role === 'walikelas' && (
-                    <div className="flex items-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                      <UserCircle size={13} className="text-primary mr-2" />
-                      <span>{kelasName || '...'}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Navigation Links */}
           <nav className="flex-1 px-4 overflow-y-auto no-scrollbar py-2">

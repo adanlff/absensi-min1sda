@@ -9,6 +9,9 @@ export default async function AdminDashboard() {
   const session = await getSession()
   const nama = session?.nama || 'Admin'
 
+  const tahunAjaranRow = await prisma.tahunAjaran.findFirst({ where: { status: 'aktif' } })
+  const tahunAjaran = tahunAjaranRow ? tahunAjaranRow.tahun : '.../'
+  
   const totalSiswa = await prisma.siswa.count()
   const totalKelas = await prisma.kelas.count()
   const totalWalikelas = await prisma.waliKelas.count()
@@ -45,6 +48,7 @@ export default async function AdminDashboard() {
   return (
     <DashboardClient 
       nama={nama}
+      tahunAjaran={tahunAjaran}
       stats={{
         totalSiswa,
         totalKelas,

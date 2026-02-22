@@ -11,11 +11,13 @@ import { Card } from '@/components/ui/Card'
 
 export default function DashboardClient({ 
   nama, 
+  tahunAjaran,
   stats, 
   recentStudents, 
   classDistribution 
 }: { 
   nama: string, 
+  tahunAjaran: string,
   stats: {
     totalSiswa: number,
     totalKelas: number,
@@ -29,7 +31,7 @@ export default function DashboardClient({
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
         title={`Selamat Datang, ${nama}! 👋`}
-        description="Kelola sistem informasi sekolah dengan mudah dan efisien"
+        description={`Kelola seluruh data dan sistem absensi MIN 1 Sidoarjo untuk Tahun Ajaran ${tahunAjaran}`}
         centered
       />
       
