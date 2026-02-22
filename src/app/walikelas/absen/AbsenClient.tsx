@@ -388,11 +388,11 @@ export default function AbsenClient({
         </>
       ) : (
         <Card className="p-12 md:p-20 text-center">
-            <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-primary/10 w-fit mx-auto mb-6">
+            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 w-fit mx-auto mb-6">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Tidak ada data siswa</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Tidak ada data siswa</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-md mx-auto">
               Belum ada siswa di kelas Anda atau Anda belum ditugaskan ke kelas manapun.
             </p>
         </Card>
