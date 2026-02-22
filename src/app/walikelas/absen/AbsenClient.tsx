@@ -8,6 +8,14 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { SearchBox } from '@/components/ui/SearchBox'
 import { Button } from '@/components/ui/Button'
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from '@/components/ui/Table'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function AbsenClient({ 
@@ -22,6 +30,7 @@ export default function AbsenClient({
   initialSearch: string
 }) {
   const router = useRouter()
+  const MotionTableRow = motion(TableRow)
   const searchParams = useSearchParams()
   
   const [search, setSearch] = useState(initialSearch)
@@ -257,37 +266,37 @@ export default function AbsenClient({
 
               {/* Desktop Table */}
               <div className="hidden md:block overflow-x-auto">
-                  <table className="min-w-full">
-                      <thead>
-                          <tr className="border-b border-gray-100">
-                              <th className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12 text-center">No</th>
-                              <th className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-28">NIS</th>
-                              <th className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Siswa</th>
-                              <th className="px-3 py-4 text-center text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-48">Kehadiran</th>
-                              <th className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-40">Keterangan</th>
-                          </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-50">
+                  <Table>
+                      <TableHeader>
+                          <TableRow className="border-b border-gray-100 dark:border-slate-800">
+                              <TableHead className="px-3 py-4 text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12 text-center">No</TableHead>
+                              <TableHead className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-28">NIS</TableHead>
+                              <TableHead className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Siswa</TableHead>
+                              <TableHead className="px-3 py-4 text-center text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-48">Kehadiran</TableHead>
+                              <TableHead className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-40">Keterangan</TableHead>
+                          </TableRow>
+                      </TableHeader>
+                      <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
                          {students.map((student, index) => (
-                            <motion.tr 
+                            <MotionTableRow 
                               key={student.id} 
                               initial={{ opacity: 0, y: 5 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: index * 0.02 }}
                               className="hover:bg-gray-50/50 dark:hover:bg-slate-900/50 transition-colors"
                             >
-                               <td className="px-3 py-4 whitespace-nowrap">
+                               <TableCell className="px-3 py-4 whitespace-nowrap">
                                   <div className="flex items-center justify-center w-9 h-9 bg-primary/5 rounded-2xl">
                                      <span className="text-primary font-black text-sm">{student.no}</span>
                                   </div>
-                               </td>
-                               <td className="px-3 py-4 whitespace-nowrap">
+                               </TableCell>
+                               <TableCell className="px-3 py-4 whitespace-nowrap">
                                   <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
-                               </td>
-                               <td className="px-3 py-4 whitespace-nowrap">
+                               </TableCell>
+                               <TableCell className="px-3 py-4 whitespace-nowrap">
                                   <p className="font-black text-gray-900 dark:text-white text-base">{student.nama}</p>
-                               </td>
-                               <td className="px-3 py-4">
+                               </TableCell>
+                               <TableCell className="px-3 py-4">
                                   <div className="grid grid-cols-2 gap-2">
                                      {[
                                        { id: 'hadir', color: 'emerald' },
@@ -304,17 +313,17 @@ export default function AbsenClient({
                                         </label>
                                      ))}
                                   </div>
-                               </td>
-                               <td className="px-3 py-4">
+                               </TableCell>
+                               <TableCell className="px-3 py-4">
                                   <input type="text" value={attendance[student.id]?.keterangan || ''}
                                      onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
                                      placeholder="Keterangan"
                                      className="w-full px-3 py-2 border border-gray-100 dark:border-slate-800 focus:border-primary text-sm rounded-xl focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all bg-transparent text-gray-900 dark:text-white font-medium" />
-                               </td>
-                            </motion.tr>
+                               </TableCell>
+                            </MotionTableRow>
                          ))}
-                      </tbody>
-                  </table>
+                      </TableBody>
+                  </Table>
               </div>
 
               {/* Mobile Card List */}

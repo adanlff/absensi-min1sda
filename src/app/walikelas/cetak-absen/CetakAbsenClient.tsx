@@ -7,6 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from '@/components/ui/Table'
 
 export default function CetakAbsenClient({ 
   waliKelas, 
@@ -224,32 +232,32 @@ export default function CetakAbsenClient({
                     </div>
 
                     <div className="overflow-x-auto print:overflow-visible">
-                       <table className="w-full text-left print:table-fixed print:text-[10px] border-collapse">
-                          <thead>
-                             <tr>
-                                 <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[5%] dark:text-white">No</th>
-                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[15%] dark:text-white">NIS</th>
-                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-left font-bold print:w-[40%] dark:text-white">Nama Siswa</th>
-                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Hadir</th>
-                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Sakit</th>
-                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Izin</th>
-                                <th className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Alpa</th>
-                             </tr>
-                          </thead>
-                          <tbody>
+                       <Table className="w-full text-left print:table-fixed print:text-[10px] border-collapse">
+                          <TableHeader>
+                             <TableRow>
+                                 <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[5%] dark:text-white">No</TableHead>
+                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[15%] dark:text-white">NIS</TableHead>
+                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-left font-bold print:w-[40%] dark:text-white">Nama Siswa</TableHead>
+                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Hadir</TableHead>
+                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Sakit</TableHead>
+                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Izin</TableHead>
+                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Alpa</TableHead>
+                             </TableRow>
+                          </TableHeader>
+                          <TableBody>
                              {attendanceData.map((student, i) => (
-                                 <tr key={student.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-slate-800 print:break-inside-avoid">
-                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.no}</td>
-                                   <td className="border border-black dark:border-slate-700 p-2 text-center font-mono dark:text-gray-300">{student.nis}</td>
-                                   <td className="border border-black dark:border-slate-700 p-2 font-medium dark:text-gray-300">{student.nama}</td>
-                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.hadir}</td>
-                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.sakit}</td>
-                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.izin}</td>
-                                   <td className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.alpa}</td>
-                                </tr>
+                                 <TableRow key={student.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-slate-800 print:break-inside-avoid">
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.no}</TableCell>
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center font-mono dark:text-gray-300">{student.nis}</TableCell>
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 font-medium dark:text-gray-300">{student.nama}</TableCell>
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.hadir}</TableCell>
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.sakit}</TableCell>
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.izin}</TableCell>
+                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.alpa}</TableCell>
+                                </TableRow>
                              ))}
-                          </tbody>
-                       </table>
+                          </TableBody>
+                       </Table>
                     </div>
 
                     <div className="mt-8 print:mt-10 font-sans break-inside-avoid">

@@ -8,10 +8,19 @@ import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Modal } from '@/components/ui/Modal'
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from '@/components/ui/Table'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
+  const MotionTableRow = motion(TableRow)
   const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState<{
     show: boolean;
@@ -121,31 +130,31 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
         
         {/* Desktop Table */}
         <div className="hidden md:block overflow-x-auto">
-          <table className="min-w-full">
-            <thead>
-              <tr className="border-b border-gray-100 dark:border-slate-800">
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Nama</th>
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Username</th>
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Kelas</th>
-                <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-wider">Aksi</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50 dark:divide-slate-800/50">
+          <Table>
+            <TableHeader>
+              <TableRow className="border-b border-gray-100 dark:border-slate-800">
+                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Nama</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Username</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Kelas</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Aksi</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
               {walikelasList.map((wk, index) => (
-                <motion.tr 
+                <MotionTableRow 
                   key={wk.id} 
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.03 }}
                   className="hover:bg-gray-50/50 transition-colors"
                 >
-                  <td className="px-6 py-5 whitespace-nowrap">
+                  <TableCell className="px-6 py-5 whitespace-nowrap">
                     <p className="font-black text-gray-900 dark:text-white text-base">{wk.nama}</p>
-                  </td>
-                  <td className="px-6 py-5 whitespace-nowrap">
+                  </TableCell>
+                  <TableCell className="px-6 py-5 whitespace-nowrap">
                     <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{wk.username}</span>
-                  </td>
-                  <td className="px-6 py-5 whitespace-nowrap">
+                  </TableCell>
+                  <TableCell className="px-6 py-5 whitespace-nowrap">
                     {wk.Kelas ? (
                       <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light">
                         <Building2 className="h-4 w-4 mr-2" />
@@ -157,8 +166,8 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                         Tidak ada kelas
                       </span>
                     )}
-                  </td>
-                  <td className="px-6 py-5 whitespace-nowrap">
+                  </TableCell>
+                  <TableCell className="px-6 py-5 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                       <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3.5 w-3.5" />}>
                         Edit
@@ -177,11 +186,11 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                         Hapus
                       </Button>
                     </div>
-                  </td>
-                </motion.tr>
+                  </TableCell>
+                </MotionTableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
         {/* Mobile Cards */}

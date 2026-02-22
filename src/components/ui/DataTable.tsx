@@ -4,6 +4,15 @@ import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from './Card'
 
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from './Table'
+
 interface Column<T> {
   header: string
   accessor: keyof T | ((item: T, index: number) => React.ReactNode)
@@ -19,6 +28,8 @@ interface DataTableProps<T> {
   renderMobileCard?: (item: T, index: number) => React.ReactNode
   onRowClick?: (item: T) => void
 }
+
+const MotionTableRow = motion(TableRow)
 
 export function DataTable<T>({ 
   data, 
@@ -39,46 +50,44 @@ export function DataTable<T>({
           {/* Desktop Table View */}
           <div className="hidden md:block overflow-hidden">
             <Card noPadding className="border-b-primary/50">
-              <div className="overflow-x-auto">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200 bg-gray-50/50">
-                      {columns.map((col, i) => (
-                        <th 
-                          key={i} 
-                          className={`px-4 py-4 text-left text-sm font-bold text-gray-900 uppercase tracking-wider ${col.className || ''}`}
-                          style={col.width ? { width: col.width } : {}}
-                        >
-                          {col.header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    <AnimatePresence mode="popLayout">
-                      {data.map((item, index) => (
-                        <motion.tr
-                          key={keyExtractor(item)}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 10 }}
-                          transition={{ delay: index * 0.05 }}
-                          onClick={() => onRowClick?.(item)}
-                          className={`transition-all duration-300 hover:bg-gray-50 border-l-4 border-transparent hover:border-primary ${onRowClick ? 'cursor-pointer' : ''}`}
-                        >
-                          {columns.map((col, i) => (
-                            <td key={i} className={`px-4 py-4 whitespace-nowrap ${col.className || ''}`}>
-                              {typeof col.accessor === 'function' 
-                                ? col.accessor(item, index) 
-                                : (item[col.accessor] as React.ReactNode)}
-                            </td>
-                          ))}
-                        </motion.tr>
-                      ))}
-                    </AnimatePresence>
-                  </tbody>
-                </table>
-              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gray-50/50 hover:bg-gray-50/50 border-b border-gray-200">
+                    {columns.map((col, i) => (
+                      <TableHead 
+                        key={i} 
+                        className={`py-4 text-sm font-bold text-gray-900 uppercase tracking-wider ${col.className || ''}`}
+                        style={col.width ? { width: col.width } : {}}
+                      >
+                        {col.header}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <AnimatePresence mode="popLayout">
+                    {data.map((item, index) => (
+                      <MotionTableRow
+                        key={keyExtractor(item)}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 10 }}
+                        transition={{ delay: index * 0.05 }}
+                        onClick={() => onRowClick?.(item)}
+                        className={`transition-all duration-300 hover:bg-gray-50 border-l-4 border-transparent hover:border-primary ${onRowClick ? 'cursor-pointer' : ''}`}
+                      >
+                        {columns.map((col, i) => (
+                          <TableCell key={i} className={`py-4 whitespace-nowrap ${col.className || ''}`}>
+                            {typeof col.accessor === 'function' 
+                              ? col.accessor(item, index) 
+                              : (item[col.accessor] as React.ReactNode)}
+                          </TableCell>
+                        ))}
+                      </MotionTableRow>
+                    ))}
+                  </AnimatePresence>
+                </TableBody>
+              </Table>
             </Card>
           </div>
 
