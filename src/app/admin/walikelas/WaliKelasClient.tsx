@@ -133,10 +133,10 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
           <Table>
             <TableHeader>
               <TableRow className="border-b border-gray-100 dark:border-slate-800">
-                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Nama</TableHead>
-                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Username</TableHead>
-                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Kelas</TableHead>
-                <TableHead className="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-wider">Aksi</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Nama</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Username</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Kelas</TableHead>
+                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
@@ -149,19 +149,19 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   className="hover:bg-gray-50/50 transition-colors"
                 >
                   <TableCell className="px-6 py-5 whitespace-nowrap">
-                    <p className="font-black text-gray-900 dark:text-white text-base">{wk.nama}</p>
+                    <p className="font-semibold text-gray-900 dark:text-white text-base">{wk.nama}</p>
                   </TableCell>
                   <TableCell className="px-6 py-5 whitespace-nowrap">
                     <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{wk.username}</span>
                   </TableCell>
                   <TableCell className="px-6 py-5 whitespace-nowrap">
                     {wk.Kelas ? (
-                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light">
+                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-semibold bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light">
                         <Building2 className="h-4 w-4 mr-2" />
                         {wk.Kelas.nama_kelas}
                       </span>
                     ) : (
-                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-bold bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400">
+                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400">
                         <X className="h-4 w-4 mr-2" />
                         Tidak ada kelas
                       </span>
@@ -209,7 +209,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                     <User className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-black text-gray-900 dark:text-white text-sm truncate">{wk.nama}</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white text-sm truncate">{wk.nama}</h4>
                     <div className="space-y-1 mt-1">
                       <div className="flex items-center text-xs text-gray-500 font-medium">
                         <AtSign className="h-3 w-3 mr-1.5 flex-shrink-0" />

@@ -36,7 +36,7 @@ export function StatCard({ label, value, icon: Icon, subValue, color, delay = 0 
       <div className="flex items-center justify-between mb-4">
         <div className="flex-1">
           <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 tracking-wider uppercase">{label}</p>
-          <p className="text-3xl lg:text-4xl font-black text-gray-900 dark:text-white leading-none mb-1">{value}</p>
+          <p className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white leading-none mb-1">{value}</p>
           {subValue && (
             <div className="flex items-center mt-2">
               <div className="w-1.5 h-1.5 bg-primary/40 rounded-full mr-2" />

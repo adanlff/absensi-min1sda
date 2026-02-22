@@ -91,7 +91,7 @@ export default function LoginPage() {
                   
                   <div className="text-white space-y-4">
                       <div className="space-y-1">
-                        <h2 className="text-3xl xl:text-4xl font-extrabold tracking-tight">Selamat Datang</h2>
+                        <h2 className="text-3xl xl:text-4xl font-bold tracking-tight">Selamat Datang</h2>
                         <p className="text-lg font-light text-white/80">Sistem Informasi Absensi</p>
                       </div>
                       
@@ -182,7 +182,7 @@ export default function LoginPage() {
                         whileTap={{ scale: 0.97 }}
                         type="submit" 
                         disabled={loading}
-                        className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-black text-xs tracking-[0.2em] rounded-2xl shadow-lg shadow-primary/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
+                        className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-bold text-xs tracking-[0.2em] rounded-2xl shadow-lg shadow-primary/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
                       >
                         {loading ? (
                           <>
@@ -205,7 +205,7 @@ export default function LoginPage() {
                         href="https://wa.me/08123456789" 
                         target="_blank" 
                         rel="noreferrer"
-                        className="flex items-center space-x-2 text-secondary hover:text-primary font-black text-xs transition-colors py-2 px-6 rounded-full bg-secondary/5"
+                        className="flex items-center space-x-2 text-secondary hover:text-primary font-bold text-xs transition-colors py-2 px-6 rounded-full bg-secondary/5"
                       >
                           <Phone className="w-4 h-4" />
                           <span>HUBUNGI ADMIN</span>

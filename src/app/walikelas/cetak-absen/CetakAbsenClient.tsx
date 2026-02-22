@@ -47,7 +47,7 @@ export default function CetakAbsenClient({
           <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
             <X className="h-10 w-10" />
           </div>
-          <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Belum Ada Kelas</h3>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Belum Ada Kelas</h3>
           <p className="text-gray-500 dark:text-gray-400 font-medium">Anda belum ditugaskan ke kelas manapun. Silakan hubungi admin.</p>
         </Card>
       </div>
@@ -284,7 +284,7 @@ export default function CetakAbsenClient({
             <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 dark:bg-slate-800 rounded-[30px] flex items-center justify-center">
                   <BarChart3 className="h-10 w-10 text-gray-400 dark:text-slate-600" />
               </div>
-              <h4 className="text-xl font-black text-gray-900 dark:text-white mb-2">Tidak ada data kehadiran</h4>
+              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Tidak ada data kehadiran</h4>
               <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Belum ada data kehadiran untuk periode yang dipilih.</p>
            </Card>
         )}

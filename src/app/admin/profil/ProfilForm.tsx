@@ -85,12 +85,12 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8 mb-10">
           <div className="w-24 h-24 md:w-28 md:h-28 rounded-3xl flex items-center justify-center bg-primary flex-shrink-0">
-            <span className="text-2xl md:text-3xl font-black text-white">
+            <span className="text-2xl md:text-3xl font-bold text-white">
               {formData.nama.substring(0, 2).toUpperCase()}
             </span>
           </div>
           <div className="text-center md:text-left">
-            <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-1">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">
               {formData.nama}
             </h3>
             <p className="text-base text-gray-500 dark:text-gray-400 font-medium mb-2">

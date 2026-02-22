@@ -55,7 +55,7 @@ export default function DashboardClient({
     { 
       header: 'No', 
       accessor: (item: any) => (
-        <div className="flex items-center justify-center w-9 h-9 bg-primary/5 text-primary rounded-2xl font-black text-sm">
+        <div className="flex items-center justify-center w-9 h-9 bg-primary/5 text-primary rounded-2xl font-bold text-sm">
           {item.Siswa?.no}
         </div>
       ),
@@ -64,12 +64,12 @@ export default function DashboardClient({
     },
     { 
       header: 'NIS', 
-      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{item.Siswa?.nis}</span>,
+      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-semibold tracking-wider text-sm">{item.Siswa?.nis}</span>,
       width: '120px'
     },
     { 
       header: 'Nama Siswa', 
-      accessor: (item: any) => <p className="font-black text-gray-900 dark:text-white text-base">{item.Siswa?.nama}</p> 
+      accessor: (item: any) => <p className="font-semibold text-gray-900 dark:text-white text-base">{item.Siswa?.nama}</p> 
     },
     { 
       header: 'Tanggal', 
@@ -125,7 +125,7 @@ export default function DashboardClient({
             </div>
             <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/10 rounded-full w-fit border border-emerald-100 dark:border-emerald-800/50">
                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-               <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Live Data</span>
+               <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Live Data</span>
             </div>
           </div>
 
@@ -139,10 +139,10 @@ export default function DashboardClient({
                 <div className="flex flex-col gap-4">
                     <div className="flex items-start gap-3 flex-1">
                         <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
-                            <span className="text-primary font-black text-sm">{absence.Siswa?.no}</span>
+                            <span className="text-primary font-bold text-sm">{absence.Siswa?.no}</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                            <h4 className="font-black text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{absence.Siswa?.nama}</h4>
+                            <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{absence.Siswa?.nama}</h4>
                             <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
                                 <FileText className="h-3 w-3 mr-1.5 flex-shrink-0" />
                                 <span className="font-mono">{absence.Siswa?.nis}</span>
@@ -152,7 +152,7 @@ export default function DashboardClient({
                     
                     <div className="flex flex-col gap-3 pt-3 border-t border-gray-100 dark:border-slate-800">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-bold">
+                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-semibold">
                                 <Calendar className="h-3 w-3 mr-1.5 flex-shrink-0" />
                                 <span>{formatDate(absence.tanggal)}</span>
                             </div>
@@ -163,7 +163,7 @@ export default function DashboardClient({
                         
                         {absence.keterangan && (
                         <div className="text-xs text-gray-500 dark:text-gray-400 p-3 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
-                            <p className="font-black text-[10px] uppercase text-gray-400 dark:text-gray-500 mb-1">Keterangan:</p>
+                            <p className="font-bold text-[10px] uppercase text-gray-400 dark:text-gray-500 mb-1">Keterangan:</p>
                             <p className="font-medium">{absence.keterangan}</p>
                         </div>
                         )}

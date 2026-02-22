@@ -97,7 +97,7 @@ export default function Sidebar({
                 animate={{ opacity: 1, x: 0 }}
                 className="overflow-hidden whitespace-nowrap"
               >
-                <h2 className="font-extrabold text-gray-900 dark:text-white tracking-tight leading-none text-lg">MIN 1</h2>
+                <h2 className="font-bold text-gray-900 dark:text-white tracking-tight leading-none text-lg">MIN 1</h2>
                 <p className="text-[10px] font-bold text-primary tracking-widest uppercase mt-1">Sidoarjo</p>
               </motion.div>
             )}
@@ -107,7 +107,7 @@ export default function Sidebar({
           <div className={`px-6 mb-6 transition-all duration-500 ${isCollapsed ? 'flex justify-center' : ''}`}>
             {isCollapsed ? (
               <div className="flex flex-col items-center space-y-1 bg-gray-50/50 dark:bg-slate-800/50 rounded-xl p-2.5 border border-gray-100 dark:border-slate-800">
-                <span className="text-[10px] font-black text-primary leading-none uppercase tracking-tighter">
+                <span className="text-[10px] font-bold text-primary leading-none uppercase tracking-tighter">
                   {tahunAjaran ? tahunAjaran.replace(/20/g, '') : '...'}
                 </span>
               </div>

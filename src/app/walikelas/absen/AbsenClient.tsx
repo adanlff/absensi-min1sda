@@ -274,11 +274,11 @@ export default function AbsenClient({
                   <Table>
                       <TableHeader>
                           <TableRow className="border-b border-gray-100 dark:border-slate-800">
-                              <TableHead className="px-3 py-4 text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12 text-center">No</TableHead>
-                              <TableHead className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-28">NIS</TableHead>
-                              <TableHead className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Siswa</TableHead>
-                              <TableHead className="px-3 py-4 text-center text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-48">Kehadiran</TableHead>
-                              <TableHead className="px-3 py-4 text-left text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider w-40">Keterangan</TableHead>
+                              <TableHead className="px-3 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12 text-center">No</TableHead>
+                              <TableHead className="px-3 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-28">NIS</TableHead>
+                              <TableHead className="px-3 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Siswa</TableHead>
+                              <TableHead className="px-3 py-4 text-center text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-48">Kehadiran</TableHead>
+                              <TableHead className="px-3 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-40">Keterangan</TableHead>
                           </TableRow>
                       </TableHeader>
                       <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
@@ -292,14 +292,14 @@ export default function AbsenClient({
                             >
                                <TableCell className="px-3 py-4 whitespace-nowrap">
                                   <div className="flex items-center justify-center w-9 h-9 bg-primary/5 rounded-2xl">
-                                     <span className="text-primary font-black text-sm">{student.no}</span>
+                                     <span className="text-primary font-bold text-sm">{student.no}</span>
                                   </div>
                                </TableCell>
                                <TableCell className="px-3 py-4 whitespace-nowrap">
-                                  <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
+                                  <span className="font-mono text-gray-500 dark:text-gray-400 font-semibold tracking-wider text-sm">{student.nis}</span>
                                </TableCell>
                                <TableCell className="px-3 py-4 whitespace-nowrap">
-                                  <p className="font-black text-gray-900 dark:text-white text-base">{student.nama}</p>
+                                  <p className="font-semibold text-gray-900 dark:text-white text-base">{student.nama}</p>
                                </TableCell>
                                <TableCell className="px-3 py-4">
                                   <div className="grid grid-cols-2 gap-2">
@@ -338,10 +338,10 @@ export default function AbsenClient({
                        <div className="flex flex-col gap-4">
                           <div className="flex items-start gap-3 flex-1">
                              <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
-                                 <span className="text-primary font-black text-sm">{student.no}</span>
+                                 <span className="text-primary font-bold text-sm">{student.no}</span>
                              </div>
                              <div className="flex-1 min-w-0">
-                                 <h4 className="font-black text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{student.nama}</h4>
+                                 <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{student.nama}</h4>
                                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
                                      <FileText className="h-3 w-3 mr-1.5 flex-shrink-0" />
                                      <span className="truncate font-mono">{student.nis}</span>
@@ -366,7 +366,7 @@ export default function AbsenClient({
                                  ))}
                              </div>
                              <div>
-                                 <label className="block text-xs font-bold text-gray-700 mb-1">Keterangan</label>
+                                 <label className="block text-xs font-semibold text-gray-700 mb-1">Keterangan</label>
                                  <input type="text" value={attendance[student.id]?.keterangan || ''}
                                     onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
                                     placeholder="Tambahkan keterangan" 

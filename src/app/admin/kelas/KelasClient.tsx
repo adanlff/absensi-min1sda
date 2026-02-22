@@ -123,7 +123,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
     { 
       header: 'No', 
       accessor: (item: any) => (
-        <div className="flex items-center justify-center w-9 h-9 bg-primary/5 text-primary rounded-2xl font-black text-sm">
+        <div className="flex items-center justify-center w-9 h-9 bg-primary/5 text-primary rounded-2xl font-bold text-sm">
           {item.no}
         </div>
       ),
@@ -132,12 +132,12 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
     },
     { 
       header: 'NIS', 
-      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{item.nis}</span>,
+      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-semibold tracking-wider text-sm">{item.nis}</span>,
       width: '200px'
     },
     { 
       header: 'Nama', 
-      accessor: (item: any) => <p className="font-black text-gray-900 dark:text-white text-base">{item.nama}</p> 
+      accessor: (item: any) => <p className="font-semibold text-gray-900 dark:text-white text-base">{item.nama}</p> 
     },
     { 
       header: 'Aksi', 
@@ -202,8 +202,8 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                     <Building2 className={`h-6 w-6 ${selectedClassId === kelas.id ? 'text-white' : 'text-primary'}`} />
                   </div>
                   <div>
-                    <p className="font-black text-sm md:text-base leading-tight truncate w-full">{kelas.nama_kelas}</p>
-                    <p className={`text-xs mt-1 font-bold ${selectedClassId === kelas.id ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'}`}>{kelas.jumlah_siswa} Siswa</p>
+                    <p className="font-bold text-sm md:text-base leading-tight truncate w-full">{kelas.nama_kelas}</p>
+                    <p className={`text-xs mt-1 font-semibold ${selectedClassId === kelas.id ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'}`}>{kelas.jumlah_siswa} Siswa</p>
                   </div>
                 </div>
               </button>
@@ -261,12 +261,12 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   renderMobileCard={(student, index) => (
                     <div className="bg-gray-50/50 dark:bg-slate-900/50 p-6 rounded-3xl border border-transparent dark:border-slate-800 hover:border-primary/20 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm mb-4">
                       <div className="flex items-center gap-5">
-                        <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-2xl flex-shrink-0 text-primary font-black">
+                        <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-2xl flex-shrink-0 text-primary font-bold">
                             {student.no}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <h4 className="font-black text-gray-900 dark:text-white text-base mb-1">{student.nama}</h4>
-                            <div className="flex items-center text-xs font-bold text-gray-400 dark:text-gray-500">
+                            <h4 className="font-semibold text-gray-900 dark:text-white text-base mb-1">{student.nama}</h4>
+                            <div className="flex items-center text-xs font-semibold text-gray-400 dark:text-gray-500">
                               <span className="font-mono tracking-wider">{student.nis}</span>
                             </div>
                         </div>
@@ -342,7 +342,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
         <CardContent className="space-y-8 py-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="space-y-3">
-              <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nomor Urut</label>
+              <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nomor Urut</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
                   <Hash className="h-6 w-6" />
@@ -352,12 +352,12 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   required 
                   value={studentForm.no} 
                   onChange={e => setStudentForm({ ...studentForm, no: e.target.value })}
-                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-black text-lg" 
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold text-lg" 
                 />
               </div>
             </div>
             <div className="space-y-3">
-              <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">NIS / NISN</label>
+              <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">NIS / NISN</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
                   <FileSpreadsheet className="h-6 w-6" />
@@ -367,13 +367,13 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   required 
                   value={studentForm.nis} 
                   onChange={e => setStudentForm({ ...studentForm, nis: e.target.value })}
-                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-black text-lg" 
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold text-lg" 
                 />
               </div>
             </div>
           </div>
           <div className="space-y-3">
-            <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nama Lengkap Siswa</label>
+            <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nama Lengkap Siswa</label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
                 <User className="h-6 w-6" />
@@ -383,7 +383,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                 required 
                 value={studentForm.nama} 
                 onChange={e => setStudentForm({ ...studentForm, nama: e.target.value })}
-                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-black text-lg" 
+                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-bold text-lg" 
                 placeholder="Ex: Muhammad Alfian"
               />
             </div>

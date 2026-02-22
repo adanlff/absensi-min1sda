@@ -27,7 +27,7 @@ export function MenuCard({ href, label, description, icon: Icon, color }: MenuCa
             <Icon size={24} className="transition-transform group-hover:scale-110" />
           </div>
           <div className="flex-1">
-            <h4 className="text-xl font-black text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
               {label}
             </h4>
             <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm md:text-base font-medium leading-relaxed">{description}</p>

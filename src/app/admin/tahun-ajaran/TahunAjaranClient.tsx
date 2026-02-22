@@ -124,15 +124,15 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                     <Calendar className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-black text-gray-900 dark:text-white">{ta.tahun}</h4>
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white">{ta.tahun}</h4>
                     <div className="flex items-center mt-1 space-x-3">
                       {ta.status === 'aktif' ? (
-                        <span className="flex items-center px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-wider rounded-full">
+                        <span className="flex items-center px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider rounded-full">
                           <CheckCircle2 className="w-3 h-3 mr-1.5" />
                           Aktif
                         </span>
                       ) : (
-                        <span className="flex items-center px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-500 text-xs font-black uppercase tracking-wider rounded-full">
+                        <span className="flex items-center px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-500 text-xs font-bold uppercase tracking-wider rounded-full">
                           <XCircle className="w-3 h-3 mr-1.5" />
                           Non-aktif
                         </span>
@@ -179,7 +179,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       <div className="p-2 bg-primary/10 rounded-xl">
                         <Plus className="h-4 w-4 text-primary" />
                       </div>
-                      <h5 className="text-lg font-black text-gray-900 dark:text-white">Tambah Semester Baru</h5>
+                      <h5 className="text-lg font-bold text-gray-900 dark:text-white">Tambah Semester Baru</h5>
                     </div>
                     
                     <form onSubmit={(e) => {
@@ -226,7 +226,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
               {/* Semester Grid */}
               {ta.semesters.length > 0 && (
                 <div className="mt-8 space-y-4">
-                  <h5 className="text-sm font-black text-gray-400 uppercase tracking-widest px-1">Daftar Semester</h5>
+                  <h5 className="text-sm font-bold text-gray-400 uppercase tracking-widest px-1">Daftar Semester</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {ta.semesters.map((semester: any, sIdx: number) => (
                        <motion.div 
@@ -239,12 +239,12 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                          <div className="flex items-center justify-between gap-3">
                            <div className="flex items-center space-x-3 min-w-0">
                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${semester.status === 'aktif' ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-slate-800 text-gray-400 group-hover:bg-primary/10 group-hover:text-primary'}`}>
-                               <span className="font-black text-base">
+                               <span className="font-bold text-base">
                                  {semester.jenis_semester.charAt(0).toUpperCase()}
                                </span>
                              </div>
                              <div className="min-w-0">
-                               <h6 className="font-black text-gray-900 dark:text-white text-sm">Semester {semester.jenis_semester.charAt(0).toUpperCase() + semester.jenis_semester.slice(1)}</h6>
+                               <h6 className="font-bold text-gray-900 dark:text-white text-sm">Semester {semester.jenis_semester.charAt(0).toUpperCase() + semester.jenis_semester.slice(1)}</h6>
                                <div className="flex items-center mt-1 text-xs text-gray-500 dark:text-gray-400 font-bold space-x-2">
                                  <Calendar className="h-3 w-3" />
                                  <span className="truncate">
@@ -257,7 +257,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                            <div className="flex-shrink-0">
                              {semester.status === 'aktif' ? (
                                 <div className="flex flex-col items-end">
-                                  <span className="flex items-center px-3 py-1 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-wider rounded-lg">
+                                  <span className="flex items-center px-3 py-1 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg">
                                     Aktif
                                   </span>
                                 </div>
