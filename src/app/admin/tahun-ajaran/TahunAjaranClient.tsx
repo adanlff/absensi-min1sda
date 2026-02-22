@@ -97,16 +97,17 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
       </Card>
 
       {/* Daftar Tahun Ajaran */}
-      <Card className="rounded-[32px] overflow-hidden">
-        <div className="flex items-center space-x-4 mb-8">
-          <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
-            <Calendar className="h-6 w-6 text-primary" />
+      <Card noPadding className="mb-8 md:mb-12 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
+        <div className="p-4 md:p-6 lg:p-8">
+          <div className="flex items-center space-x-4 mb-6 md:mb-8">
+            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+              <Calendar className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Tahun Ajaran & Semester</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Kelola semua periode akademik dan aktivasi semester</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Tahun Ajaran & Semester</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base">Kelola semua periode akademik dan aktivasi semester</p>
-          </div>
-        </div>
 
         <div className="space-y-6">
           {data.map((ta, index) => (
@@ -115,7 +116,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className={`p-5 md:p-6 rounded-[32px] border transition-all ${ta.status === 'aktif' ? 'bg-primary/5 border-primary/20' : 'border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:bg-gray-50/50 dark:hover:bg-slate-800/50'}`}
+              className={`p-5 md:p-6 rounded-[32px] border transition-all ${ta.status === 'aktif' ? 'bg-white dark:bg-slate-800 border-primary/20 ring-1 ring-primary/5 shadow-lg shadow-primary/5' : 'border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md'}`}
             >
               {/* Year Header */}
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 pb-5 border-b border-gray-100 dark:border-slate-800">
@@ -281,7 +282,8 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
             </motion.div>
           ))}
         </div>
-      </Card>
+      </div>
+    </Card>
 
       <SweetAlert
         type={alert.type}

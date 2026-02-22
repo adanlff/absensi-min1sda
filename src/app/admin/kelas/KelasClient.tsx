@@ -169,19 +169,21 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
       />
 
       <Card className="mb-8 md:mb-12">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-          <div className="flex items-center space-x-4">
-            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-              <Building2 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Kelas</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Pilih kelas untuk mengelola data siswa</p>
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <Building2 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Kelas</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Pilih kelas untuk mengelola data siswa</p>
+              </div>
+              <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />} className="w-full md:w-auto">
+                Tambah Kelas Baru
+              </Button>
             </div>
           </div>
-          <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
-            Tambah Kelas Baru
-          </Button>
         </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
@@ -195,7 +197,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
             >
               <button 
                 onClick={() => handleClassClick(kelas.id)} 
-                className={`w-full p-4 md:p-6 rounded-3xl text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent dark:border-slate-800 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5'}`}
+                className={`w-full p-4 md:p-6 rounded-[32px] text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent dark:border-slate-800 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5'}`}
               >
                 <div className="flex flex-col items-center space-y-3">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${selectedClassId === kelas.id ? 'bg-white/20' : 'bg-primary/5'}`}>
@@ -234,23 +236,25 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
           >
-            <Card noPadding className="mb-8 overflow-hidden">
-              <div className="p-6 md:p-8">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-                  <div className="flex items-center space-x-4">
-                    <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-                      <User className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                        Siswa {selectedClassInfo?.nama_kelas}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {students.length} Siswa Terdaftar</p>
+            <Card noPadding className="mb-8 md:mb-12 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
+              <div className="p-4 md:p-6 lg:p-8">
+                <div className="flex items-center space-x-4 mb-6 md:mb-8">
+                  <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+                    <User className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                          Siswa {selectedClassInfo?.nama_kelas}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {students.length} Siswa Terdaftar</p>
+                      </div>
+                      <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />} className="w-full md:w-auto">
+                        Tambah Siswa
+                      </Button>
                     </div>
                   </div>
-                  <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
-                    Tambah Siswa
-                  </Button>
                 </div>
 
                 <DataTable 
@@ -259,7 +263,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   keyExtractor={(item) => item.id}
                   emptyMessage={`Belum ada data siswa di kelas ${selectedClassInfo?.nama_kelas}`}
                   renderMobileCard={(student, index) => (
-                    <div className="bg-gray-50/50 dark:bg-slate-900/50 p-6 rounded-3xl border border-transparent dark:border-slate-800 hover:border-primary/20 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm mb-4">
+                    <div className="bg-gray-50/50 dark:bg-slate-900/50 p-6 rounded-[32px] border border-transparent dark:border-slate-800 hover:border-primary/20 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm mb-4">
                       <div className="flex items-center gap-5">
                         <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-2xl flex-shrink-0 text-primary font-bold">
                             {student.no}

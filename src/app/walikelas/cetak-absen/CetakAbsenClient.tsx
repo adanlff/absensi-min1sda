@@ -85,7 +85,7 @@ export default function CetakAbsenClient({
         />
       </div>
 
-      <Card className="mb-6 md:mb-8 print:hidden">
+      <Card className="mb-6 md:mb-8">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">
           <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
             <Filter className="h-5 w-5 md:h-6 md:w-6 text-primary" />
@@ -208,8 +208,8 @@ export default function CetakAbsenClient({
 
       <AnimatePresence>
         {hasSubmitted && attendanceData.length > 0 && (
-          <Card noPadding className="mb-6 md:mb-8 print:shadow-none print:rounded-none print:border-none">
-             <div className="p-4 md:p-8 print:p-0">
+          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 print:shadow-none print:rounded-none print:border-none">
+             <div className="p-4 md:p-6 lg:p-8 print:p-0">
                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0 print:hidden">
                      <div className="flex items-center space-x-4">
                         <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">

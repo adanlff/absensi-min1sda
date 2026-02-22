@@ -199,7 +199,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             </Button>
           </div>
           
-          <div className="bg-primary/5 dark:bg-primary/10 p-6 rounded-3xl border border-primary/10 dark:border-primary/20">
+          <div className="bg-primary/5 dark:bg-primary/10 p-6 rounded-[32px] border border-primary/10 dark:border-primary/20">
             <h4 className="font-bold text-primary mb-3 flex items-center">
               <Info className="h-5 w-5 mr-2" />
               Format Excel yang Disarankan

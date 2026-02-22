@@ -106,26 +106,29 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
 
   return (
     <>
-      <Card>
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-          <div className="flex items-center space-x-4">
-            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-              <UserCheck className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {walikelasList.length} wali kelas terdaftar</p>
+      <Card className="mb-8 md:mb-12">
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <UserCheck className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {walikelasList.length} wali kelas terdaftar</p>
+              </div>
+              <Button 
+                onClick={() => {
+                  setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
+                  setIsCreateModalOpen(true)
+                }}
+                icon={<Plus className="h-5 w-5" />}
+                className="w-full md:w-auto"
+              >
+                Tambah Wali Kelas
+              </Button>
             </div>
           </div>
-          <Button 
-            onClick={() => {
-              setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
-              setIsCreateModalOpen(true)
-            }}
-            icon={<Plus className="h-5 w-5" />}
-          >
-            Tambah Wali Kelas
-          </Button>
         </div>
         
         {/* Desktop Table */}
@@ -201,7 +204,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03 }}
-              className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-2xl p-4 transition-all"
+              className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-[32px] p-4 transition-all"
             >
               <div className="flex flex-col gap-3">
                 <div className="flex items-start gap-3">

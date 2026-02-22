@@ -44,7 +44,7 @@ export default function DashboardClient({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-16">
         {/* Recent Students */}
-        <Card noPadding>
+        <Card noPadding className="overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
           <div className="p-4 md:p-6 lg:p-8">
             <div className="flex items-center space-x-4 mb-6 md:mb-8">
               <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
@@ -88,7 +88,7 @@ export default function DashboardClient({
         </Card>
 
         {/* Class Distribution */}
-        <Card noPadding>
+        <Card noPadding className="overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
           <div className="p-4 md:p-6 lg:p-8">
             <div className="flex items-center space-x-4 mb-6 md:mb-8">
               <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
@@ -149,7 +149,7 @@ export default function DashboardClient({
         </Card>
       </div>
 
-      <Card noPadding className="mb-8 md:mb-16 bg-gray-50/50 dark:bg-slate-900/50 border-gray-100 dark:border-slate-800">
+      <Card noPadding className="mb-8 md:mb-16 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
         <div className="p-4 md:p-6 lg:p-8">
           <div className="flex items-center space-x-4 mb-6 md:mb-8">
             <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">

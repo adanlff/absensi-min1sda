@@ -249,8 +249,8 @@ export default function AbsenClient({
             </div>
           </Card>
 
-          <Card noPadding>
-            <div className="p-4 md:p-8">
+          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
+            <div className="p-4 md:p-6 lg:p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
                 <div className="flex items-center space-x-4">
                   <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">

@@ -113,7 +113,7 @@ export default function DashboardClient({
         <StatCard label="Alpa" value={stats.alpa} icon={AlertCircle} color="emerald" subValue="Tidak masuk tanpa keterangan" delay={0.4} />
       </div>
 
-      <Card noPadding className="mb-8 md:mb-16">
+      <Card noPadding className="mb-8 md:mb-16 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
         <div className="p-4 md:p-6 lg:p-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 md:mb-10 space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4">
@@ -137,7 +137,7 @@ export default function DashboardClient({
             keyExtractor={(item) => item.id}
             emptyMessage="Tidak ada data ketidakhadiran dalam 7 hari terakhir"
             renderMobileCard={(absence, index) => (
-              <div className="bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent dark:border-slate-800">
+              <div className="bg-gray-50/50 dark:bg-slate-900/50 rounded-[32px] p-4 border border-transparent dark:border-slate-800">
                 <div className="flex flex-col gap-4">
                     <div className="flex items-start gap-3 flex-1">
                         <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
@@ -177,7 +177,7 @@ export default function DashboardClient({
         </div>
       </Card>
 
-      <Card noPadding className="mb-8 md:mb-16 bg-gray-50/50 dark:bg-slate-900/50 border-gray-100 dark:border-slate-800">
+      <Card noPadding className="mb-8 md:mb-16 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
         <div className="p-4 md:p-6 lg:p-8">
           <div className="flex items-center space-x-4 mb-6 md:mb-8">
             <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
