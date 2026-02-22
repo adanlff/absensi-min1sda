@@ -165,15 +165,15 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Kelas</label>
-                <div className="relative h-[58px] flex items-center border border-gray-100 bg-gray-50/50 rounded-2xl focus-within:bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
+                <div className="relative h-[58px] flex items-center border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl focus-within:bg-white dark:focus-within:bg-slate-800 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <Building2 className="h-5 w-5" />
                   </div>
                   <select required value={uploadClassId} onChange={e => setUploadClassId(e.target.value)}
-                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none">
-                    <option value="">Pilih Kelas</option>
+                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
+                    <option value="" className="dark:bg-slate-900">Pilih Kelas</option>
                     {kelasList.map(k => (
-                      <option key={k.id} value={k.id}>{k.nama_kelas}</option>
+                      <option key={k.id} value={k.id} className="dark:bg-slate-900">{k.nama_kelas}</option>
                     ))}
                   </select>
                 </div>
@@ -182,12 +182,12 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">File Excel</label>
               <div className="relative">
-                <div className="relative h-[58px] flex items-center border border-gray-100 bg-gray-50/50 rounded-2xl focus-within:bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
+                <div className="relative h-[58px] flex items-center border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl focus-within:bg-white dark:focus-within:bg-slate-800 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <FileSpreadsheet className="h-5 w-5" />
                   </div>
                   <input type="file" ref={fileInputRef} accept=".xlsx,.xls" required 
-                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer" />
                 </div>
               </div>
             </div>
