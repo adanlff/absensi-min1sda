@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, Plus, User, AtSign, Building2, Pencil, Trash2 } from 'lucide-react'
+import { Check, X, Plus, User, AtSign, Building2, Pencil, Trash2, UserCheck } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -116,9 +116,14 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
 
       <Card>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-          <div>
-            <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Total {walikelasList.length} wali kelas terdaftar</p>
+          <div className="flex items-center space-x-4">
+            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+              <UserCheck className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {walikelasList.length} wali kelas terdaftar</p>
+            </div>
           </div>
           <Button 
             onClick={() => {
