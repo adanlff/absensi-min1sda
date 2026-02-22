@@ -10,9 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#628141",
-        secondary: "#40513B",
-        accent: "#E5D9B6",
+        primary: "#285430",
+        secondary: "#285430",
+        accent: "#D9EAD3",
         orange: "#E67E22",
       },
       fontFamily: {

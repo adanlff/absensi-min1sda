@@ -116,7 +116,7 @@ export default function Sidebar({
                 <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Informasi Akses</p>
                 <div className="space-y-2">
                   <div className="flex items-center text-xs font-bold text-gray-700 dark:text-gray-300">
-                    <Calendar size={13} className="text-secondary dark:text-secondary/80 mr-2" />
+                    <Calendar size={13} className="text-primary dark:text-primary/80 mr-2" />
                     <span>TA {tahunAjaran ? tahunAjaran.replace(/20/g, '') : '...'}</span>
                   </div>
                   {role === 'walikelas' && (

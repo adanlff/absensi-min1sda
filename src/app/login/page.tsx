@@ -74,7 +74,7 @@ export default function LoginPage() {
         className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-6xl h-full max-h-[92vh] grid lg:grid-cols-2 overflow-hidden"
       >
           {/* Left Hero Section (Landscape Split) */}
-          <div className="hidden lg:flex bg-gradient-to-br from-primary via-[#40513B] to-secondary relative overflow-hidden items-center justify-center p-12">
+          <div className="hidden lg:flex bg-primary relative overflow-hidden items-center justify-center p-12">
               {/* Subtle Static Gradient Orbs instead of heavy animated bubbles */}
               <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-white/5 rounded-full blur-3xl" />
               <div className="absolute bottom-[-10%] left-[-10%] w-[250px] h-[250px] bg-white/5 rounded-full blur-3xl" />
@@ -111,7 +111,7 @@ export default function LoginPage() {
                   
                   {/* Mobile Logo Only */}
                   <div className="lg:hidden text-center mb-4">
-                      <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
+                      <div className="w-24 h-24 mx-auto bg-primary rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
                           <img src="/assets/gambar/min1.png" alt="MIN 1 Sidoarjo" className="w-16 h-16 object-contain" />
                       </div>
                   </div>
@@ -205,7 +205,7 @@ export default function LoginPage() {
                         href="https://wa.me/08123456789" 
                         target="_blank" 
                         rel="noreferrer"
-                        className="flex items-center space-x-2 text-secondary hover:text-primary font-bold text-xs transition-colors py-2 px-6 rounded-full bg-secondary/5"
+                        className="flex items-center space-x-2 text-primary hover:text-primary/80 font-bold text-xs transition-colors py-2 px-6 rounded-full bg-primary/5"
                       >
                           <Phone className="w-4 h-4" />
                           <span>HUBUNGI ADMIN</span>
