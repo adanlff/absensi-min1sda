@@ -2,19 +2,21 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, Plus, User, AtSign, Building2, Pencil, Trash2, UserCheck } from 'lucide-react'
+import { X, Plus, User, AtSign, Building2, Pencil, Trash2, UserCheck, Lock as LockIcon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Card } from '@/components/ui/Card'
+import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import SweetAlert from '@/components/ui/SweetAlert'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { Modal } from '@/components/ui/Modal'
 
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   
   const [selectedItem, setSelectedItem] = useState<any>(null)
 
@@ -26,26 +28,12 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
     id_kelas: ''
   })
 
-  // State for SweetAlert
-  const [alertConfig, setAlertConfig] = useState<{
-    show: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    title: string;
-    message: string;
-  }>({
-    show: false,
-    type: 'success',
-    title: '',
-    message: '',
-  })
 
-  // Helper to show alert
-  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
-    setAlertConfig({ show: true, type, title, message })
-  }
 
   const handleAction = async (payload: any) => {
     setLoading(true)
+    setMessage('')
+    setError('')
     try {
       const res = await fetch('/api/admin/walikelas', {
         method: 'POST',
@@ -54,17 +42,16 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
       })
       const result = await res.json()
       if (res.ok) {
+        setMessage(result.message)
         setIsCreateModalOpen(false)
         setIsEditModalOpen(false)
-        setIsDeleteModalOpen(false)
         setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
         router.refresh()
-        showAlert('success', 'Berhasil', result.message)
       } else {
-        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
+        setError(result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan pada jaringan')
+      setError('Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -82,21 +69,10 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
     setIsEditModalOpen(true)
   }
 
-  const openDeleteModal = (wk: any) => {
-    setSelectedItem(wk)
-    setIsDeleteModalOpen(true)
-  }
+
 
   return (
     <>
-      <SweetAlert 
-        show={alertConfig.show}
-        type={alertConfig.type}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
-      />
-
       <Card>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
           <div className="flex items-center space-x-4">
@@ -163,7 +139,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                       <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3.5 w-3.5" />}>
                         Edit
                       </Button>
-                      <Button size="sm" variant="ghost-danger" onClick={() => openDeleteModal(wk)} icon={<Trash2 className="h-3.5 w-3.5" />}>
+                      <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete', id: wk.id })} icon={<Trash2 className="h-3.5 w-3.5" />}>
                         Hapus
                       </Button>
                     </div>
@@ -208,7 +184,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3 w-3" />}>
                     Edit
                   </Button>
-                  <Button size="sm" variant="ghost-danger" onClick={() => openDeleteModal(wk)} icon={<Trash2 className="h-3 w-3" />}>
+                  <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete', id: wk.id })} icon={<Trash2 className="h-3 w-3" />}>
                     Hapus
                   </Button>
                 </div>
@@ -219,142 +195,135 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
       </Card>
 
       {/* Modals */}
-      <AnimatePresence>
-        {/* Create Modal */}
-        {isCreateModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsCreateModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10"
-            >
-              <div className="flex items-center space-x-4 mb-8">
-                <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-                  <Plus className="h-6 w-6" />
+      <Modal
+        open={isCreateModalOpen}
+        onOpenChange={setIsCreateModalOpen}
+        title="Tambah Wali Kelas"
+        description="Daftarkan wali kelas baru ke dalam sistem"
+        icon={<UserCheck className="h-6 w-6" />}
+        onSave={() => handleAction({ action: 'create', ...formData })}
+        loading={loading}
+        saveLabel="Tambah Wali Kelas"
+        footerText="Wali kelas akan mendapatkan akses dashboard"
+      >
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Nama Lengkap</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <User className="h-5 w-5" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-black text-gray-900 dark:text-white">Tambah Wali Kelas</h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Buat akun baru untuk wali kelas</p>
-                </div>
+                <input type="text" placeholder="Nama Lengkap" required value={formData.nama} onChange={e => setFormData({ ...formData, nama: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
               </div>
-              
-              <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'create', ...formData }) }} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nama Lengkap</label>
-                  <input type="text" required value={formData.nama} onChange={e => setFormData({...formData, nama: e.target.value})} 
-                         className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Username</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <AtSign className="h-5 w-5" />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Username</label>
-                  <input type="text" required value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} 
-                         className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Password</label>
-                  <input type="password" required value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} 
-                         className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Kelas</label>
-                  <select value={formData.id_kelas} onChange={e => setFormData({...formData, id_kelas: e.target.value})} 
-                          className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none">
-                    <option value="">Pilih Kelas</option>
-                    {kelasList.map(k => (
-                      <option key={k.id} value={k.id}>{k.nama_kelas}</option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsCreateModalOpen(false)} type="button" className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">Batal</Button>
-                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
-                </div>
-              </form>
-            </motion.div>
+                <input type="text" placeholder="username" required value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
+              </div>
+            </div>
           </div>
-        )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Password</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <LockIcon className="h-5 w-5" />
+                </div>
+                <input type="password" placeholder="••••••••" required value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Pilih Kelas</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <Building2 className="h-5 w-5" />
+                </div>
+                <select required value={formData.id_kelas} onChange={e => setFormData({ ...formData, id_kelas: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold appearance-none">
+                  <option value="">Pilih Kelas</option>
+                  {kelasList.map(k => (
+                    <option key={k.id} value={k.id}>{k.nama_kelas}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Modal>
 
-        {/* Edit Modal */}
-        {isEditModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsEditModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10"
-            >
-              <div className="flex items-center space-x-4 mb-8">
-                <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-                  <Pencil className="h-6 w-6" />
+      <Modal
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        title="Edit Wali Kelas"
+        description="Perbarui informasi akun wali kelas"
+        icon={<Pencil className="h-6 w-6" />}
+        onSave={() => handleAction({ action: 'update', ...formData })}
+        loading={loading}
+        saveLabel="Simpan Perubahan"
+        footerText="Password kosongkan jika tidak ingin diubah"
+      >
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Nama Lengkap</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <User className="h-5 w-5" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-black text-gray-900 dark:text-white">Edit Wali Kelas</h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Perbarui informasi wali kelas</p>
-                </div>
+                <input type="text" placeholder="Nama Lengkap" required value={formData.nama} onChange={e => setFormData({ ...formData, nama: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
               </div>
-              
-              <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'update', ...formData }) }} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Nama Lengkap</label>
-                  <input type="text" required value={formData.nama} onChange={e => setFormData({...formData, nama: e.target.value})} 
-                         className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Username</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <AtSign className="h-5 w-5" />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Username</label>
-                  <input type="text" required value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} 
-                         className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Password <span className="text-xs font-normal text-gray-400">(kosongkan jika tidak diubah)</span></label>
-                  <input type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} 
-                         className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium" />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 px-1">Kelas</label>
-                  <select value={formData.id_kelas} onChange={e => setFormData({...formData, id_kelas: e.target.value})} 
-                          className="block w-full px-4 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 font-medium appearance-none">
-                    <option value="">Pilih Kelas</option>
-                    {kelasList.map(k => (
-                      <option key={k.id} value={k.id}>{k.nama_kelas}</option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsEditModalOpen(false)} type="button" className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
-                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Update</Button>
-                </div>
-              </form>
-            </motion.div>
+                <input type="text" placeholder="username" required value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
+              </div>
+            </div>
           </div>
-        )}
-
-        {/* Delete Modal */}
-        {isDeleteModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeleteModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center border border-gray-100 dark:border-slate-800"
-            >
-              <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
-                <Trash2 className="h-10 w-10" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Password Baru</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <LockIcon className="h-5 w-5" />
+                </div>
+                <input type="password" placeholder="Kosongkan jika tidak berubah" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
               </div>
-              <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Hapus Wali Kelas?</h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">Wali kelas <span className="text-red-500">{selectedItem?.nama}</span> akan dihapus dari daftar.</p>
-              <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteModalOpen(false)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-700">Batal</Button>
-                <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete', id: selectedItem?.id })} className="flex-1">Ya, Hapus</Button>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Pilih Kelas</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <Building2 className="h-5 w-5" />
+                </div>
+                <select required value={formData.id_kelas} onChange={e => setFormData({ ...formData, id_kelas: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold appearance-none">
+                  <option value="">Pilih Kelas</option>
+                  {kelasList.map(k => (
+                    <option key={k.id} value={k.id}>{k.nama_kelas}</option>
+                  ))}
+                </select>
               </div>
-            </motion.div>
+            </div>
           </div>
-        )}
-      </AnimatePresence>
+        </CardContent>
+      </Modal>
     </>
   )
 }

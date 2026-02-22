@@ -8,7 +8,6 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { SearchBox } from '@/components/ui/SearchBox'
 import { Button } from '@/components/ui/Button'
-import SweetAlert from '@/components/ui/SweetAlert'
 
 export default function AbsenClient({ 
   waliKelas, 
@@ -26,23 +25,11 @@ export default function AbsenClient({
   
   const [search, setSearch] = useState(initialSearch)
   const [tanggal, setTanggal] = useState(initialDate)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  
-  // State for SweetAlert
-  const [alertConfig, setAlertConfig] = useState<{
-    show: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    title: string;
-    message: string;
-  }>({
-    show: false,
-    type: 'success',
-    title: '',
-    message: '',
-  })
 
   const [attendance, setAttendance] = useState<{ [key: number]: { status: string, keterangan: string } }>({})
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
 
   useEffect(() => {
     const initData: any = {}
@@ -73,13 +60,12 @@ export default function AbsenClient({
     return () => clearTimeout(handler)
   }, [search, tanggal, initialSearch, initialDate, router, searchParams])
 
-  // Helper to show alert
-  const showAlert = (type: 'success' | 'error' | 'warning', title: string, message: string) => {
-    setAlertConfig({ show: true, type, title, message })
-  }
+
 
   const handleBulkAction = async (status: string) => {
     setLoading(true)
+    setMessage('')
+    setError('')
     try {
       const res = await fetch('/api/walikelas/absen', {
         method: 'POST',
@@ -93,6 +79,7 @@ export default function AbsenClient({
       })
       const result = await res.json()
       if (res.ok) {
+        setMessage(result.message)
         const newData = { ...attendance }
         students.forEach(s => {
           if(newData[s.id]) {
@@ -101,12 +88,11 @@ export default function AbsenClient({
         })
         setAttendance(newData)
         router.refresh()
-        showAlert('success', 'Berhasil', result.message)
       } else {
-        showAlert('error', 'Gagal', result.error || 'Gagal update absen massal')
+        setError(result.error || 'Gagal update absen massal')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan jaringan')
+      setError('Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -114,7 +100,9 @@ export default function AbsenClient({
 
   const handleSaveAttendance = async () => {
     setLoading(true)
-    setIsConfirmModalOpen(false)
+    setMessage('')
+    setError('')
+
     
     const payloadData = Object.keys(attendance).map(id => ({
       id_siswa: id,
@@ -134,13 +122,13 @@ export default function AbsenClient({
       })
       const result = await res.json()
       if (res.ok) {
+        setMessage(result.message || 'Absen berhasil disimpan!')
         router.refresh()
-        showAlert('success', 'Berhasil', result.message || 'Absen berhasil disimpan!')
       } else {
-        showAlert('error', 'Gagal', result.error || 'Gagal menyimpan absen')
+        setError(result.error || 'Gagal menyimpan absen')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan jaringan')
+      setError('Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -177,14 +165,6 @@ export default function AbsenClient({
           placeholder="Cari nama atau NIS siswa..." 
         />
       </PageHeader>
-
-      <SweetAlert 
-        show={alertConfig.show}
-        type={alertConfig.type}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
-      />
 
       <Card className="mb-6 md:mb-8">
         <div className="flex items-center space-x-4 mb-6">
@@ -375,7 +355,7 @@ export default function AbsenClient({
               </div>
 
               <div className="flex justify-end pt-6 md:pt-8 mt-4 border-t border-gray-100 dark:border-slate-800">
-                  <Button size="lg" onClick={() => setIsConfirmModalOpen(true)} loading={loading} icon={<Save className="h-5 w-5" />} fullWidth className="md:w-auto">
+                  <Button size="lg" onClick={handleSaveAttendance} loading={loading} icon={<Save className="h-5 w-5" />} fullWidth className="md:w-auto">
                     {loading ? 'Menyimpan...' : 'Simpan Absen'}
                   </Button>
               </div>
@@ -392,38 +372,7 @@ export default function AbsenClient({
         </Card>
       )}
 
-      {/* Confirmation Modal */}
-      <AnimatePresence>
-        {isConfirmModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsConfirmModalOpen(false)}
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md w-full mx-auto text-center relative z-10 shadow-2xl border border-gray-100 dark:border-slate-800"
-            >
-               <div className="w-20 h-20 mx-auto mb-6 bg-amber-50 dark:bg-amber-900/20 rounded-[30px] flex items-center justify-center text-amber-500">
-                   <AlertCircle className="h-10 w-10" />
-               </div>
-               <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Konfirmasi Simpan</h3>
-               <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">
-                  Simpan data absen untuk tanggal <span className="text-primary">{new Date(tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</span>?
-               </p>
-               <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                   <Button variant="ghost" size="lg" fullWidth onClick={() => setIsConfirmModalOpen(false)} className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
-                   <Button size="lg" fullWidth loading={loading} onClick={handleSaveAttendance} icon={<Check className="h-5 w-5" />} className="flex-1">Ya, Simpan</Button>
-               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+
     </div>
   )
 }

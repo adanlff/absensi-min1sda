@@ -24,8 +24,9 @@ export function Card({ children, className = '', noPadding = false, ...props }: 
 
 export function CardContent({ children, className = '' }: { children: React.ReactNode, className?: string }) {
   return (
-    <div className={className}>
+    <div className={`p-4 md:p-6 ${className}`}>
       {children}
     </div>
   )
 }
+

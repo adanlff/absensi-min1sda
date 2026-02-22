@@ -9,23 +9,23 @@ import {
   FileSpreadsheet, 
   Plus, 
   Trash2, 
-  Check, 
   Info, 
   Hash, 
   User, 
   Loader2,
-  AlertCircle,
   X
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Card } from '@/components/ui/Card'
+import { Card, CardContent } from '@/components/ui/Card'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { DataTable } from '@/components/ui/DataTable'
 import { Button } from '@/components/ui/Button'
-import SweetAlert from '@/components/ui/SweetAlert'
+import { Modal } from '@/components/ui/Modal'
 
 export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const router = useRouter()
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const [selectedClassId, setSelectedClassId] = useState<number | null>(null)
@@ -33,8 +33,6 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   
   const [isAddClassModalOpen, setIsAddClassModalOpen] = useState(false)
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false)
-  const [isDeleteStudentModalOpen, setIsDeleteStudentModalOpen] = useState(false)
-  const [isDeleteClassModalOpen, setIsDeleteClassModalOpen] = useState(false)
 
   const [selectedStudent, setSelectedStudent] = useState<any>(null)
   const [classToDelete, setClassToDelete] = useState<any>(null)
@@ -45,23 +43,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const [uploadClassId, setUploadClassId] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // State for SweetAlert
-  const [alertConfig, setAlertConfig] = useState<{
-    show: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    title: string;
-    message: string;
-  }>({
-    show: false,
-    type: 'success',
-    title: '',
-    message: '',
-  })
 
-  // Helper to show alert
-  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
-    setAlertConfig({ show: true, type, title, message })
-  }
 
   const fetchStudents = async (kelasId: number) => {
     setLoading(true)
@@ -71,10 +53,10 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       if (res.ok) {
         setStudents(data.students)
       } else {
-        showAlert('error', 'Gagal', data.error || 'Gagal memuat data siswa')
+        setError(data.error || 'Gagal memuat data siswa')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan jaringan')
+      setError('Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -87,6 +69,8 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
 
   const handleAction = async (payload: any) => {
     setLoading(true)
+    setMessage('')
+    setError('')
     try {
       const res = await fetch('/api/admin/siswa', {
         method: 'POST',
@@ -95,10 +79,9 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       })
       const result = await res.json()
       if (res.ok) {
+        setMessage(result.message)
         setIsAddClassModalOpen(false)
         setIsAddStudentModalOpen(false)
-        setIsDeleteStudentModalOpen(false)
-        setIsDeleteClassModalOpen(false)
         setNamaKelas('')
         setStudentForm({ no: '', nis: '', nama: '' })
         
@@ -113,12 +96,11 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
            setSelectedClassId(null)
            setStudents([])
         }
-        showAlert('success', 'Berhasil', result.message)
       } else {
-        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
+        setError(result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan pada jaringan')
+      setError('Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -127,17 +109,19 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!uploadClassId) {
-      showAlert('error', 'Peringatan', 'Silakan pilih kelas terlebih dahulu')
+      setError('Silakan pilih kelas terlebih dahulu')
       return
     }
 
     const file = fileInputRef.current?.files?.[0]
     if (!file) {
-      showAlert('error', 'Peringatan', 'Silakan pilih file Excel')
+      setError('Silakan pilih file Excel')
       return
     }
 
     setLoading(true)
+    setMessage('')
+    setError('')
 
     const reader = new FileReader()
     reader.onload = async (e) => {
@@ -154,7 +138,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         })).filter(row => row.no && row.nis && row.nama)
 
         if (formattedData.length === 0) {
-          showAlert('error', 'Gagal', 'File Excel kosong atau format tidak sesuai')
+          setError('File Excel kosong atau format tidak sesuai')
           setLoading(false)
           return
         }
@@ -169,7 +153,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         setSelectedClassId(parseInt(uploadClassId))
         
       } catch (err) {
-        showAlert('error', 'Gagal', 'Gagal membaca file Excel')
+        setError('Gagal membaca file Excel')
         setLoading(false)
       }
     }
@@ -201,7 +185,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
     { 
       header: 'Aksi', 
       accessor: (item: any) => (
-        <Button size="sm" variant="ghost-danger" onClick={() => { setSelectedStudent(item); setIsDeleteStudentModalOpen(true) }} icon={<Trash2 className="h-3.5 w-3.5" />}>
+        <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete_student', id: item.id })} icon={<Trash2 className="h-3.5 w-3.5" />}>
           Hapus
         </Button>
       ),
@@ -215,14 +199,6 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         title="Kelola Siswa"
         description="Upload dan kelola data siswa dengan sistem yang terintegrasi dan mudah digunakan"
         className="mb-8 md:mb-12"
-      />
-
-      <SweetAlert 
-        show={alertConfig.show}
-        type={alertConfig.type}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
       />
 
       <Card className="mb-8 md:mb-12 relative overflow-hidden">
@@ -333,7 +309,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
               
               {kelas.jumlah_siswa === 0 && (
                 <button 
-                  onClick={() => { setClassToDelete(kelas); setIsDeleteClassModalOpen(true) }} 
+                  onClick={() => handleAction({ action: 'delete_class', id: kelas.id })} 
                   className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg z-10"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -390,7 +366,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                         </div>
                       </div>
                       <div className="flex justify-end pt-5 mt-5 border-t border-gray-100 dark:border-slate-800">
-                          <Button size="sm" variant="ghost-danger" onClick={() => { setSelectedStudent(student); setIsDeleteStudentModalOpen(true) }} icon={<Trash2 className="h-3 w-3" />}>
+                          <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete_student', id: student.id })} icon={<Trash2 className="h-3 w-3" />}>
                             Hapus
                           </Button>
                       </div>
@@ -404,131 +380,100 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       </AnimatePresence>
 
       {/* Modals with AnimatePresence */}
-      <AnimatePresence>
-        {isAddClassModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAddClassModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10 border border-gray-100 dark:border-slate-800">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h3 className="text-3xl font-black text-gray-900 dark:text-white">Tambah Kelas</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-2 font-bold mb-0">Buat kelas baru</p>
-                </div>
-                <button onClick={() => setIsAddClassModalOpen(false)} className="p-3 hover:bg-gray-100 rounded-2xl transition-all">
-                  <X className="h-6 w-6 text-gray-400" />
-                </button>
+      <Modal
+        open={isAddClassModalOpen}
+        onOpenChange={setIsAddClassModalOpen}
+        title="Tambah Kelas"
+        description="Buat kelas baru untuk tahun ajaran ini"
+        icon={<Building2 className="h-6 w-6" />}
+        onSave={() => handleAction({ action: 'add_class', nama_kelas: namaKelas })}
+        loading={loading}
+        saveLabel="Tambah Kelas"
+        footerText="Nama kelas harus unik"
+      >
+        <CardContent className="space-y-6">
+          <div>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1 text-center">Nama Kelas</label>
+            <div className="relative group max-w-sm mx-auto">
+              <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                <Building2 className="h-6 w-6" />
               </div>
-              
-              <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'add_class', nama_kelas: namaKelas }) }} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nama Kelas</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <Building2 className="h-5 w-5" />
-                    </div>
-                    <input type="text" placeholder="Contoh: KELAS 1A" required value={namaKelas} onChange={e => setNamaKelas(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-bold" />
-                  </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddClassModalOpen(false)} type="button" className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
-                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
-                </div>
-              </form>
-            </motion.div>
+              <input 
+                type="text" 
+                placeholder="Contoh: KELAS 1A" 
+                required 
+                value={namaKelas} 
+                onChange={e => setNamaKelas(e.target.value)}
+                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-bold text-center text-lg" 
+                autoFocus
+              />
+            </div>
           </div>
-        )}
+        </CardContent>
+      </Modal>
 
-        {isAddStudentModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAddStudentModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-8 md:p-12 w-full max-w-md shadow-2xl relative z-10 border border-gray-100 dark:border-slate-800">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h3 className="text-3xl font-black text-gray-900 dark:text-white">Tambah Siswa</h3>
-                  <p className="text-primary dark:text-primary-light mt-2 font-black uppercase tracking-widest text-xs">Kelas {selectedClassInfo?.nama_kelas}</p>
+      <Modal
+        open={isAddStudentModalOpen}
+        onOpenChange={setIsAddStudentModalOpen}
+        title="Tambah Siswa"
+        description={`Sekolah Menengah Pertama • Kelas ${selectedClassInfo?.nama_kelas}`}
+        icon={<User className="h-6 w-6" />}
+        onSave={() => handleAction({ action: 'add_student', ...studentForm, kelas_id: selectedClassId })}
+        loading={loading}
+        saveLabel="Simpan Data"
+        footerText="PASTIKAN DATA SUDAH BENAR SEBELUM DISIMPAN"
+      >
+        <CardContent className="space-y-8 py-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nomor Urut</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <Hash className="h-6 w-6" />
                 </div>
-                <button onClick={() => setIsAddStudentModalOpen(false)} className="p-3 hover:bg-gray-100 rounded-2xl transition-all">
-                  <X className="h-6 w-6 text-gray-400" />
-                </button>
+                <input 
+                  type="number" 
+                  required 
+                  value={studentForm.no} 
+                  onChange={e => setStudentForm({ ...studentForm, no: e.target.value })}
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-black text-lg" 
+                />
               </div>
-              
-              <form onSubmit={(e) => { e.preventDefault(); handleAction({ action: 'add_student', ...studentForm, kelas_id: selectedClassId }) }} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nomor Urut</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <Hash className="h-5 w-5" />
-                    </div>
-                    <input type="number" required value={studentForm.no} onChange={e => setStudentForm({ ...studentForm, no: e.target.value })}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
-                  </div>
+            </div>
+            <div className="space-y-3">
+              <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">NIS / NISN</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <FileSpreadsheet className="h-6 w-6" />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">NIS</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <FileSpreadsheet className="h-5 w-5" />
-                    </div>
-                    <input type="text" required value={studentForm.nis} onChange={e => setStudentForm({ ...studentForm, nis: e.target.value })}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Nama Lengkap</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <User className="h-5 w-5" />
-                    </div>
-                    <input type="text" required value={studentForm.nama} onChange={e => setStudentForm({ ...studentForm, nama: e.target.value })}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
-                  </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsAddStudentModalOpen(false)} type="button" className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
-                  <Button size="lg" fullWidth loading={loading} type="submit" className="flex-1">Simpan</Button>
-                </div>
-              </form>
-            </motion.div>
+                <input 
+                  type="text" 
+                  required 
+                  value={studentForm.nis} 
+                  onChange={e => setStudentForm({ ...studentForm, nis: e.target.value })}
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-black text-lg" 
+                />
+              </div>
+            </div>
           </div>
-        )}
-
-        {isDeleteStudentModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeleteStudentModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center border border-gray-100 dark:border-slate-800">
-               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 dark:bg-red-900/20 rounded-[30px] flex items-center justify-center text-red-500">
-                  <Trash2 className="h-10 w-10" />
-               </div>
-               <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Hapus Data?</h3>
-               <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">Siswa <span className="text-red-500">{selectedStudent?.nama}</span> akan dihapus permanen dari sistem.</p>
-               <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteStudentModalOpen(false)} className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
-                  <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete_student', id: selectedStudent?.id })} className="flex-1">Ya, Hapus</Button>
-               </div>
-            </motion.div>
+          <div className="space-y-3">
+            <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nama Lengkap Siswa</label>
+            <div className="relative group">
+              <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                <User className="h-6 w-6" />
+              </div>
+              <input 
+                type="text" 
+                required 
+                value={studentForm.nama} 
+                onChange={e => setStudentForm({ ...studentForm, nama: e.target.value })}
+                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-black text-lg" 
+                placeholder="Ex: Muhammad Alfian"
+              />
+            </div>
           </div>
-        )}
-
-        {isDeleteClassModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeleteClassModalOpen(false)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="bg-white dark:bg-slate-900 rounded-[40px] p-10 max-w-md mx-auto w-full shadow-2xl relative z-10 text-center border border-gray-100 dark:border-slate-800">
-               <div className="w-20 h-20 mx-auto mb-6 bg-red-50 dark:bg-red-900/20 rounded-[30px] flex items-center justify-center text-red-500">
-                  <Trash2 className="h-10 w-10" />
-               </div>
-               <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Hapus Kelas?</h3>
-               <p className="text-gray-500 dark:text-gray-400 mb-10 font-bold leading-relaxed">Kelas <span className="text-red-500">{classToDelete?.nama_kelas}</span> akan dihapus dari daftar.</p>
-               <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button variant="ghost" size="lg" fullWidth onClick={() => setIsDeleteClassModalOpen(false)} className="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700">Batal</Button>
-                  <Button variant="danger" size="lg" fullWidth loading={loading} onClick={() => handleAction({ action: 'delete_class', id: classToDelete?.id })} className="flex-1">Ya, Hapus</Button>
-               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+        </CardContent>
+      </Modal>
     </div>
   )
 }

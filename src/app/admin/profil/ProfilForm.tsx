@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, User, AtSign, Mail, Phone, MapPin, Lock } from 'lucide-react'
+import { Check, User, AtSign, Mail, Phone, MapPin, Lock } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import SweetAlert from '@/components/ui/SweetAlert'
 
 interface AdminData {
   nama: string
@@ -27,25 +26,11 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
     password: ''
   })
   
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  
-  // State for SweetAlert
-  const [alertConfig, setAlertConfig] = useState<{
-    show: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    title: string;
-    message: string;
-  }>({
-    show: false,
-    type: 'success',
-    title: '',
-    message: '',
-  })
 
-  // Helper to show alert
-  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
-    setAlertConfig({ show: true, type, title, message })
-  }
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -54,6 +39,8 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setMessage('')
+    setError('')
 
     try {
       const res = await fetch('/api/admin/profil', {
@@ -67,14 +54,14 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
       const data = await res.json()
 
       if (res.ok) {
+        setMessage(data.message)
         setFormData(prev => ({ ...prev, password: '' }))
         router.refresh()
-        showAlert('success', 'Berhasil', data.message)
       } else {
-        showAlert('error', 'Gagal', data.error || 'Gagal mengupdate profil')
+        setError(data.error || 'Gagal mengupdate profil')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan pada jaringan')
+      setError('Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -82,14 +69,6 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
 
   return (
     <>
-      <SweetAlert 
-        show={alertConfig.show}
-        type={alertConfig.type}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
-      />
-
       <Card>
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8 mb-10">

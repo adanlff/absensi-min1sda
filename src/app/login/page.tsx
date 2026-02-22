@@ -2,35 +2,32 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, AlertCircle, Loader2 } from 'lucide-react'
+import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import SweetAlert from '@/components/ui/SweetAlert'
-import SuccessAlert from '@/components/ui/SuccessAlert'
 
 export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<'admin' | 'walikelas' | ''>('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [alertConfig, setAlertConfig] = useState({ show: false, title: '', message: '', type: 'error' as any })
-  const [successConfig, setSuccessConfig] = useState({ show: false, message: '', redirect: '' })
   const router = useRouter()
 
   const selectRole = (role: 'admin' | 'walikelas') => {
     setSelectedRole(role)
-    setAlertConfig(prev => ({ ...prev, show: false }))
+    setError('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (!selectedRole) {
-      setAlertConfig({ show: true, type: 'warning', title: 'Peringatan', message: 'Silakan pilih peran terlebih dahulu!' })
+      setError('Silakan pilih peran terlebih dahulu!')
       return
     }
 
     setLoading(true)
-    setAlertConfig(prev => ({ ...prev, show: false }))
+    setError('')
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -42,35 +39,20 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (res.ok) {
-        setSuccessConfig({ show: true, message: 'Login berhasil! Selamat datang kembali.', redirect: data.redirect })
+        router.push(data.redirect)
+        router.refresh()
       } else {
-        setAlertConfig({ show: true, type: 'error', title: 'Login Gagal', message: data.error || 'Username atau password salah' })
+        setError(data.error || 'Login gagal')
         setLoading(false)
       }
     } catch (error) {
-      setAlertConfig({ show: true, type: 'error', title: 'Error', message: 'Terjadi kesalahan pada server' })
+      setError('Terjadi kesalahan pada server')
       setLoading(false)
     }
   }
 
   return (
     <div className="h-screen w-full bg-[#f8fafc] dark:bg-slate-950 flex items-center justify-center p-4 lg:p-6 overflow-hidden transition-colors duration-300">
-      <SweetAlert 
-        show={alertConfig.show}
-        type={alertConfig.type}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
-      />
-
-      <SuccessAlert 
-        show={successConfig.show}
-        message={successConfig.message}
-        onButtonClick={() => {
-          router.push(successConfig.redirect)
-          router.refresh()
-        }}
-      />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -180,7 +162,7 @@ export default function LoginPage() {
                         </div>
                       </div>
 
-                      {/* Error message removed as it's now handled by SweetAlert */}
+
 
                       <motion.button 
                         whileTap={{ scale: 0.97 }}

@@ -2,35 +2,20 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, X, Plus, Calendar, CheckCircle2, XCircle, Zap } from 'lucide-react'
+import { Plus, Calendar, CheckCircle2, XCircle, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import SweetAlert from '@/components/ui/SweetAlert'
 
 export default function TahunAjaranClient({ data }: { data: any[] }) {
   const router = useRouter()
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [tahun, setTahun] = useState('')
   const [openSemesterForms, setOpenSemesterForms] = useState<Record<number, boolean>>({})
 
-  // State for SweetAlert
-  const [alertConfig, setAlertConfig] = useState<{
-    show: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    title: string;
-    message: string;
-  }>({
-    show: false,
-    type: 'success',
-    title: '',
-    message: '',
-  })
 
-  // Helper to show alert
-  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
-    setAlertConfig({ show: true, type, title, message })
-  }
 
   const toggleSemesterForm = (id: number) => {
     setOpenSemesterForms(prev => ({ ...prev, [id]: !prev[id] }))
@@ -38,6 +23,8 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
   const handleAction = async (payload: any) => {
     setLoading(true)
+    setMessage('')
+    setError('')
     try {
       const res = await fetch('/api/admin/tahun-ajaran', {
         method: 'POST',
@@ -46,17 +33,17 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
       })
       const result = await res.json()
       if (res.ok) {
+        setMessage(result.message)
         if (payload.action === 'create') setTahun('')
         if (payload.action === 'create_semester') {
            setOpenSemesterForms(prev => ({ ...prev, [payload.id_tahun_ajaran]: false }))
         }
         router.refresh()
-        showAlert('success', 'Berhasil', result.message)
       } else {
-        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
+        setError(result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      showAlert('error', 'Error', 'Terjadi kesalahan pada jaringan')
+      setError('Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -64,14 +51,6 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
   return (
     <>
-      <SweetAlert 
-        show={alertConfig.show}
-        type={alertConfig.type}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        onClose={() => setAlertConfig(prev => ({ ...prev, show: false }))}
-      />
-
       {/* Create Tahun Ajaran Card */}
       <Card className="mb-8 md:mb-12">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">

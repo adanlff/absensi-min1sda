@@ -19,7 +19,6 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/components/ThemeProvider'
-import SuccessAlert from '@/components/ui/SuccessAlert'
 
 interface SidebarProps {
   isOpen: boolean
@@ -56,7 +55,6 @@ export default function Sidebar({
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [showLogoutAlert, setShowLogoutAlert] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -69,12 +67,6 @@ export default function Sidebar({
 
   return (
     <>
-       <SuccessAlert 
-        show={showLogoutAlert}
-        message="Anda telah berhasil keluar dari sistem."
-        onButtonClick={() => window.location.href = '/login'}
-      />
-
       <aside 
         className={`bg-white dark:bg-slate-900 shadow-sm h-screen border-r border-gray-100 dark:border-slate-800 fixed top-0 left-0 z-50 transition-all duration-500 ease-in-out transform lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarWidth}`}
       >
@@ -219,7 +211,7 @@ export default function Sidebar({
                 <button 
                   onClick={async () => {
                     await fetch('/api/auth/logout', { method: 'POST' })
-                    setShowLogoutAlert(true)
+                    window.location.href = '/login'
                   }}
                   className={`w-full group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} text-red-500 hover:bg-red-50`}
                 >
