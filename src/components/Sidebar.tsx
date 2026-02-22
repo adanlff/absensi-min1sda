@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/components/ThemeProvider'
+import { SuccessAlert } from '@/components/ui/SuccessAlert'
 
 interface SidebarProps {
   isOpen: boolean
@@ -55,6 +56,7 @@ export default function Sidebar({
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -211,7 +213,7 @@ export default function Sidebar({
                 <button 
                   onClick={async () => {
                     await fetch('/api/auth/logout', { method: 'POST' })
-                    window.location.href = '/login'
+                    setShowLogoutAlert(true)
                   }}
                   className={`w-full group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} text-red-500 hover:bg-red-50`}
                 >
@@ -251,6 +253,14 @@ export default function Sidebar({
           />
         )}
       </AnimatePresence>
+
+      {showLogoutAlert && (
+        <SuccessAlert 
+          message="Anda telah berhasil keluar dari sistem. Sampai jumpa kembali!" 
+          onButtonClick={() => window.location.href = '/login'}
+          buttonText="Ke Halaman Login"
+        />
+      )}
     </>
   )
 }

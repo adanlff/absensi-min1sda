@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { SearchBox } from '@/components/ui/SearchBox'
 import { Button } from '@/components/ui/Button'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function AbsenClient({ 
   waliKelas, 
@@ -25,9 +26,22 @@ export default function AbsenClient({
   
   const [search, setSearch] = useState(initialSearch)
   const [tanggal, setTanggal] = useState(initialDate)
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  })
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ show: true, type, title, message })
+  }
 
   const [attendance, setAttendance] = useState<{ [key: number]: { status: string, keterangan: string } }>({})
 
@@ -64,8 +78,6 @@ export default function AbsenClient({
 
   const handleBulkAction = async (status: string) => {
     setLoading(true)
-    setMessage('')
-    setError('')
     try {
       const res = await fetch('/api/walikelas/absen', {
         method: 'POST',
@@ -79,7 +91,7 @@ export default function AbsenClient({
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message)
+        showAlert('success', 'Berhasil', result.message)
         const newData = { ...attendance }
         students.forEach(s => {
           if(newData[s.id]) {
@@ -89,10 +101,10 @@ export default function AbsenClient({
         setAttendance(newData)
         router.refresh()
       } else {
-        setError(result.error || 'Gagal update absen massal')
+        showAlert('error', 'Gagal', result.error || 'Gagal update absen massal')
       }
     } catch (err) {
-      setError('Terjadi kesalahan jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -100,9 +112,6 @@ export default function AbsenClient({
 
   const handleSaveAttendance = async () => {
     setLoading(true)
-    setMessage('')
-    setError('')
-
     
     const payloadData = Object.keys(attendance).map(id => ({
       id_siswa: id,
@@ -122,13 +131,13 @@ export default function AbsenClient({
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message || 'Absen berhasil disimpan!')
+        showAlert('success', 'Berhasil', result.message || 'Absen berhasil disimpan!')
         router.refresh()
       } else {
-        setError(result.error || 'Gagal menyimpan absen')
+        showAlert('error', 'Gagal', result.error || 'Gagal menyimpan absen')
       }
     } catch (err) {
-      setError('Terjadi kesalahan jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -154,6 +163,7 @@ export default function AbsenClient({
   ]
 
   return (
+    <>
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
         title="Input Absen"
@@ -374,5 +384,14 @@ export default function AbsenClient({
 
 
     </div>
+
+    <SweetAlert
+      type={alert.type}
+      title={alert.title}
+      message={alert.message}
+      show={alert.show}
+      onClose={() => setAlert({ ...alert, show: false })}
+    />
+    </>
   )
 }

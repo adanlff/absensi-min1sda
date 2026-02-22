@@ -21,12 +21,26 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { DataTable } from '@/components/ui/DataTable'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const router = useRouter()
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  })
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ show: true, type, title, message })
+  }
 
   const [selectedClassId, setSelectedClassId] = useState<number | null>(null)
   const [students, setStudents] = useState<any[]>([])
@@ -53,10 +67,10 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       if (res.ok) {
         setStudents(data.students)
       } else {
-        setError(data.error || 'Gagal memuat data siswa')
+        showAlert('error', 'Gagal', data.error || 'Gagal memuat data siswa')
       }
     } catch (err) {
-      setError('Terjadi kesalahan jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan jaringan')
     } finally {
       setLoading(false)
     }
@@ -69,8 +83,6 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
 
   const handleAction = async (payload: any) => {
     setLoading(true)
-    setMessage('')
-    setError('')
     try {
       const res = await fetch('/api/admin/siswa', {
         method: 'POST',
@@ -79,7 +91,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message)
+        showAlert('success', 'Berhasil', result.message)
         setIsAddClassModalOpen(false)
         setIsAddStudentModalOpen(false)
         setNamaKelas('')
@@ -97,10 +109,10 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
            setStudents([])
         }
       } else {
-        setError(result.error || 'Terjadi kesalahan')
+        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      setError('Terjadi kesalahan pada jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -109,19 +121,17 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!uploadClassId) {
-      setError('Silakan pilih kelas terlebih dahulu')
+      showAlert('warning', 'Peringatan', 'Silakan pilih kelas terlebih dahulu')
       return
     }
 
     const file = fileInputRef.current?.files?.[0]
     if (!file) {
-      setError('Silakan pilih file Excel')
+      showAlert('warning', 'Peringatan', 'Silakan pilih file Excel')
       return
     }
 
     setLoading(true)
-    setMessage('')
-    setError('')
 
     const reader = new FileReader()
     reader.onload = async (e) => {
@@ -138,7 +148,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         })).filter(row => row.no && row.nis && row.nama)
 
         if (formattedData.length === 0) {
-          setError('File Excel kosong atau format tidak sesuai')
+          showAlert('error', 'Format Salah', 'File Excel kosong atau format tidak sesuai')
           setLoading(false)
           return
         }
@@ -153,7 +163,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         setSelectedClassId(parseInt(uploadClassId))
         
       } catch (err) {
-        setError('Gagal membaca file Excel')
+        showAlert('error', 'Gagal', 'Gagal membaca file Excel')
         setLoading(false)
       }
     }
@@ -474,6 +484,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
           </div>
         </CardContent>
       </Modal>
+
+      <SweetAlert
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        show={alert.show}
+        onClose={() => setAlert({ ...alert, show: false })}
+      />
     </div>
   )
 }

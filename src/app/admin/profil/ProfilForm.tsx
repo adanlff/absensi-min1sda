@@ -6,6 +6,7 @@ import { Check, User, AtSign, Mail, Phone, MapPin, Lock } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 interface AdminData {
   nama: string
@@ -26,9 +27,22 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
     password: ''
   })
   
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  })
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ show: true, type, title, message })
+  }
 
 
 
@@ -39,8 +53,6 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setMessage('')
-    setError('')
 
     try {
       const res = await fetch('/api/admin/profil', {
@@ -54,14 +66,14 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
       const data = await res.json()
 
       if (res.ok) {
-        setMessage(data.message)
+        showAlert('success', 'Berhasil', data.message)
         setFormData(prev => ({ ...prev, password: '' }))
         router.refresh()
       } else {
-        setError(data.error || 'Gagal mengupdate profil')
+        showAlert('error', 'Gagal', data.error || 'Gagal mengupdate profil')
       }
     } catch (err) {
-      setError('Terjadi kesalahan pada jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -179,6 +191,14 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
           </div>
         </form>
       </Card>
+
+      <SweetAlert
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        show={alert.show}
+        onClose={() => setAlert({ ...alert, show: false })}
+      />
     </>
   )
 }

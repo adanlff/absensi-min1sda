@@ -8,12 +8,26 @@ import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Modal } from '@/components/ui/Modal'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  })
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ show: true, type, title, message })
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -32,8 +46,6 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
 
   const handleAction = async (payload: any) => {
     setLoading(true)
-    setMessage('')
-    setError('')
     try {
       const res = await fetch('/api/admin/walikelas', {
         method: 'POST',
@@ -42,16 +54,16 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message)
+        showAlert('success', 'Berhasil', result.message)
         setIsCreateModalOpen(false)
         setIsEditModalOpen(false)
         setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
         router.refresh()
       } else {
-        setError(result.error || 'Terjadi kesalahan')
+        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      setError('Terjadi kesalahan pada jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -324,6 +336,14 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
           </div>
         </CardContent>
       </Modal>
+
+      <SweetAlert
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        show={alert.show}
+        onClose={() => setAlert({ ...alert, show: false })}
+      />
     </>
   )
 }

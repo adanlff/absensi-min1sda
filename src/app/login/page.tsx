@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { SuccessAlert } from '@/components/ui/SuccessAlert'
+import SweetAlert from '@/components/ui/SweetAlert'
 
 export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<'admin' | 'walikelas' | ''>('')
@@ -11,6 +13,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [apiResponse, setApiResponse] = useState<any>(null)
   const router = useRouter()
 
   const selectRole = (role: 'admin' | 'walikelas') => {
@@ -39,15 +44,24 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (res.ok) {
-        router.push(data.redirect)
-        router.refresh()
+        setApiResponse(data)
+        setShowSuccessAlert(true)
       } else {
         setError(data.error || 'Login gagal')
+        setShowErrorAlert(true)
         setLoading(false)
       }
     } catch (error) {
       setError('Terjadi kesalahan pada server')
+      setShowErrorAlert(true)
       setLoading(false)
+    }
+  }
+
+  const handleSuccessRedirect = () => {
+    if (apiResponse) {
+      router.push(apiResponse.redirect)
+      router.refresh()
     }
   }
 
@@ -200,6 +214,21 @@ export default function LoginPage() {
               </div>
           </div>
       </motion.div>
+
+      {showSuccessAlert && (
+        <SuccessAlert 
+          message="Anda berhasil masuk ke sistem. Selamat datang!" 
+          onButtonClick={handleSuccessRedirect}
+        />
+      )}
+
+      <SweetAlert
+        type="error"
+        title="Login Gagal"
+        message={error}
+        show={showErrorAlert}
+        onClose={() => setShowErrorAlert(false)}
+      />
     </div>
   )
 }

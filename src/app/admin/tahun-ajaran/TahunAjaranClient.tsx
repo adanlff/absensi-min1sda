@@ -6,12 +6,26 @@ import { Plus, Calendar, CheckCircle2, XCircle, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function TahunAjaranClient({ data }: { data: any[] }) {
   const router = useRouter()
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  })
+
+  const showAlert = (type: AlertType, title: string, message: string) => {
+    setAlert({ show: true, type, title, message })
+  }
   const [tahun, setTahun] = useState('')
   const [openSemesterForms, setOpenSemesterForms] = useState<Record<number, boolean>>({})
 
@@ -23,8 +37,6 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
   const handleAction = async (payload: any) => {
     setLoading(true)
-    setMessage('')
-    setError('')
     try {
       const res = await fetch('/api/admin/tahun-ajaran', {
         method: 'POST',
@@ -33,17 +45,17 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
       })
       const result = await res.json()
       if (res.ok) {
-        setMessage(result.message)
+        showAlert('success', 'Berhasil', result.message)
         if (payload.action === 'create') setTahun('')
         if (payload.action === 'create_semester') {
            setOpenSemesterForms(prev => ({ ...prev, [payload.id_tahun_ajaran]: false }))
         }
         router.refresh()
       } else {
-        setError(result.error || 'Terjadi kesalahan')
+        showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
       }
     } catch (err) {
-      setError('Terjadi kesalahan pada jaringan')
+      showAlert('error', 'Kesalahan', 'Terjadi kesalahan pada jaringan')
     } finally {
       setLoading(false)
     }
@@ -240,6 +252,14 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
           ))}
         </div>
       </Card>
+
+      <SweetAlert
+        type={alert.type}
+        title={alert.title}
+        message={alert.message}
+        show={alert.show}
+        onClose={() => setAlert({ ...alert, show: false })}
+      />
     </>
   )
 }
