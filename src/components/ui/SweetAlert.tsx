@@ -206,7 +206,7 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
         className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       ></div>
-      <Card className={`relative max-w-md w-full mx-4 overflow-hidden transform transition-all animate-fade-in-up z-[10000] shadow-2xl rounded-xl ${getBorderColor()}`}>
+      <Card className={`relative max-w-md w-full mx-4 overflow-hidden transform transition-all animate-fade-in-up z-[10000] shadow-2xl rounded-[32px] ${getBorderColor()}`}>
         <CardContent className="p-6">
           <div className="flex items-start">
             <div className={`flex-shrink-0 mt-1 ${getIconColors()}`}>

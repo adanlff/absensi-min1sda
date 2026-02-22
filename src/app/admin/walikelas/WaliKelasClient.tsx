@@ -25,6 +25,18 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
     message: ''
   })
 
+  const [confirmConfig, setConfirmConfig] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    action: () => void;
+  }>({
+    show: false,
+    title: '',
+    message: '',
+    action: () => {}
+  })
+
   const showAlert = (type: AlertType, title: string, message: string) => {
     setAlert({ show: true, type, title, message })
   }
@@ -151,7 +163,17 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                       <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3.5 w-3.5" />}>
                         Edit
                       </Button>
-                      <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete', id: wk.id })} icon={<Trash2 className="h-3.5 w-3.5" />}>
+                      <Button 
+                        size="sm" 
+                        variant="ghost-danger" 
+                        onClick={() => setConfirmConfig({
+                          show: true,
+                          title: 'Hapus Wali Kelas',
+                          message: `Apakah Anda yakin ingin menghapus wali kelas ${wk.nama}?`,
+                          action: () => handleAction({ action: 'delete', id: wk.id })
+                        })} 
+                        icon={<Trash2 className="h-3.5 w-3.5" />}
+                      >
                         Hapus
                       </Button>
                     </div>
@@ -196,7 +218,17 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3 w-3" />}>
                     Edit
                   </Button>
-                  <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete', id: wk.id })} icon={<Trash2 className="h-3 w-3" />}>
+                  <Button 
+                    size="sm" 
+                    variant="ghost-danger" 
+                    onClick={() => setConfirmConfig({
+                      show: true,
+                      title: 'Hapus Wali Kelas',
+                      message: `Apakah Anda yakin ingin menghapus wali kelas ${wk.nama}?`,
+                      action: () => handleAction({ action: 'delete', id: wk.id })
+                    })} 
+                    icon={<Trash2 className="h-3 w-3" />}
+                  >
                     Hapus
                   </Button>
                 </div>
@@ -344,6 +376,35 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
         show={alert.show}
         onClose={() => setAlert({ ...alert, show: false })}
       />
+
+      {confirmConfig.show && (
+        <SweetAlert
+          type="warning"
+          title={confirmConfig.title}
+          message={confirmConfig.message}
+          show={confirmConfig.show}
+          onClose={() => setConfirmConfig({ ...confirmConfig, show: false })}
+          duration={0}
+        >
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => {
+                confirmConfig.action()
+                setConfirmConfig({ ...confirmConfig, show: false })
+              }}
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-[20px] transition-all shadow-lg shadow-red-200 dark:shadow-none"
+            >
+              Ya, Hapus
+            </button>
+            <button
+              onClick={() => setConfirmConfig({ ...confirmConfig, show: false })}
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-[20px] transition-all"
+            >
+              Batal
+            </button>
+          </div>
+        </SweetAlert>
+      )}
     </>
   )
 }

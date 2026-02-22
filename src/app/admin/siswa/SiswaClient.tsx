@@ -38,6 +38,18 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
     message: ''
   })
 
+  const [confirmConfig, setConfirmConfig] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    action: () => void;
+  }>({
+    show: false,
+    title: '',
+    message: '',
+    action: () => {}
+  })
+
   const showAlert = (type: AlertType, title: string, message: string) => {
     setAlert({ show: true, type, title, message })
   }
@@ -195,7 +207,17 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
     { 
       header: 'Aksi', 
       accessor: (item: any) => (
-        <Button size="sm" variant="ghost-danger" onClick={() => handleAction({ action: 'delete_student', id: item.id })} icon={<Trash2 className="h-3.5 w-3.5" />}>
+        <Button 
+          size="sm" 
+          variant="ghost-danger" 
+          onClick={() => setConfirmConfig({
+            show: true,
+            title: 'Hapus Siswa',
+            message: `Apakah Anda yakin ingin menghapus data siswa ${item.nama}?`,
+            action: () => handleAction({ action: 'delete_student', id: item.id })
+          })} 
+          icon={<Trash2 className="h-3.5 w-3.5" />}
+        >
           Hapus
         </Button>
       ),
@@ -319,7 +341,12 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
               
               {kelas.jumlah_siswa === 0 && (
                 <button 
-                  onClick={() => handleAction({ action: 'delete_class', id: kelas.id })} 
+                  onClick={() => setConfirmConfig({
+                    show: true,
+                    title: 'Hapus Kelas',
+                    message: `Apakah Anda yakin ingin menghapus kelas ${kelas.nama_kelas}?`,
+                    action: () => handleAction({ action: 'delete_class', id: kelas.id })
+                  })} 
                   className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg z-10"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -492,6 +519,35 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
         show={alert.show}
         onClose={() => setAlert({ ...alert, show: false })}
       />
+
+      {confirmConfig.show && (
+        <SweetAlert
+          type="warning"
+          title={confirmConfig.title}
+          message={confirmConfig.message}
+          show={confirmConfig.show}
+          onClose={() => setConfirmConfig({ ...confirmConfig, show: false })}
+          duration={0}
+        >
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => {
+                confirmConfig.action()
+                setConfirmConfig({ ...confirmConfig, show: false })
+              }}
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-[20px] transition-all shadow-lg shadow-red-200 dark:shadow-none"
+            >
+              Ya, Hapus
+            </button>
+            <button
+              onClick={() => setConfirmConfig({ ...confirmConfig, show: false })}
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-[20px] transition-all"
+            >
+              Batal
+            </button>
+          </div>
+        </SweetAlert>
+      )}
     </div>
   )
 }

@@ -18,7 +18,7 @@ export const SuccessAlert: React.FC<SuccessAlertProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 p-4">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 animate-scale-in">
+      <div className="bg-white dark:bg-gray-900 rounded-[32px] shadow-xl max-w-md w-full p-6 animate-scale-in">
         <div className="text-center">
           {/* Close Button */}
           {onClose && (

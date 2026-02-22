@@ -20,6 +20,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/components/ThemeProvider'
 import { SuccessAlert } from '@/components/ui/SuccessAlert'
+import SweetAlert from '@/components/ui/SweetAlert'
 
 interface SidebarProps {
   isOpen: boolean
@@ -57,6 +58,7 @@ export default function Sidebar({
   const { theme, toggleTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [showLogoutAlert, setShowLogoutAlert] = useState(false)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -211,10 +213,7 @@ export default function Sidebar({
               {/* Logout Button */}
               <li>
                 <button 
-                  onClick={async () => {
-                    await fetch('/api/auth/logout', { method: 'POST' })
-                    setShowLogoutAlert(true)
-                  }}
+                  onClick={() => setShowLogoutConfirm(true)}
                   className={`w-full group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} text-red-500 hover:bg-red-50`}
                 >
                   <LogOut 
@@ -253,6 +252,36 @@ export default function Sidebar({
           />
         )}
       </AnimatePresence>
+
+      {showLogoutConfirm && (
+        <SweetAlert
+          type="warning"
+          title="Konfirmasi Keluar"
+          message="Apakah Anda yakin ingin keluar dari sistem?"
+          show={showLogoutConfirm}
+          onClose={() => setShowLogoutConfirm(false)}
+          duration={0}
+        >
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={async () => {
+                setShowLogoutConfirm(false)
+                await fetch('/api/auth/logout', { method: 'POST' })
+                setShowLogoutAlert(true)
+              }}
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-2xl transition-all shadow-lg shadow-red-200 dark:shadow-none"
+            >
+              Ya, Keluar
+            </button>
+            <button
+              onClick={() => setShowLogoutConfirm(false)}
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-2xl transition-all"
+            >
+              Batal
+            </button>
+          </div>
+        </SweetAlert>
+      )}
 
       {showLogoutAlert && (
         <SuccessAlert 
