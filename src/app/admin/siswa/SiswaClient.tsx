@@ -245,13 +245,13 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       </AnimatePresence>
 
       <Card className="mb-8 md:mb-12 relative overflow-hidden">
-        <div className="mb-8 flex items-center space-x-4">
-          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-            <CloudUpload className="h-6 w-6" />
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <CloudUpload className="h-5 w-5 md:h-6 md:w-6 text-primary" />
           </div>
           <div>
-            <h3 className="text-2xl font-black text-gray-900 dark:text-white leading-tight">Upload Data Siswa</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Gunakan file Excel untuk menambah data siswa secara massal</p>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Upload Data Siswa</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Gunakan file Excel untuk menambah data siswa secara massal</p>
           </div>
         </div>
         
@@ -312,9 +312,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
 
       <Card className="mb-8 md:mb-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-          <div>
-            <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1 border-l-4 border-primary pl-4">Data Per Kelas</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Pilih kelas untuk mengelola data siswa</p>
+          <div className="flex items-center space-x-4">
+            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+              <Building2 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Data Per Kelas</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Pilih kelas untuk mengelola data siswa</p>
+            </div>
           </div>
           <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
             Tambah Kelas Baru
@@ -332,7 +337,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             >
               <button 
                 onClick={() => handleClassClick(kelas.id)} 
-                className={`w-full p-4 md:p-6 rounded-3xl text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent dark:border-slate-800 hover:border-primary/20 hover:shadow-md'}`}
+                className={`w-full p-4 md:p-6 rounded-3xl text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent dark:border-slate-800 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5'}`}
               >
                 <div className="flex flex-col items-center space-y-3">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${selectedClassId === kelas.id ? 'bg-white/20' : 'bg-primary/5'}`}>
@@ -369,11 +374,16 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
             <Card noPadding className="mb-8 overflow-hidden">
               <div className="p-6 md:p-8">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-                  <div>
-                    <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1 border-l-4 border-primary pl-4">
-                      Siswa {selectedClassInfo?.nama_kelas}
-                    </h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm font-bold">Total {students.length} Siswa Terdaftar</p>
+                  <div className="flex items-center space-x-4">
+                    <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+                      <User className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                        Siswa {selectedClassInfo?.nama_kelas}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {students.length} Siswa Terdaftar</p>
+                    </div>
                   </div>
                   <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />}>
                     Tambah Siswa
