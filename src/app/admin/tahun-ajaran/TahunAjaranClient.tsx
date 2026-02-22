@@ -91,13 +91,13 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
       {/* Create Tahun Ajaran Card */}
       <Card className="mb-8 md:mb-12">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-6">
-          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
-            <Plus className="h-6 w-6" />
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <Plus className="h-5 w-5 md:h-6 md:w-6 text-primary" />
           </div>
           <div>
-            <h3 className="text-2xl font-black text-gray-900 dark:text-white leading-tight">Buat Tahun Ajaran Baru</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">Tambahkan periode akademik baru dan aktifkan secara otomatis</p>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Buat Tahun Ajaran Baru</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Tambahkan periode akademik baru dan aktifkan secara otomatis</p>
           </div>
         </div>
 
@@ -124,9 +124,14 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
       {/* Daftar Tahun Ajaran */}
       <Card>
-        <div className="mb-8">
-          <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-1">Daftar Tahun Ajaran & Semester</h3>
-          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Total {data.length} tahun ajaran terdaftar</p>
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+            <Calendar className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Tahun Ajaran & Semester</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {data.length} tahun ajaran terdaftar</p>
+          </div>
         </div>
 
         <div className="space-y-6">
