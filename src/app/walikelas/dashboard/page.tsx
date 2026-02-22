@@ -77,12 +77,6 @@ export default async function WalikelasDashboardPage({
     where: {
       Siswa: {
         id_kelas: waliKelas.id_kelas,
-        ...(search ? {
-          OR: [
-            { nama: { contains: search, mode: 'insensitive' } },
-            { nis: { contains: search } }
-          ]
-        } : {})
       },
       status: { not: 'hadir' },
       tanggal: { gte: sevenDaysAgo }
@@ -99,5 +93,5 @@ export default async function WalikelasDashboardPage({
 
   const stats = { totalSiswa, sakit, izin, alpa }
 
-  return <DashboardClient waliKelas={waliKelas} stats={stats} recentAbsences={recentAbsences} initialSearch={search} />
+  return <DashboardClient waliKelas={waliKelas} stats={stats} recentAbsences={recentAbsences} initialSearch="" />
 }

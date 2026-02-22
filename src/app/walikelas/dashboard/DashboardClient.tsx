@@ -17,8 +17,7 @@ import {
   ClipboardCheck, 
   Printer, 
   UserCog, 
-  Calendar,
-  Search
+  Calendar
 } from 'lucide-react'
 
 export default function DashboardClient({ 
@@ -34,23 +33,6 @@ export default function DashboardClient({
 }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [search, setSearch] = useState(initialSearch)
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      if (search !== initialSearch) {
-        const params = new URLSearchParams(searchParams.toString())
-        if (search) {
-          params.set('search', search)
-        } else {
-          params.delete('search')
-        }
-        router.push(`/walikelas/dashboard?${params.toString()}`)
-      }
-    }, 500)
-    
-    return () => clearTimeout(handler)
-  }, [search, initialSearch, router, searchParams])
 
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('id-ID', {
@@ -120,13 +102,7 @@ export default function DashboardClient({
         title={`Selamat Datang, ${waliKelas.nama}! 👋`}
         description={`Pantau kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'} hari ini`}
         centered
-      >
-        <SearchBox 
-          value={search} 
-          onChange={setSearch} 
-          placeholder="Cari nama atau NIS siswa..." 
-        />
-      </PageHeader>
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-16">
         <StatCard label="Total Siswa" value={stats.totalSiswa} icon={Users} color="emerald" subValue="Seluruh Peserta Didik" delay={0.1} />
