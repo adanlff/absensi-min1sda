@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Users, Building2, UserCheck, Clock, Zap, GraduationCap, Calendar, FileText } from 'lucide-react'
+import { Users, Building2, UserCheck, Clock, Zap, CloudUpload, UserCircle, Calendar, FileText } from 'lucide-react'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatCard } from '@/components/ui/StatCard'
 import { MenuCard } from '@/components/ui/MenuCard'
@@ -160,10 +160,10 @@ export default function DashboardClient({
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <QuickActionCard href="/admin/siswa" label="Kelola Siswa" icon={GraduationCap} color="blue" description="Kelola semua data siswa" />
-            <QuickActionCard href="/admin/walikelas" label="Kelola Wali Kelas" icon={UserCheck} color="amber" description="Kelola semua wali kelas" />
+            <QuickActionCard href="/admin/siswa" label="Kelola Siswa" icon={CloudUpload} color="blue" description="Kelola semua data siswa" />
+            <QuickActionCard href="/admin/kelas" label="Kelola Kelas" icon={Users} color="emerald" description="Kelola perwalian kelas" />
+            <QuickActionCard href="/admin/walikelas" label="Kelola Wali Kelas" icon={UserCircle} color="amber" description="Kelola semua wali kelas" />
             <QuickActionCard href="/admin/tahun-ajaran" label="Tahun Ajaran" icon={Calendar} color="emerald" description="Atur periode akademik" />
-            <QuickActionCard href="/admin/laporan" label="Lihat Laporan" icon={FileText} color="red" description="Analisis dan laporan" />
           </div>
         </div>
       </Card>
