@@ -522,7 +522,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
 
       {confirmConfig.show && (
         <SweetAlert
-          type="warning"
+          type="error"
           title={confirmConfig.title}
           message={confirmConfig.message}
           show={confirmConfig.show}

@@ -379,7 +379,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
 
       {confirmConfig.show && (
         <SweetAlert
-          type="warning"
+          type="error"
           title={confirmConfig.title}
           message={confirmConfig.message}
           show={confirmConfig.show}

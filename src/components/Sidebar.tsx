@@ -255,7 +255,7 @@ export default function Sidebar({
 
       {showLogoutConfirm && (
         <SweetAlert
-          type="warning"
+          type="error"
           title="Konfirmasi Keluar"
           message="Apakah Anda yakin ingin keluar dari sistem?"
           show={showLogoutConfirm}
