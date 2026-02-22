@@ -2,12 +2,24 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Users, Heart, FileText, AlertCircle, TrendingUp, CheckCircle2, Calendar } from 'lucide-react'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatCard } from '@/components/ui/StatCard'
 import { SearchBox } from '@/components/ui/SearchBox'
 import { DataTable } from '@/components/ui/DataTable'
 import { Card } from '@/components/ui/Card'
+import { QuickActionCard } from '@/components/ui/QuickActionCard'
+import { 
+  Users, 
+  Heart, 
+  FileText, 
+  AlertCircle, 
+  Zap, 
+  ClipboardCheck, 
+  Printer, 
+  UserCog, 
+  Calendar,
+  Search
+} from 'lucide-react'
 
 export default function DashboardClient({ 
   waliKelas, 
@@ -105,8 +117,9 @@ export default function DashboardClient({
   return (
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
-        title="Dashboard"
+        title={`Selamat Datang, ${waliKelas.nama}! 👋`}
         description={`Pantau kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'} hari ini`}
+        centered
       >
         <SearchBox 
           value={search} 
@@ -115,28 +128,28 @@ export default function DashboardClient({
         />
       </PageHeader>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-16">
-        <StatCard label="Total Siswa" value={stats.totalSiswa} icon={Users} color="blue" subValue="Seluruh Peserta Didik" delay={0.1} />
-        <StatCard label="Sakit" value={stats.sakit} icon={Heart} color="green" subValue="Tidak masuk karena sakit" delay={0.2} />
-        <StatCard label="Izin" value={stats.izin} icon={FileText} color="amber" subValue="Tidak masuk karena izin" delay={0.3} />
-        <StatCard label="Alpa" value={stats.alpa} icon={AlertCircle} color="red" subValue="Tidak masuk tanpa keterangan" delay={0.4} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-16">
+        <StatCard label="Total Siswa" value={stats.totalSiswa} icon={Users} color="emerald" subValue="Seluruh Peserta Didik" delay={0.1} />
+        <StatCard label="Sakit" value={stats.sakit} icon={Heart} color="emerald" subValue="Tidak masuk karena sakit" delay={0.2} />
+        <StatCard label="Izin" value={stats.izin} icon={FileText} color="emerald" subValue="Tidak masuk karena izin" delay={0.3} />
+        <StatCard label="Alpa" value={stats.alpa} icon={AlertCircle} color="emerald" subValue="Tidak masuk tanpa keterangan" delay={0.4} />
       </div>
 
-      <Card noPadding>
+      <Card noPadding className="mb-8 md:mb-16">
         <div className="p-4 md:p-6 lg:p-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
-            <div>
-               <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-1">
-                  Data Ketidakhadiran Siswa
-               </h3>
-               <p className="text-gray-500 dark:text-gray-400 text-sm font-medium flex items-center">
-                  <Calendar className="h-4 w-4 mr-2 text-gray-400 dark:text-slate-600" />
-                  7 hari terakhir - {waliKelas.Kelas?.nama_kelas || 'Kelas Anda'}
-               </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 md:mb-10 space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-4">
+              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+                <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Data Ketidakhadiran Siswa</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">7 hari terakhir - {waliKelas.Kelas?.nama_kelas || 'Kelas Anda'}</p>
+              </div>
             </div>
-            <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-50 dark:bg-slate-950 rounded-full w-fit">
-               <div className="w-2 h-2 bg-emerald-500 rounded-full" />
-               <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Live Data</span>
+            <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/10 rounded-full w-fit border border-emerald-100 dark:border-emerald-800/50">
+               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+               <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Live Data</span>
             </div>
           </div>
 
@@ -183,6 +196,26 @@ export default function DashboardClient({
               </div>
             )}
           />
+        </div>
+      </Card>
+
+      <Card noPadding className="mb-8 md:mb-16 bg-gray-50/50 dark:bg-slate-900/50 border-gray-100 dark:border-slate-800">
+        <div className="p-4 md:p-6 lg:p-8">
+          <div className="flex items-center space-x-4 mb-6 md:mb-8">
+            <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+               <Zap className="h-5 w-5 md:h-6 md:w-6 text-primary fill-primary/10" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Aksi Cepat</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Akses platform dengan cepat</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+            <QuickActionCard href="/walikelas/absen" label="Input Absen" icon={ClipboardCheck} color="emerald" description="Input absensi harian" />
+            <QuickActionCard href="/walikelas/cetak-absen" label="Cetak Absen" icon={Printer} color="blue" description="Laporan absensi kelas" />
+            <QuickActionCard href="/walikelas/profil" label="Edit Profil" icon={UserCog} color="amber" description="Kelola akun Anda" />
+          </div>
         </div>
       </Card>
     </div>
