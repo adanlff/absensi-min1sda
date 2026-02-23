@@ -307,7 +307,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                 placeholder="Pilih Kelas"
                 icon={<Building2 className="h-5 w-5" />}
                 options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
-                triggerClassName="pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold"
+                triggerClassName="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold"
               />
             </div>
           </div>
@@ -369,7 +369,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                 placeholder="Pilih Kelas"
                 icon={<Building2 className="h-5 w-5" />}
                 options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
-                triggerClassName="pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold"
+                triggerClassName="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold"
               />
             </div>
           </div>

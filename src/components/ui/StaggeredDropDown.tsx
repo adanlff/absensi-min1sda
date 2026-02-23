@@ -18,7 +18,7 @@ interface StaggeredDropDownProps {
   required?: boolean
   name?: string
   className?: string
-  triggerClassName?: string // New prop for custom trigger styling
+  triggerClassName?: string
 }
 
 export function StaggeredDropDown({
@@ -67,17 +67,17 @@ export function StaggeredDropDown({
       <button
         type="button"
         onClick={() => setOpen(pv => !pv)}
-        className={`flex items-center w-full transition-all text-left cursor-pointer relative ${
+        className={`flex items-center w-full transition-all text-left cursor-pointer relative group ${
           triggerClassName || 
           'h-[58px] pl-12 pr-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 font-bold'
         }`}
       >
         {icon && (
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus:text-primary transition-colors">
             {icon}
           </div>
         )}
-        <span className={`flex-1 truncate text-sm ${value ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'}`}>
+        <span className={`flex-1 truncate ${value ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'}`}>
           {selectedLabel || placeholder}
         </span>
         <ChevronDown 
@@ -94,7 +94,7 @@ export function StaggeredDropDown({
             exit="closed"
             variants={wrapperVariants}
             style={{ originY: 'top' }}
-            className="flex flex-col gap-1 p-3 rounded-[24px] bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 absolute top-[calc(100%+6px)] left-0 w-full z-[100] overflow-hidden max-h-60 overflow-y-auto"
+            className="flex flex-col gap-1 p-3 rounded-[24px] bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 absolute top-[calc(100%+8px)] left-0 w-full z-[100] overflow-hidden max-h-60 overflow-y-auto"
           >
             {options.map(option => (
               <motion.li
@@ -104,13 +104,13 @@ export function StaggeredDropDown({
                   onChange(option.value)
                   setOpen(false)
                 }}
-                className={`flex items-center gap-2 w-full p-2.5 px-4 text-sm font-semibold whitespace-nowrap rounded-xl cursor-pointer transition-colors ${
+                className={`flex items-center gap-2 w-full p-3 px-4 text-sm font-semibold whitespace-nowrap rounded-[20px] cursor-pointer transition-colors ${
                   value === option.value
                     ? 'bg-primary/10 text-primary dark:text-primary'
                     : 'hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 hover:text-primary'
                 }`}
               >
-                <motion.span variants={actionIconVariants} className="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0" />
+                <motion.span variants={actionIconVariants} className="w-2 h-2 rounded-full bg-current flex-shrink-0" />
                 <span className="truncate">{option.label}</span>
               </motion.li>
             ))}
