@@ -237,6 +237,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                             { value: 'ganjil', label: 'Ganjil' },
                             { value: 'genap', label: 'Genap' },
                           ]}
+                          triggerClassName="px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold"
                         />
                       </div>
 

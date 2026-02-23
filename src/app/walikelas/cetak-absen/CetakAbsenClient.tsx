@@ -152,6 +152,7 @@ export default function CetakAbsenClient({
                     placeholder="Pilih Bulan"
                     icon={<Calendar className="h-5 w-5" />}
                     options={months.map((m, i) => ({ value: (i + 1).toString(), label: m }))}
+                    triggerClassName="pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                   />
                 </div>
                 <div>
@@ -162,6 +163,7 @@ export default function CetakAbsenClient({
                     placeholder="Pilih Tahun"
                     icon={<Calendar className="h-5 w-5" />}
                     options={years.map(y => ({ value: y.toString(), label: y.toString() }))}
+                    triggerClassName="pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                   />
                 </div>
               </motion.div>
@@ -184,6 +186,7 @@ export default function CetakAbsenClient({
                       value: s.id.toString(),
                       label: `Semester ${s.jenis_semester.charAt(0).toUpperCase() + s.jenis_semester.slice(1)} - ${s.TahunAjaran.tahun}`
                     }))}
+                    triggerClassName="pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                   />
                 </div>
               </motion.div>

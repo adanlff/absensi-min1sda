@@ -18,6 +18,7 @@ interface StaggeredDropDownProps {
   required?: boolean
   name?: string
   className?: string
+  triggerClassName?: string // New prop for custom trigger styling
 }
 
 export function StaggeredDropDown({
@@ -29,6 +30,7 @@ export function StaggeredDropDown({
   required,
   name,
   className = '',
+  triggerClassName = '',
 }: StaggeredDropDownProps) {
   const [open, setOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -65,7 +67,10 @@ export function StaggeredDropDown({
       <button
         type="button"
         onClick={() => setOpen(pv => !pv)}
-        className="flex items-center w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold text-left cursor-pointer relative"
+        className={`flex items-center w-full transition-all text-left cursor-pointer relative ${
+          triggerClassName || 
+          'h-[58px] pl-12 pr-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 font-bold'
+        }`}
       >
         {icon && (
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
@@ -75,7 +80,10 @@ export function StaggeredDropDown({
         <span className={`flex-1 truncate text-sm ${value ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'}`}>
           {selectedLabel || placeholder}
         </span>
-        <ChevronDown className={`h-4 w-4 text-gray-400 flex-shrink-0 ml-2 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown 
+          className={`h-4 w-4 text-gray-400 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} 
+          style={{ marginLeft: '8px' }}
+        />
       </button>
 
       <AnimatePresence>
@@ -86,7 +94,7 @@ export function StaggeredDropDown({
             exit="closed"
             variants={wrapperVariants}
             style={{ originY: 'top' }}
-            className="flex flex-col gap-1 p-3 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 absolute top-[calc(100%+6px)] left-0 w-full z-50 overflow-hidden max-h-60 overflow-y-auto"
+            className="flex flex-col gap-1 p-3 rounded-[24px] bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 absolute top-[calc(100%+6px)] left-0 w-full z-[100] overflow-hidden max-h-60 overflow-y-auto"
           >
             {options.map(option => (
               <motion.li

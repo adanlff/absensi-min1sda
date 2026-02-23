@@ -173,6 +173,7 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                 placeholder="Pilih Kelas"
                 icon={<Building2 className="h-5 w-5" />}
                 options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
+                triggerClassName="h-[58px] pl-12 pr-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all font-bold"
               />
             </div>
             
