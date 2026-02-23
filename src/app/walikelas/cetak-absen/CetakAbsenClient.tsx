@@ -15,6 +15,7 @@ import {
   TableRow, 
   TableCell 
 } from '@/components/ui/Table'
+import Dropdown from '@/components/ui/Dropdown'
 
 export default function CetakAbsenClient({ 
   waliKelas, 
@@ -145,29 +146,29 @@ export default function CetakAbsenClient({
               >
                 <div>
                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Bulan</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <Calendar className="h-5 w-5" />
-                    </div>
-                     <select value={bulan} onChange={e => setBulan(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
-                      {months.map((m, i) => (
-                        <option key={i} value={(i + 1).toString()}>{m}</option>
-                      ))}
-                    </select>
-                  </div>
+                  <Dropdown 
+                    placeholder="Pilih Bulan"
+                    value={bulan}
+                    options={months.map((m, i) => ({
+                      value: (i + 1).toString(),
+                      label: m,
+                      icon: Calendar
+                    }))}
+                    onChange={(val) => setBulan(val)}
+                  />
                 </div>
                 <div>
                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Tahun</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <Calendar className="h-5 w-5" />
-                    </div>
-                     <select value={tahun} onChange={e => setTahun(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
-                      {years.map(y => <option key={y} value={y}>{y}</option>)}
-                    </select>
-                  </div>
+                  <Dropdown 
+                    placeholder="Pilih Tahun"
+                    value={tahun}
+                    options={years.map(y => ({
+                      value: y.toString(),
+                      label: y.toString(),
+                      icon: Calendar
+                    }))}
+                    onChange={(val) => setTahun(val)}
+                  />
                 </div>
               </motion.div>
             ) : (
@@ -179,20 +180,16 @@ export default function CetakAbsenClient({
               >
                 <div>
                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Semester</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                      <BookOpen className="h-5 w-5" />
-                    </div>
-                     <select value={semesterId} onChange={e => setSemesterId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer" required>
-                      <option value="">Pilih Semester</option>
-                      {availableSemesters.map(s => (
-                        <option key={s.id} value={s.id}>
-                          Semester {s.jenis_semester.charAt(0).toUpperCase() + s.jenis_semester.slice(1)} - {s.TahunAjaran.tahun}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  <Dropdown 
+                    placeholder="Pilih Semester"
+                    value={semesterId}
+                    options={availableSemesters.map(s => ({
+                      value: s.id.toString(),
+                      label: `Semester ${s.jenis_semester.charAt(0).toUpperCase() + s.jenis_semester.slice(1)} - ${s.TahunAjaran.tahun}`,
+                      icon: BookOpen
+                    }))}
+                    onChange={(val) => setSemesterId(val)}
+                  />
                 </div>
               </motion.div>
             )}

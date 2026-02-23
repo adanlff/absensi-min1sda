@@ -17,6 +17,7 @@ import {
   TableCell 
 } from '@/components/ui/Table'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
+import Dropdown from '@/components/ui/Dropdown'
 
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
@@ -299,18 +300,16 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Pilih Kelas</label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
-                  <Building2 className="h-5 w-5" />
-                </div>
-                <select required value={formData.id_kelas} onChange={e => setFormData({ ...formData, id_kelas: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold appearance-none">
-                  <option value="">Pilih Kelas</option>
-                  {kelasList.map(k => (
-                    <option key={k.id} value={k.id}>{k.nama_kelas}</option>
-                  ))}
-                </select>
-              </div>
+              <Dropdown 
+                placeholder="Pilih Kelas"
+                value={formData.id_kelas}
+                options={kelasList.map(k => ({
+                  value: k.id.toString(),
+                  label: k.nama_kelas,
+                  icon: Building2
+                }))}
+                onChange={(val) => setFormData({ ...formData, id_kelas: val })}
+              />
             </div>
           </div>
         </CardContent>
@@ -364,18 +363,16 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Pilih Kelas</label>
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
-                  <Building2 className="h-5 w-5" />
-                </div>
-                <select required value={formData.id_kelas} onChange={e => setFormData({ ...formData, id_kelas: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold appearance-none">
-                  <option value="">Pilih Kelas</option>
-                  {kelasList.map(k => (
-                    <option key={k.id} value={k.id}>{k.nama_kelas}</option>
-                  ))}
-                </select>
-              </div>
+              <Dropdown 
+                placeholder="Pilih Kelas"
+                value={formData.id_kelas}
+                options={kelasList.map(k => ({
+                  value: k.id.toString(),
+                  label: k.nama_kelas,
+                  icon: Building2
+                }))}
+                onChange={(val) => setFormData({ ...formData, id_kelas: val })}
+              />
             </div>
           </div>
         </CardContent>

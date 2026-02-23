@@ -22,6 +22,7 @@ import { DataTable } from '@/components/ui/DataTable'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
+import Dropdown from '@/components/ui/Dropdown'
 
 export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const router = useRouter()
@@ -165,17 +166,17 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Kelas</label>
-                <div className="relative h-[58px] flex items-center border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl focus-within:bg-white dark:focus-within:bg-slate-800 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/5 transition-all">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                    <Building2 className="h-5 w-5" />
-                  </div>
-                  <select required value={uploadClassId} onChange={e => setUploadClassId(e.target.value)}
-                    className="w-full pl-12 pr-4 bg-transparent focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
-                    <option value="" className="dark:bg-slate-900">Pilih Kelas</option>
-                    {kelasList.map(k => (
-                      <option key={k.id} value={k.id} className="dark:bg-slate-900">{k.nama_kelas}</option>
-                    ))}
-                  </select>
+                <div className="relative">
+                  <Dropdown 
+                    placeholder="Pilih Kelas"
+                    value={uploadClassId}
+                    options={kelasList.map(k => ({
+                      value: k.id,
+                      label: k.nama_kelas,
+                      icon: Building2
+                    }))}
+                    onChange={(val) => setUploadClassId(val)}
+                  />
                 </div>
               </div>
             

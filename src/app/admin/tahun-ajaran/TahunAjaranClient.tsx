@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
+import Dropdown, { DropdownOption } from '@/components/ui/Dropdown'
 
 export default function TahunAjaranClient({ data }: { data: any[] }) {
   const router = useRouter()
@@ -43,8 +44,11 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
 
 
+  const [semesterJenis, setSemesterJenis] = useState('')
+
   const toggleSemesterForm = (id: number) => {
     setOpenSemesterForms(prev => ({ ...prev, [id]: !prev[id] }))
+    setSemesterJenis('') // Reset selection when form toggles
   }
 
   const handleAction = async (payload: any) => {
@@ -226,11 +230,16 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Jenis Semester</label>
-                        <select name="jenis_semester" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold appearance-none cursor-pointer" required>
-                          <option value="">Pilih Semester</option>
-                          <option value="ganjil">Ganjil</option>
-                          <option value="genap">Genap</option>
-                        </select>
+                        <input type="hidden" name="jenis_semester" value={semesterJenis} required />
+                        <Dropdown 
+                          placeholder="Pilih Semester"
+                          value={semesterJenis}
+                          options={[
+                            { value: 'ganjil', label: 'Ganjil' },
+                            { value: 'genap', label: 'Genap' }
+                          ]}
+                          onChange={(val) => setSemesterJenis(val)}
+                        />
                       </div>
 
                       <div className="space-y-2">
