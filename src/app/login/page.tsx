@@ -4,18 +4,25 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SuccessAlert } from '@/components/ui/SuccessAlert'
-import SweetAlert from '@/components/ui/SweetAlert'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function LoginPage() {
-  const [selectedRole, setSelectedRole] = useState<'admin' | 'walikelas' | ''>('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
-  const [showErrorAlert, setShowErrorAlert] = useState(false)
-  const [apiResponse, setApiResponse] = useState<any>(null)
+  const [selectedRole, setSelectedRole] = useState<'admin' | 'walikelas' | ''>('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertConfig, setAlertConfig] = useState<{
+    type: AlertType;
+    title: string;
+    message: string;
+  }>({
+    type: "success",
+    title: "",
+    message: "",
+  });
+  const [apiResponse, setApiResponse] = useState<any>(null);
   const router = useRouter()
 
   const selectRole = (role: 'admin' | 'walikelas') => {
@@ -23,47 +30,60 @@ export default function LoginPage() {
     setError('')
   }
 
+  const showSweetAlert = (type: AlertType, title: string, message: string) => {
+    setAlertConfig({ type, title, message });
+    setShowAlert(true);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     
     if (!selectedRole) {
-      setError('Silakan pilih peran terlebih dahulu!')
-      return
+      setError('Silakan pilih peran terlebih dahulu!');
+      return;
     }
 
-    setLoading(true)
-    setError('')
+    setIsLoading(true);
+    setError(null);
 
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, role: selectedRole }),
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (res.ok) {
-        setApiResponse(data)
-        setShowSuccessAlert(true)
+        setApiResponse(data);
+        showSweetAlert(
+          "success",
+          "Login Berhasil!",
+          "Anda berhasil masuk ke sistem. Selamat datang!"
+        );
+        setTimeout(() => {
+          handleSuccessRedirect(data);
+        }, 2000);
       } else {
-        setError(data.error || 'Login gagal')
-        setShowErrorAlert(true)
-        setLoading(false)
+        setError(data.error || 'Login gagal');
+        showSweetAlert("error", "Login Gagal", data.error || 'Login gagal');
       }
     } catch (error) {
-      setError('Terjadi kesalahan pada server')
-      setShowErrorAlert(true)
-      setLoading(false)
+      setError('Terjadi kesalahan pada server');
+      showSweetAlert("error", "Error", "Terjadi kesalahan pada server");
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
-  const handleSuccessRedirect = () => {
-    if (apiResponse) {
-      router.push(apiResponse.redirect)
-      router.refresh()
+  const handleSuccessRedirect = (data?: any) => {
+    const response = data || apiResponse;
+    if (response) {
+      router.push(response.redirect);
+      router.refresh();
     }
-  }
+  };
 
   return (
     <div className="h-screen w-full bg-[#f8fafc] dark:bg-slate-950 flex items-center justify-center p-4 lg:p-6 overflow-hidden transition-colors duration-300">
@@ -73,6 +93,16 @@ export default function LoginPage() {
         transition={{ duration: 0.6 }}
         className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-6xl h-full max-h-[92vh] grid lg:grid-cols-2 overflow-hidden"
       >
+        {/* Sweet Alert Component for success notification */}
+        <SweetAlert
+          type={alertConfig.type}
+          title={alertConfig.title}
+          message={alertConfig.message}
+          show={showAlert}
+          onClose={() => setShowAlert(false)}
+          duration={alertConfig.type === "success" ? 2000 : 5000}
+          showCloseButton={false}
+        />
           {/* Left Hero Section (Landscape Split) */}
           <div className="hidden lg:flex bg-primary relative overflow-hidden items-center justify-center p-12">
               {/* Subtle Static Gradient Orbs instead of heavy animated bubbles */}
@@ -181,10 +211,10 @@ export default function LoginPage() {
                       <motion.button 
                         whileTap={{ scale: 0.97 }}
                         type="submit" 
-                        disabled={loading}
+                        disabled={isLoading}
                         className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-bold text-xs tracking-[0.2em] rounded-2xl shadow-lg shadow-primary/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
                       >
-                        {loading ? (
+                        {isLoading ? (
                           <>
                             <Loader2 className="animate-spin h-4 w-4" />
                             <span>LOADING...</span>
@@ -215,21 +245,6 @@ export default function LoginPage() {
           </div>
       </motion.div>
 
-      {showSuccessAlert && (
-        <SuccessAlert 
-          title="Login Berhasil!"
-          message="Anda berhasil masuk ke sistem. Selamat datang!" 
-          onButtonClick={handleSuccessRedirect}
-        />
-      )}
-
-      <SweetAlert
-        type="error"
-        title="Login Gagal"
-        message={error}
-        show={showErrorAlert}
-        onClose={() => setShowErrorAlert(false)}
-      />
     </div>
   )
 }

@@ -20,8 +20,7 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '@/components/ThemeProvider'
-import { SuccessAlert } from '@/components/ui/SuccessAlert'
-import SweetAlert from '@/components/ui/SweetAlert'
+import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 interface SidebarProps {
   isOpen: boolean
@@ -55,8 +54,18 @@ export default function Sidebar({
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [showLogoutAlert, setShowLogoutAlert] = useState(false)
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+  const [showConfirmAlert, setShowConfirmAlert] = useState(false)
+  const [alertConfig, setAlertConfig] = useState<{
+    type: AlertType
+    title: string
+    message: string
+  }>({
+    type: "success",
+    title: "",
+    message: "",
+  })
 
   useEffect(() => {
     setMounted(true)
@@ -64,6 +73,31 @@ export default function Sidebar({
 
   const links = role === 'admin' ? adminLinks : walikelasLinks
   const profilPath = role === 'admin' ? '/admin/profil' : '/walikelas/profil'
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+      showSweetAlert(
+        "success",
+        "Logout Berhasil!",
+        "Anda telah berhasil keluar dari sistem. Sampai jumpa kembali!"
+      )
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 2000)
+    } catch (error) {
+      showSweetAlert("error", "Logout Gagal", "Terjadi kesalahan saat mencoba keluar.")
+    } finally {
+      setIsLoggingOut(false)
+      setShowConfirmAlert(false)
+    }
+  }
+
+  const showSweetAlert = (type: AlertType, title: string, message: string) => {
+    setAlertConfig({ type, title, message })
+    setShowAlert(true)
+  }
 
   const sidebarWidth = isCollapsed ? 'w-20' : 'w-[280px]'
 
@@ -185,7 +219,7 @@ export default function Sidebar({
               {/* Logout Button */}
               <li>
                 <button 
-                  onClick={() => setShowLogoutConfirm(true)}
+                  onClick={() => setShowConfirmAlert(true)}
                   className={`w-full group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} text-red-500 hover:bg-red-50`}
                 >
                   <LogOut 
@@ -225,44 +259,51 @@ export default function Sidebar({
         )}
       </AnimatePresence>
 
-      {showLogoutConfirm && (
-        <SweetAlert
-          type="error"
-          title="Konfirmasi Keluar"
-          message="Apakah Anda yakin ingin keluar dari sistem?"
-          show={showLogoutConfirm}
-          onClose={() => setShowLogoutConfirm(false)}
-          duration={0}
-        >
-          <div className="flex gap-3 mt-6">
-            <button
-              onClick={async () => {
-                setShowLogoutConfirm(false)
-                await fetch('/api/auth/logout', { method: 'POST' })
-                setShowLogoutAlert(true)
-              }}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-2xl transition-all shadow-lg shadow-red-200 dark:shadow-none"
-            >
-              Ya, Keluar
-            </button>
-            <button
-              onClick={() => setShowLogoutConfirm(false)}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-2xl transition-all"
-            >
-              Batal
-            </button>
-          </div>
-        </SweetAlert>
-      )}
+      {/* SweetAlert Component for notifications */}
+      <SweetAlert
+        type={alertConfig.type}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        show={showAlert}
+        onClose={() => setShowAlert(false)}
+        duration={alertConfig.type === "success" ? 2000 : 3000}
+        showCloseButton={true}
+      />
 
-      {showLogoutAlert && (
-        <SuccessAlert 
-          title="Logout Berhasil"
-          message="Anda telah berhasil keluar dari sistem. Sampai jumpa kembali!" 
-          onButtonClick={() => window.location.href = '/login'}
-          buttonText="Ke Halaman Login"
-        />
-      )}
+      {/* SweetAlert for logout confirmation (RED THEME) */}
+      <SweetAlert
+        type="error"
+        title="Konfirmasi Keluar"
+        message="Apakah Anda yakin ingin keluar dari sistem? Anda akan diarahkan ke halaman login."
+        show={showConfirmAlert}
+        onClose={() => setShowConfirmAlert(false)}
+        duration={0}
+        showCloseButton={true}
+      >
+        <div className="mt-6 flex gap-3">
+          <button
+            onClick={() => setShowConfirmAlert(false)}
+            disabled={isLoggingOut}
+            className="flex-1 py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-2xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors disabled:opacity-50 font-bold"
+          >
+            Batal
+          </button>
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="flex-1 py-3 px-4 bg-[#D93025] hover:bg-[#c41c1c] text-white rounded-2xl transition-all shadow-lg shadow-red-200 dark:shadow-none disabled:opacity-50 flex items-center justify-center font-bold"
+          >
+            {isLoggingOut ? (
+              <>
+                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                Sedang logout...
+              </>
+            ) : (
+              "Ya, Logout"
+            )}
+          </button>
+        </div>
+      </SweetAlert>
     </>
   )
 }
