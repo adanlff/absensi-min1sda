@@ -102,7 +102,7 @@ export default function DashboardClient({
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
         title={`Selamat Datang, ${waliKelas.nama}! 👋`}
-        description={`Wali Kelas ${waliKelas.Kelas?.nama_kelas?.replace(/KELAS\s?/i, '') || '...'}, Pantau dan kelola kehadiran siswa dengan efisien pada Tahun Ajaran ${tahunAjaran}`}
+        description={`Wali Kelas ${waliKelas.Kelas?.nama_kelas?.replace(/KELAS\s?/i, '') || '...'}, Pantau kehadiran siswa dengan efisien pada Tahun Ajaran ${tahunAjaran}`}
         centered
       />
 
@@ -189,10 +189,9 @@ export default function DashboardClient({
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
             <QuickActionCard href="/walikelas/absen" label="Input Absen" icon={ClipboardCheck} color="emerald" description="Input absensi harian" />
             <QuickActionCard href="/walikelas/cetak-absen" label="Cetak Absen" icon={Printer} color="blue" description="Laporan absensi kelas" />
-            <QuickActionCard href="/walikelas/profil" label="Edit Profil" icon={UserCog} color="amber" description="Kelola akun Anda" />
           </div>
         </div>
       </Card>

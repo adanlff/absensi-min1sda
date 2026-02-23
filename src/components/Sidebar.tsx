@@ -32,9 +32,9 @@ interface SidebarProps {
 
 const adminLinks = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/siswa', label: 'Kelola Siswa', icon: CloudUpload },
-  { href: '/admin/kelas', label: 'Kelola Kelas', icon: Users },
-  { href: '/admin/walikelas', label: 'Kelola Wali Kelas', icon: UserCircle },
+  { href: '/admin/walikelas', label: 'Wali Kelas', icon: UserCircle },
+  { href: '/admin/kelas', label: 'Kelas', icon: Users },
+  { href: '/admin/siswa', label: 'Siswa', icon: CloudUpload },
   { href: '/admin/tahun-ajaran', label: 'Tahun Ajaran', icon: Calendar },
 ]
 
@@ -175,21 +175,23 @@ export default function Sidebar({
             </div>
 
             <ul className="space-y-1.5">
-              {/* Profile Link */}
-              <li>
-                <Link 
-                  href={profilPath}
-                  className={`group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} ${pathname === profilPath ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}
-                >
-                  <UserCog 
-                    size={pathname === profilPath ? 20 : 18} 
-                    className={`transition-all duration-300 ${pathname === profilPath ? 'text-white' : 'text-gray-400 group-hover:text-primary'}`} 
-                  />
-                  {!isCollapsed && (
-                    <span className="text-sm font-bold tracking-tight whitespace-nowrap">Edit Profil</span>
-                  )}
-                </Link>
-              </li>
+              {/* Profile Link - Only for Admin */}
+              {role === 'admin' && (
+                <li>
+                  <Link 
+                    href={profilPath}
+                    className={`group flex items-center transition-all duration-300 rounded-xl ${isCollapsed ? 'justify-center p-3' : 'px-4 py-3.5 space-x-4'} ${pathname === profilPath ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}
+                  >
+                    <UserCog 
+                      size={pathname === profilPath ? 20 : 18} 
+                      className={`transition-all duration-300 ${pathname === profilPath ? 'text-white' : 'text-gray-400 group-hover:text-primary'}`} 
+                    />
+                    {!isCollapsed && (
+                      <span className="text-sm font-bold tracking-tight whitespace-nowrap">Edit Profil</span>
+                    )}
+                  </Link>
+                </li>
+              )}
 
               {/* Theme Toggle */}
               <li>

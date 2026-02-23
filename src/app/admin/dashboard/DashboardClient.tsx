@@ -162,9 +162,9 @@ export default function DashboardClient({
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <QuickActionCard href="/admin/siswa" label="Kelola Siswa" icon={CloudUpload} color="blue" description="Kelola semua data siswa" />
-            <QuickActionCard href="/admin/kelas" label="Kelola Kelas" icon={Users} color="emerald" description="Kelola perwalian kelas" />
-            <QuickActionCard href="/admin/walikelas" label="Kelola Wali Kelas" icon={UserCircle} color="amber" description="Kelola semua wali kelas" />
+            <QuickActionCard href="/admin/walikelas" label="Wali Kelas" icon={UserCircle} color="amber" description="Manajemen semua wali kelas" />
+            <QuickActionCard href="/admin/kelas" label="Kelas" icon={Users} color="emerald" description="Manajemen perwalian kelas" />
+            <QuickActionCard href="/admin/siswa" label="Siswa" icon={CloudUpload} color="blue" description="Manajemen semua data siswa" />
             <QuickActionCard href="/admin/tahun-ajaran" label="Tahun Ajaran" icon={Calendar} color="emerald" description="Atur periode akademik" />
           </div>
         </div>
