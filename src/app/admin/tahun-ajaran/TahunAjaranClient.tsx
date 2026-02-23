@@ -6,8 +6,8 @@ import { Plus, Calendar, CheckCircle2, XCircle, Zap, Trash2 } from 'lucide-react
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { StaggeredDropDown } from '@/components/ui/StaggeredDropDown'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
-import Dropdown, { DropdownOption } from '@/components/ui/Dropdown'
 
 export default function TahunAjaranClient({ data }: { data: any[] }) {
   const router = useRouter()
@@ -41,14 +41,12 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
   }
   const [tahun, setTahun] = useState('')
   const [openSemesterForms, setOpenSemesterForms] = useState<Record<number, boolean>>({})
+  const [semesterTypes, setSemesterTypes] = useState<Record<number, string>>({})
 
 
-
-  const [semesterJenis, setSemesterJenis] = useState('')
 
   const toggleSemesterForm = (id: number) => {
     setOpenSemesterForms(prev => ({ ...prev, [id]: !prev[id] }))
-    setSemesterJenis('') // Reset selection when form toggles
   }
 
   const handleAction = async (payload: any) => {
@@ -222,7 +220,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       handleAction({
                         action: 'create_semester',
                         id_tahun_ajaran: ta.id,
-                        jenis_semester: fd.get('jenis_semester'),
+                        jenis_semester: semesterTypes[ta.id] || '',
                         tanggal_mulai: fd.get('tanggal_mulai'),
                         tanggal_selesai: fd.get('tanggal_selesai')
                       });
@@ -230,15 +228,15 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Jenis Semester</label>
-                        <input type="hidden" name="jenis_semester" value={semesterJenis} required />
-                        <Dropdown 
+                        <StaggeredDropDown
+                          required
+                          value={semesterTypes[ta.id] || ''}
+                          onChange={(val) => setSemesterTypes(prev => ({ ...prev, [ta.id]: val }))}
                           placeholder="Pilih Semester"
-                          value={semesterJenis}
                           options={[
                             { value: 'ganjil', label: 'Ganjil' },
-                            { value: 'genap', label: 'Genap' }
+                            { value: 'genap', label: 'Genap' },
                           ]}
-                          onChange={(val) => setSemesterJenis(val)}
                         />
                       </div>
 

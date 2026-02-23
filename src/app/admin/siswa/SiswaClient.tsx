@@ -21,8 +21,8 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { DataTable } from '@/components/ui/DataTable'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
+import { StaggeredDropDown } from '@/components/ui/StaggeredDropDown'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
-import Dropdown from '@/components/ui/Dropdown'
 
 export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
   const router = useRouter()
@@ -166,19 +166,15 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Kelas</label>
-                <div className="relative">
-                  <Dropdown 
-                    placeholder="Pilih Kelas"
-                    value={uploadClassId}
-                    options={kelasList.map(k => ({
-                      value: k.id,
-                      label: k.nama_kelas,
-                      icon: Building2
-                    }))}
-                    onChange={(val) => setUploadClassId(val)}
-                  />
-                </div>
-              </div>
+              <StaggeredDropDown
+                required
+                value={uploadClassId}
+                onChange={(val) => setUploadClassId(val)}
+                placeholder="Pilih Kelas"
+                icon={<Building2 className="h-5 w-5" />}
+                options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
+              />
+            </div>
             
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">File Excel</label>

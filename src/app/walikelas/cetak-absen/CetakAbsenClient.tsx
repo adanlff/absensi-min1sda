@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { StaggeredDropDown } from '@/components/ui/StaggeredDropDown'
 import { 
   Table, 
   TableHeader, 
@@ -15,7 +16,6 @@ import {
   TableRow, 
   TableCell 
 } from '@/components/ui/Table'
-import Dropdown from '@/components/ui/Dropdown'
 
 export default function CetakAbsenClient({ 
   waliKelas, 
@@ -146,28 +146,22 @@ export default function CetakAbsenClient({
               >
                 <div>
                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Bulan</label>
-                  <Dropdown 
-                    placeholder="Pilih Bulan"
+                  <StaggeredDropDown
                     value={bulan}
-                    options={months.map((m, i) => ({
-                      value: (i + 1).toString(),
-                      label: m,
-                      icon: Calendar
-                    }))}
                     onChange={(val) => setBulan(val)}
+                    placeholder="Pilih Bulan"
+                    icon={<Calendar className="h-5 w-5" />}
+                    options={months.map((m, i) => ({ value: (i + 1).toString(), label: m }))}
                   />
                 </div>
                 <div>
                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Tahun</label>
-                  <Dropdown 
-                    placeholder="Pilih Tahun"
+                  <StaggeredDropDown
                     value={tahun}
-                    options={years.map(y => ({
-                      value: y.toString(),
-                      label: y.toString(),
-                      icon: Calendar
-                    }))}
                     onChange={(val) => setTahun(val)}
+                    placeholder="Pilih Tahun"
+                    icon={<Calendar className="h-5 w-5" />}
+                    options={years.map(y => ({ value: y.toString(), label: y.toString() }))}
                   />
                 </div>
               </motion.div>
@@ -180,15 +174,16 @@ export default function CetakAbsenClient({
               >
                 <div>
                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">Pilih Semester</label>
-                  <Dropdown 
-                    placeholder="Pilih Semester"
+                  <StaggeredDropDown
+                    required
                     value={semesterId}
+                    onChange={(val) => setSemesterId(val)}
+                    placeholder="Pilih Semester"
+                    icon={<BookOpen className="h-5 w-5" />}
                     options={availableSemesters.map(s => ({
                       value: s.id.toString(),
-                      label: `Semester ${s.jenis_semester.charAt(0).toUpperCase() + s.jenis_semester.slice(1)} - ${s.TahunAjaran.tahun}`,
-                      icon: BookOpen
+                      label: `Semester ${s.jenis_semester.charAt(0).toUpperCase() + s.jenis_semester.slice(1)} - ${s.TahunAjaran.tahun}`
                     }))}
-                    onChange={(val) => setSemesterId(val)}
                   />
                 </div>
               </motion.div>

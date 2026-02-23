@@ -16,8 +16,8 @@ import {
   TableRow, 
   TableCell 
 } from '@/components/ui/Table'
+import { StaggeredDropDown } from '@/components/ui/StaggeredDropDown'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
-import Dropdown from '@/components/ui/Dropdown'
 
 export default function WaliKelasClient({ walikelasList, kelasList }: { walikelasList: any[], kelasList: any[] }) {
   const router = useRouter()
@@ -300,15 +300,13 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Pilih Kelas</label>
-              <Dropdown 
-                placeholder="Pilih Kelas"
+              <StaggeredDropDown
+                required
                 value={formData.id_kelas}
-                options={kelasList.map(k => ({
-                  value: k.id.toString(),
-                  label: k.nama_kelas,
-                  icon: Building2
-                }))}
                 onChange={(val) => setFormData({ ...formData, id_kelas: val })}
+                placeholder="Pilih Kelas"
+                icon={<Building2 className="h-5 w-5" />}
+                options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
               />
             </div>
           </div>
@@ -363,15 +361,13 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Pilih Kelas</label>
-              <Dropdown 
-                placeholder="Pilih Kelas"
+              <StaggeredDropDown
+                required
                 value={formData.id_kelas}
-                options={kelasList.map(k => ({
-                  value: k.id.toString(),
-                  label: k.nama_kelas,
-                  icon: Building2
-                }))}
                 onChange={(val) => setFormData({ ...formData, id_kelas: val })}
+                placeholder="Pilih Kelas"
+                icon={<Building2 className="h-5 w-5" />}
+                options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
               />
             </div>
           </div>
