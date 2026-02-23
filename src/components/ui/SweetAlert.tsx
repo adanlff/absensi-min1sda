@@ -132,7 +132,7 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
       case "error":
         return "border-[#D93025] dark:border-[#D93025]";
       case "warning":
-        return "border-[#F4B400] dark:border-[#F4B400]";
+        return "border-[#D93025] dark:border-[#D93025]";
       case "info":
         return "border-[#005EB8] dark:border-[#005EB8]";
       default:
@@ -147,7 +147,7 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
       case "error":
         return "text-[#D93025] dark:text-[#FFFFFF]";
       case "warning":
-        return "text-[#F4B400] dark:text-[#1A1A1A]";
+        return "text-[#D93025] dark:text-[#FFFFFF]";
       case "info":
         return "text-[#005EB8] dark:text-[#FFFFFF]";
       default:
@@ -162,7 +162,7 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
       case "error":
         return "text-[#D93025] dark:text-[#FFFFFF]";
       case "warning":
-        return "text-[#F4B400] dark:text-[#1A1A1A]";
+        return "text-[#D93025] dark:text-[#FFFFFF]";
       case "info":
         return "text-[#005EB8] dark:text-[#FFFFFF]";
       default:
@@ -177,7 +177,7 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
       case "error":
         return "bg-gray-100 dark:bg-gray-800 text-[#D93025] dark:text-[#FFFFFF] hover:bg-gray-200 dark:hover:bg-gray-700";
       case "warning":
-        return "bg-gray-100 dark:bg-gray-800 text-[#F4B400] dark:text-[#1A1A1A] hover:bg-gray-200 dark:hover:bg-gray-700";
+        return "bg-gray-100 dark:bg-gray-800 text-[#D93025] dark:text-[#FFFFFF] hover:bg-gray-200 dark:hover:bg-gray-700";
       case "info":
         return "bg-gray-100 dark:bg-gray-800 text-[#005EB8] dark:text-[#FFFFFF] hover:bg-gray-200 dark:hover:bg-gray-700";
       default:
@@ -192,7 +192,7 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
       case "error":
         return "bg-[#D93025]";
       case "warning":
-        return "bg-[#F4B400]";
+        return "bg-[#D93025]";
       case "info":
         return "bg-[#005EB8]";
       default:

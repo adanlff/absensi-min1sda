@@ -164,7 +164,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
     <div className="max-w-7xl mx-auto md:max-w-none">
       <PageHeader 
         title="Kelola Kelas"
-        description="Kelola struktur kelas dan data siswa per kelas dalam satu tempat yang profesional"
+        description="Kelola struktur kelas dalam satu tempat yang profesional"
         className="mb-8 md:mb-12"
       />
 
