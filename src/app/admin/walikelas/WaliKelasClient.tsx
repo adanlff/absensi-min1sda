@@ -271,7 +271,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <User className="h-5 w-5" />
                 </div>
                 <input type="text" placeholder="Nama Lengkap" required value={formData.nama} onChange={e => setFormData({ ...formData, nama: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold" />
               </div>
             </div>
             <div className="space-y-2">
@@ -281,7 +281,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <AtSign className="h-5 w-5" />
                 </div>
                 <input type="text" placeholder="username" required value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-mono font-bold" />
               </div>
             </div>
           </div>
@@ -294,7 +294,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <LockIcon className="h-5 w-5" />
                 </div>
                 <input type="password" placeholder="••••••••" required value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold" />
               </div>
             </div>
             <div className="space-y-2">
@@ -304,7 +304,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <Building2 className="h-5 w-5" />
                 </div>
                 <select required value={formData.id_kelas} onChange={e => setFormData({ ...formData, id_kelas: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold appearance-none">
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold appearance-none">
                   <option value="">Pilih Kelas</option>
                   {kelasList.map(k => (
                     <option key={k.id} value={k.id}>{k.nama_kelas}</option>
@@ -336,7 +336,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <User className="h-5 w-5" />
                 </div>
                 <input type="text" placeholder="Nama Lengkap" required value={formData.nama} onChange={e => setFormData({ ...formData, nama: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold" />
               </div>
             </div>
             <div className="space-y-2">
@@ -346,7 +346,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <AtSign className="h-5 w-5" />
                 </div>
                 <input type="text" placeholder="username" required value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold" />
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-mono font-bold" />
               </div>
             </div>
           </div>
@@ -359,7 +359,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <LockIcon className="h-5 w-5" />
                 </div>
                 <input type="password" placeholder="Kosongkan jika tidak berubah" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold" />
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold" />
               </div>
             </div>
             <div className="space-y-2">
@@ -369,7 +369,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   <Building2 className="h-5 w-5" />
                 </div>
                 <select required value={formData.id_kelas} onChange={e => setFormData({ ...formData, id_kelas: e.target.value })}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all font-bold appearance-none">
+                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold appearance-none">
                   <option value="">Pilih Kelas</option>
                   {kelasList.map(k => (
                     <option key={k.id} value={k.id}>{k.nama_kelas}</option>

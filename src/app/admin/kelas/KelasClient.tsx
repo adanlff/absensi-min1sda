@@ -324,7 +324,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                 required 
                 value={namaKelas} 
                 onChange={e => setNamaKelas(e.target.value)}
-                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-bold text-center text-lg" 
+                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold text-center text-lg" 
                 autoFocus
               />
             </div>
@@ -356,7 +356,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   required 
                   value={studentForm.no} 
                   onChange={e => setStudentForm({ ...studentForm, no: e.target.value })}
-                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold text-lg" 
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-mono font-bold text-lg" 
                 />
               </div>
             </div>
@@ -371,7 +371,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   required 
                   value={studentForm.nis} 
                   onChange={e => setStudentForm({ ...studentForm, nis: e.target.value })}
-                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-mono font-bold text-lg" 
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-mono font-bold text-lg" 
                 />
               </div>
             </div>
@@ -387,7 +387,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                 required 
                 value={studentForm.nama} 
                 onChange={e => setStudentForm({ ...studentForm, nama: e.target.value })}
-                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-8 focus:ring-primary/5 focus:outline-none transition-all font-bold text-lg" 
+                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold text-lg" 
                 placeholder="Ex: Muhammad Alfian"
               />
             </div>

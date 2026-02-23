@@ -114,7 +114,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
                   <User className="h-5 w-5" />
                 </div>
                 <input type="text" name="nama" value={formData.nama} onChange={handleChange} required 
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
               </div>
             </div>
 
@@ -126,7 +126,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
                   <AtSign className="h-5 w-5" />
                 </div>
                 <input type="text" name="username" value={formData.username} onChange={handleChange} required 
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
               </div>
             </div>
 
@@ -138,7 +138,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
                   <Mail className="h-5 w-5" />
                 </div>
                 <input type="email" name="email" value={formData.email} onChange={handleChange}
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                        placeholder="admin@min1sidoarjo.sch.id" />
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
                   <Phone className="h-5 w-5" />
                 </div>
                 <input type="tel" name="telepon" value={formData.telepon} onChange={handleChange}
-                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
+                       className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                        placeholder="08123456789" />
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
                 <MapPin className="h-5 w-5" />
               </div>
               <textarea name="alamat" rows={4} value={formData.alamat} onChange={handleChange}
-                        className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium resize-none"
+                        className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium resize-none"
                         placeholder="Masukkan alamat lengkap..."></textarea>
             </div>
           </div>
@@ -178,7 +178,7 @@ export default function ProfilForm({ admin }: { admin: AdminData }) {
                 <Lock className="h-5 w-5" />
               </div>
               <input type="password" name="password" value={formData.password} onChange={handleChange}
-                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
+                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium"
                      placeholder="Masukkan password baru..." />
             </div>
           </div>

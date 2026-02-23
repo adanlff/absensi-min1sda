@@ -83,7 +83,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                 <Calendar className="h-5 w-5" />
               </div>
               <input type="text" value={tahun} onChange={(e) => setTahun(e.target.value)} placeholder="Contoh: 2024/2025"
-                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium shadow-sm"
+                     className="block w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium shadow-sm"
                      required pattern="[0-9]{4}/[0-9]{4}" />
             </div>
             <p className="text-xs text-gray-400 mt-2 px-1">Format: YYYY/YYYY (contoh: 2024/2025)</p>
@@ -197,7 +197,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                       
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Jenis Semester</label>
-                        <select name="jenis_semester" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold appearance-none cursor-pointer" required>
+                        <select name="jenis_semester" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold appearance-none cursor-pointer" required>
                           <option value="">Pilih Semester</option>
                           <option value="ganjil">Ganjil</option>
                           <option value="genap">Genap</option>
@@ -206,12 +206,12 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
 
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold" required />
+                        <input type="date" name="tanggal_mulai" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold" required />
                       </div>
 
                       <div className="space-y-2">
                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Tanggal Selesai</label>
-                        <input type="date" name="tanggal_selesai" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold" required />
+                        <input type="date" name="tanggal_selesai" className="w-full px-4 py-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 focus:border-primary focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold" required />
                       </div>
 
                       <div className="flex items-end">

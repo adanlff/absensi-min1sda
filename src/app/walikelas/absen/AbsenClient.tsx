@@ -204,7 +204,7 @@ export default function AbsenClient({
                 <Calendar className="h-5 w-5" />
               </div>
               <input type="date" value={tanggal} max={today} onChange={(e) => setTanggal(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
+                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium" />
             </div>
             <p className="text-xs text-gray-400 mt-2 px-1">Hanya dapat menginput hingga hari ini</p>
           </div>
@@ -323,7 +323,7 @@ export default function AbsenClient({
                                   <input type="text" value={attendance[student.id]?.keterangan || ''}
                                      onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
                                      placeholder="Keterangan"
-                                     className="w-full px-3 py-2 border border-gray-100 dark:border-slate-800 focus:border-primary text-sm rounded-xl focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all bg-transparent text-gray-900 dark:text-white font-medium" />
+                                     className="w-full px-3 py-2 border border-gray-100 dark:border-slate-800 focus:border-primary text-sm rounded-xl focus:outline-none transition-all bg-transparent text-gray-900 dark:text-white font-medium" />
                                </TableCell>
                             </MotionTableRow>
                          ))}
@@ -370,7 +370,7 @@ export default function AbsenClient({
                                  <input type="text" value={attendance[student.id]?.keterangan || ''}
                                     onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
                                     placeholder="Tambahkan keterangan" 
-                                    className="w-full p-3 border border-gray-100 dark:border-slate-800 focus:border-primary rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/5 transition-all bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-medium" />
+                                    className="w-full p-3 border border-gray-100 dark:border-slate-800 focus:border-primary rounded-xl text-sm focus:outline-none transition-all bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-medium" />
                              </div>
                           </div>
                        </div>

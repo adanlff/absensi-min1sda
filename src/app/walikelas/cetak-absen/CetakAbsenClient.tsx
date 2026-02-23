@@ -150,7 +150,7 @@ export default function CetakAbsenClient({
                       <Calendar className="h-5 w-5" />
                     </div>
                      <select value={bulan} onChange={e => setBulan(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
                       {months.map((m, i) => (
                         <option key={i} value={(i + 1).toString()}>{m}</option>
                       ))}
@@ -164,7 +164,7 @@ export default function CetakAbsenClient({
                       <Calendar className="h-5 w-5" />
                     </div>
                      <select value={tahun} onChange={e => setTahun(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer">
                       {years.map(y => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
@@ -184,7 +184,7 @@ export default function CetakAbsenClient({
                       <BookOpen className="h-5 w-5" />
                     </div>
                      <select value={semesterId} onChange={e => setSemesterId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/5 focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer" required>
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-medium appearance-none cursor-pointer" required>
                       <option value="">Pilih Semester</option>
                       {availableSemesters.map(s => (
                         <option key={s.id} value={s.id}>
