@@ -59,6 +59,16 @@ export async function POST(req: Request) {
       await prisma.semester.update({ where: { id }, data: { status: 'aktif' } })
       return NextResponse.json({ success: true, message: 'Semester berhasil diaktifkan!' })
 
+    } else if (action === 'delete_tahun') {
+      const { id } = body
+      await prisma.tahunAjaran.delete({ where: { id } })
+      return NextResponse.json({ success: true, message: 'Tahun ajaran berhasil dihapus!' })
+
+    } else if (action === 'delete_semester') {
+      const { id } = body
+      await prisma.semester.delete({ where: { id } })
+      return NextResponse.json({ success: true, message: 'Semester berhasil dihapus!' })
+
     }
 
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 })

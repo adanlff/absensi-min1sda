@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plus, Calendar, CheckCircle2, XCircle, Zap } from 'lucide-react'
+import { Plus, Calendar, CheckCircle2, XCircle, Zap, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
@@ -21,6 +21,18 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
     type: 'success',
     title: '',
     message: ''
+  })
+
+  const [confirmConfig, setConfirmConfig] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    action: () => void;
+  }>({
+    show: false,
+    title: '',
+    message: '',
+    action: () => { }
   })
 
   const showAlert = (type: AlertType, title: string, message: string) => {
@@ -143,28 +155,45 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  {ta.status !== 'aktif' && (
+                  <div className="flex items-center gap-3">
+                    {ta.status !== 'aktif' && (
+                      <>
+                        <Button 
+                          size="sm" 
+                          variant="success" 
+                          loading={loading} 
+                          onClick={() => handleAction({ action: 'activate', id: ta.id })} 
+                          icon={<Zap className="h-4 w-4" />}
+                          className="rounded-xl"
+                        >
+                          Aktifkan Tahun
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          loading={loading} 
+                          onClick={() => {
+                            setConfirmConfig({
+                              show: true,
+                              title: 'Hapus Tahun Ajaran',
+                              message: `Apakah Anda yakin ingin menghapus Tahun Ajaran ${ta.tahun}? Seluruh data semester di dalamnya juga akan terhapus.`,
+                              action: () => handleAction({ action: 'delete_tahun', id: ta.id })
+                            })
+                          }} 
+                          icon={<Trash2 className="h-4 w-4 text-red-500" />}
+                          className="rounded-xl hover:bg-red-50"
+                        />
+                      </>
+                    )}
                     <Button 
-                      size="sm" 
-                      variant="success" 
-                      loading={loading} 
-                      onClick={() => handleAction({ action: 'activate', id: ta.id })} 
-                      icon={<Zap className="h-4 w-4" />}
+                      onClick={() => toggleSemesterForm(ta.id)} 
+                      icon={<Plus className="h-5 w-5" />}
+                      variant={openSemesterForms[ta.id] ? 'ghost' : 'primary'}
                       className="rounded-xl"
                     >
-                      Aktifkan Tahun
+                      {openSemesterForms[ta.id] ? 'Tutup Form' : 'Tambah Semester'}
                     </Button>
-                  )}
-                  <Button 
-                    onClick={() => toggleSemesterForm(ta.id)} 
-                    icon={<Plus className="h-5 w-5" />}
-                    variant={openSemesterForms[ta.id] ? 'ghost' : 'primary'}
-                    className="rounded-xl"
-                  >
-                    {openSemesterForms[ta.id] ? 'Tutup Form' : 'Tambah Semester'}
-                  </Button>
-                </div>
+                  </div>
               </div>
 
               {/* Add Semester Form Container */}
@@ -255,24 +284,39 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                              </div>
                            </div>
 
-                           <div className="flex-shrink-0">
-                             {semester.status === 'aktif' ? (
-                                <div className="flex flex-col items-end">
-                                  <span className="flex items-center px-3 py-1 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg">
-                                    Aktif
-                                  </span>
-                                </div>
-                             ) : (
-                                <button 
-                                  onClick={() => handleAction({ action: 'activate_semester', id: semester.id })}
-                                  disabled={loading}
-                                  className="p-3 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-400 hover:text-primary hover:border-primary/30 hover:shadow-md transition-all rounded-xl disabled:opacity-50"
-                                  title="Aktifkan Semester"
-                                >
-                                  <Zap className="h-5 w-5" />
-                                </button>
-                             )}
-                           </div>
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              {semester.status === 'aktif' ? (
+                                 <div className="flex flex-col items-end">
+                                   <span className="flex items-center px-3 py-1 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg">
+                                     Aktif
+                                   </span>
+                                 </div>
+                              ) : (
+                                 <button 
+                                   onClick={() => handleAction({ action: 'activate_semester', id: semester.id })}
+                                   disabled={loading}
+                                   className="p-3 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-400 hover:text-primary hover:border-primary/30 hover:shadow-md transition-all rounded-xl disabled:opacity-50"
+                                   title="Aktifkan Semester"
+                                 >
+                                   <Zap className="h-5 w-5" />
+                                 </button>
+                              )}
+                              <button 
+                                onClick={() => {
+                                  setConfirmConfig({
+                                    show: true,
+                                    title: 'Hapus Semester',
+                                    message: `Apakah Anda yakin ingin menghapus Semester ${semester.jenis_semester} pada tahun ajaran ${ta.tahun}?`,
+                                    action: () => handleAction({ action: 'delete_semester', id: semester.id })
+                                  })
+                                }}
+                                disabled={loading}
+                                className="p-3 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-400 hover:text-red-500 hover:border-red-200 hover:shadow-md transition-all rounded-xl disabled:opacity-50"
+                                title="Hapus Semester"
+                              >
+                                <Trash2 className="h-5 w-5" />
+                              </button>
+                            </div>
                          </div>
                        </motion.div>
                     ))}
@@ -284,6 +328,34 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
         </div>
       </div>
     </Card>
+
+      <SweetAlert
+        type="warning"
+        title={confirmConfig.title}
+        message={confirmConfig.message}
+        show={confirmConfig.show}
+        onClose={() => setConfirmConfig({ ...confirmConfig, show: false })}
+      >
+        <div className="flex gap-3 mt-6">
+          <Button
+            fullWidth
+            variant="danger"
+            onClick={() => {
+              confirmConfig.action();
+              setConfirmConfig({ ...confirmConfig, show: false });
+            }}
+          >
+            Ya, Hapus
+          </Button>
+          <Button
+            fullWidth
+            variant="ghost"
+            onClick={() => setConfirmConfig({ ...confirmConfig, show: false })}
+          >
+            Batal
+          </Button>
+        </div>
+      </SweetAlert>
 
       <SweetAlert
         type={alert.type}
