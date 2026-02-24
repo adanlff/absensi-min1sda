@@ -364,95 +364,166 @@ export default function CetakAbsenClient({
                      </Button>
                  </div>
 
-                 <div className="print-area">
-                     <div className="text-center mb-6 md:mb-8 border-b-2 border-black dark:border-slate-700 pb-6">
-                       <h1 className="text-xl md:text-2xl font-bold mb-2 uppercase print:text-sm print:mb-1 dark:text-white">MIN 1 SIDOARJO</h1>
-                       <h2 className="text-lg md:text-xl font-semibold mb-2 print:text-xs print:mb-1 dark:text-white">{reportTitle}</h2>
-                       <p className="text-sm md:text-base print:text-[10px] print:mb-0 dark:text-gray-400">Kelas: {waliKelas.Kelas?.nama_kelas}</p>
-                       <p className="text-xs md:text-sm print:text-[10px] print:mb-2 dark:text-gray-400">Wali Kelas: {waliKelas.nama}</p>
-                    </div>
+                   {/* Paper Wrapper for Web UI - Hidden in Print */}
+                   <div className="mx-auto transition-all duration-300 print:hidden print-hidden-paper bg-white dark:bg-slate-900 rounded-[32px] shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-800"
+                     style={{
+                       width: '100%',
+                       maxWidth: '210mm',
+                     }}
+                   >
+                       {/* The Actual Content Area */}
+                       <div className="print-area bg-white dark:bg-slate-900 print:bg-white"
+                         style={{
+                           fontFamily: `'${fontFamily}', serif`,
+                           fontSize: `${fontSize}pt`,
+                           padding: `${margins.top}cm ${margins.right}cm ${margins.bottom}cm ${margins.left}cm`,
+                           minHeight: pageSize === 'A4' ? '297mm' : '330mm',
+                         }}
+                       >
+                          <div className="text-center mb-6 md:mb-8 border-b-2 border-black dark:border-slate-700 pb-6">
+                             <h1 className="text-xl md:text-2xl font-bold mb-2 uppercase dark:text-white">MIN 1 SIDOARJO</h1>
+                             <h2 className="text-lg md:text-xl font-semibold mb-2 dark:text-white">{reportTitle}</h2>
+                             <p className="text-sm md:text-base dark:text-gray-400 font-bold uppercase">KELAS {waliKelas.Kelas?.nama_kelas}</p>
+                          </div>
+     
+                          <div className="overflow-x-auto print:overflow-visible">
+                             <Table className="w-full text-left border-collapse border-black dark:border-slate-700">
+                                <TableHeader>
+                                   <TableRow className="print:border-b-0">
+                                       <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[50px]">No</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[120px]">NIS</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-left font-bold dark:text-white">Nama Siswa</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Hadir</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Sakit</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Izin</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Alpa</TableHead>
+                                   </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                   {attendanceData.map((student, i) => (
+                                       <TableRow key={student.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-slate-800 print:break-inside-avoid">
+                                         <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{i + 1}</TableCell>
+                                          <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.nis}</TableCell>
+                                          <TableCell className="border border-black dark:border-slate-700 p-2 font-medium dark:text-gray-300">
+                                            {student.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                                          </TableCell>
+                                         <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.hadir}</TableCell>
+                                         <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.sakit}</TableCell>
+                                         <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.izin}</TableCell>
+                                         <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.alpa}</TableCell>
+                                      </TableRow>
+                                   ))}
+                                </TableBody>
+                             </Table>
+                          </div>
+     
+                           <div className="mt-8 print:mt-10 break-inside-avoid text-right w-full">
+                                <div className="inline-block text-left">
+                                   <p className="text-sm mb-20 print:mb-16 dark:text-gray-400">Sidoarjo, {new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                                   <p className="text-sm font-semibold dark:text-white capitalize">{waliKelas.nama.toLowerCase()}</p>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
 
-                    <div className="overflow-x-auto print:overflow-visible">
-                       <Table className="w-full text-left print:table-fixed print:text-[10px] border-collapse">
-                          <TableHeader>
-                             <TableRow>
-                                 <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[5%] dark:text-white">No</TableHead>
-                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[15%] dark:text-white">NIS</TableHead>
-                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-left font-bold print:w-[40%] dark:text-white">Nama Siswa</TableHead>
-                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Hadir</TableHead>
-                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Sakit</TableHead>
-                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Izin</TableHead>
-                                <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold print:w-[10%] dark:text-white">Alpa</TableHead>
-                             </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                             {attendanceData.map((student, i) => (
-                                 <TableRow key={student.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-slate-800 print:break-inside-avoid">
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.no}</TableCell>
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center font-mono dark:text-gray-300">{student.nis}</TableCell>
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 font-medium dark:text-gray-300">{student.nama}</TableCell>
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.hadir}</TableCell>
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.sakit}</TableCell>
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.izin}</TableCell>
-                                   <TableCell className="border border-black dark:border-slate-700 p-2 text-center dark:text-gray-300">{student.alpa}</TableCell>
-                                </TableRow>
-                             ))}
-                          </TableBody>
+                   {/* Content Area for Print (Clean Container) */}
+                   <div className="hidden print:block bg-white print-report-container"
+                     style={{
+                       fontFamily: `'${fontFamily}', serif`,
+                       fontSize: `${fontSize}pt`,
+                     }}
+                   >
+                       <div className="text-center mb-10 border-b-2 border-black pb-6">
+                           <h1 className="text-2xl font-bold mb-2 uppercase">MIN 1 SIDOARJO</h1>
+                           <h2 className="text-xl font-semibold mb-2">{reportTitle}</h2>
+                           <p className="text-base font-bold uppercase">KELAS {waliKelas.Kelas?.nama_kelas}</p>
+                       </div>
+
+                       <Table className="w-full text-left border-collapse border-black">
+                           <TableHeader>
+                               <TableRow className="border-b-0">
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-center font-bold w-[50px]">No</TableHead>
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-center font-bold w-[120px]">NIS</TableHead>
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-left font-bold">Nama Siswa</TableHead>
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-center font-bold w-[60px]">Hadir</TableHead>
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-center font-bold w-[60px]">Sakit</TableHead>
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-center font-bold w-[60px]">Izin</TableHead>
+                                   <TableHead className="border border-black p-2 bg-gray-50 text-center font-bold w-[60px]">Alpa</TableHead>
+                               </TableRow>
+                           </TableHeader>
+                           <TableBody>
+                               {attendanceData.map((student, i) => (
+                                   <TableRow key={student.id} className="break-inside-avoid">
+                                       <TableCell className="border border-black p-2 text-center">{i + 1}</TableCell>
+                                       <TableCell className="border border-black p-2 text-center">{student.nis}</TableCell>
+                                       <TableCell className="border border-black p-2 font-medium">
+                                           {student.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                                       </TableCell>
+                                       <TableCell className="border border-black p-2 text-center">{student.hadir}</TableCell>
+                                       <TableCell className="border border-black p-2 text-center">{student.sakit}</TableCell>
+                                       <TableCell className="border border-black p-2 text-center">{student.izin}</TableCell>
+                                       <TableCell className="border border-black p-2 text-center">{student.alpa}</TableCell>
+                                   </TableRow>
+                               ))}
+                           </TableBody>
                        </Table>
-                    </div>
 
-                    <div className="mt-8 print:mt-10 font-sans break-inside-avoid">
-                         <div className="ml-auto w-48 text-right print:w-[200px]">
-                            <p className="text-sm print:text-[10px] mb-8 print:mb-12 dark:text-gray-400">Sidoarjo, {new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}<br/>Wali Kelas,</p>
-                            <div className="border-b border-black dark:border-slate-700 w-full mb-1" />
-                            <p className="text-sm print:text-[10px] font-semibold text-center dark:text-white">{waliKelas.nama}</p>
-                        </div>
-                    </div>
-                 </div>
-             </div>
-          </Card>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {hasSubmitted && attendanceData.length === 0 && (
-           <Card className="p-8 md:p-16 text-center print:hidden">
-            <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 dark:bg-slate-800 rounded-[30px] flex items-center justify-center">
-                  <BarChart3 className="h-10 w-10 text-gray-400 dark:text-slate-600" />
-              </div>
-              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Tidak ada data kehadiran</h4>
-              <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Belum ada data kehadiran untuk periode yang dipilih.</p>
+                       <div className="mt-10 break-inside-avoid text-right w-full">
+                           <div className="inline-block text-left">
+                               <p className="mb-16">Sidoarjo, {new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                               <p className="font-semibold capitalize">{waliKelas.nama.toLowerCase()}</p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
            </Card>
-        )}
-      </AnimatePresence>
+         )}
+       </AnimatePresence>
 
-      <style jsx global>{`
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .print-area, .print-area * {
-                visibility: visible;
-            }
-            .print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            @page { 
-                margin: ${margins.top}cm ${margins.right}cm ${margins.bottom}cm ${margins.left}cm; 
-                size: ${pageSize === 'A4' ? 'A4' : '210mm 330mm'} portrait; 
-            }
-            .print-area {
-                font-family: '${fontFamily}', serif !important;
-                font-size: ${fontSize}pt !important;
-            }
-            .print-area * {
-                font-family: inherit !important;
-            }
-        }
-      `}</style>
+       <AnimatePresence>
+         {hasSubmitted && attendanceData.length === 0 && (
+            <Card className="p-8 md:p-16 text-center print:hidden">
+             <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 dark:bg-slate-800 rounded-[30px] flex items-center justify-center">
+                   <BarChart3 className="h-10 w-10 text-gray-400 dark:text-slate-600" />
+               </div>
+               <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Tidak ada data kehadiran</h4>
+               <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Belum ada data kehadiran untuk periode yang dipilih.</p>
+            </Card>
+         )}
+       </AnimatePresence>
+
+        <style jsx global>{`
+         @media print {
+             body {
+                 margin: 0 !important;
+                 padding: 0 !important;
+                 background: white !important;
+             }
+             /* Hide the web-only paper preview completely to save space */
+             .print-hidden-paper {
+                 display: none !important;
+             }
+             .print-report-container {
+                 position: absolute !important;
+                 top: 0 !important;
+                 left: 0 !important;
+                 width: 100% !important;
+                 display: block !important;
+                 background: white !important;
+             }
+             @page {
+                 margin: ${margins.top}cm ${margins.right}cm ${margins.bottom}cm ${margins.left}cm;
+                 size: ${pageSize === 'A4' ? 'A4' : '210mm 330mm'} portrait;
+             }
+             /* Ensure table borders are visible */
+             .print-report-container table {
+                 border-collapse: collapse !important;
+             }
+             .print-report-container td, .print-report-container th {
+                 border-color: black !important;
+             }
+         }
+       `}</style>
     </div>
-  )
+   )
 }
