@@ -256,7 +256,7 @@ export default function CetakAbsenClient({
                   onClick={() => setPageSize(size)}
                   className={`px-6 py-4 rounded-2xl font-bold transition-all border ${
                     pageSize === size 
-                      ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
+                      ? 'bg-primary text-white border-primary' 
                       : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-500 dark:text-gray-400 hover:border-primary/20'
                   }`}
                 >
@@ -278,17 +278,14 @@ export default function CetakAbsenClient({
                     min="0"
                     value={margins[side]}
                     onChange={(e) => setMargins({ ...margins, [side]: parseFloat(e.target.value) || 0 })}
-                    className="w-full pl-4 pr-10 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
+                    className="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase text-gray-400 tracking-wider">
-                    {side === 'top' ? 'T' : side === 'bottom' ? 'B' : side === 'left' ? 'L' : 'R'}
-                  </span>
                 </div>
               ))}
             </div>
             <div className="flex justify-between px-1">
                <p className="text-xs text-gray-400">Atas, Bawah, Kiri, Kanan</p>
-               <p className="text-xs font-bold text-primary">Satuan: CM</p>
+               <p className="text-xs font-bold text-gray-900 dark:text-white">Satuan: CM</p>
             </div>
           </div>
         </div>

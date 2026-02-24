@@ -94,7 +94,7 @@ export function StaggeredDropDown({
             exit="closed"
             variants={wrapperVariants}
             style={{ originY: 'top' }}
-            className="flex flex-col gap-1 p-3 rounded-[24px] bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 absolute top-[calc(100%+8px)] left-0 w-full z-[100] overflow-hidden max-h-60 overflow-y-auto"
+            className="flex flex-col gap-1 p-3 rounded-[24px] bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 absolute top-[calc(100%+8px)] left-0 w-full z-[100] overflow-hidden max-h-60 overflow-y-auto scrollbar-hide"
           >
             {options.map(option => (
               <motion.li
