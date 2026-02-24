@@ -213,10 +213,10 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
               {getIcon()}
             </div>
             <div className="ml-4 w-full">
-              <h3 className={`text-lg font-semibold ${getTextColors()}`}>
+              <h3 className={`text-xl font-bold ${getTextColors()}`}>
                 {title}
               </h3>
-              <div className={`mt-2 text-sm ${getTextColors()}`}>
+              <div className={`mt-2 text-base font-medium ${getTextColors()}`}>
                 <p>{message}</p>
               </div>
             </div>
@@ -246,14 +246,6 @@ const SweetAlert: React.FC<SweetAlertProps> = ({
           {children}
         </CardContent>
         
-        {duration > 0 && !children && (
-          <div className="w-full h-1 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-            <div 
-              className={`h-full ${getProgressBarColors()} animate-progress`}
-              style={{ animationDuration: `${duration}ms` }}
-            />
-          </div>
-        )}
       </Card>
     </div>
   );

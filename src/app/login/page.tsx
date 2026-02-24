@@ -121,14 +121,14 @@ export default function LoginPage() {
                   
                   <div className="text-white space-y-4">
                       <div className="space-y-1">
-                        <h2 className="text-3xl xl:text-4xl font-bold tracking-tight">Selamat Datang</h2>
-                        <p className="text-lg font-light text-white/80">Sistem Informasi Absensi</p>
+                        <h2 className="text-4xl xl:text-5xl font-bold tracking-tight">Selamat Datang</h2>
+                        <p className="text-xl font-light text-white/80">Sistem Informasi Absensi</p>
                       </div>
                       
                       <div className="w-12 h-1 bg-white/30 mx-auto rounded-full" />
                       
                       <div className="space-y-1">
-                          <p className="text-xl font-bold tracking-wide">MIN 1 Sidoarjo</p>
+                          <p className="text-2xl font-bold tracking-wide">MIN 1 Sidoarjo</p>
                           <p className="text-[10px] text-white/60 tracking-widest uppercase">Membangun Generasi Madani</p>
                       </div>
                   </div>
@@ -147,19 +147,19 @@ export default function LoginPage() {
                   </div>
                   
                   <div>
-                      <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight mb-1">Login ke Sistem</h1>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Pilih peran dan gunakan akun Anda</p>
+                      <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-2">Login ke Sistem</h1>
+                      <p className="text-gray-500 dark:text-gray-400 text-base font-medium">Pilih peran dan gunakan akun Anda</p>
                   </div>
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Role Tabs Style */}
                       <div className="space-y-2">
-                        <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em] ml-1">Kategori Akses</span>
+                        <span className="text-[11px] font-bold text-primary uppercase tracking-[0.2em] ml-1">Kategori Akses</span>
                         <div className="grid grid-cols-2 gap-2 bg-gray-50/50 dark:bg-slate-950 p-1 rounded-2xl border border-gray-100 dark:border-slate-800">
                           <button 
                             type="button"
                             onClick={() => selectRole('admin')}
-                            className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl transition-all duration-300 font-bold text-[10px] ${selectedRole === 'admin' ? 'bg-white dark:bg-slate-800 text-primary shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-700 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                            className={`flex items-center justify-center space-x-2 py-3 rounded-xl transition-all duration-300 font-bold text-base ${selectedRole === 'admin' ? 'bg-white dark:bg-slate-800 text-primary shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-700 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                           >
                             <ShieldCheck className={`w-3.5 h-3.5 ${selectedRole === 'admin' ? 'text-primary' : 'text-gray-300'}`} />
                             <span>ADMIN</span>
@@ -167,7 +167,7 @@ export default function LoginPage() {
                           <button 
                             type="button"
                             onClick={() => selectRole('walikelas')}
-                            className={`flex items-center justify-center space-x-2 py-2.5 rounded-xl transition-all duration-300 font-bold text-[10px] ${selectedRole === 'walikelas' ? 'bg-white dark:bg-slate-800 text-primary shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-700 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                            className={`flex items-center justify-center space-x-2 py-3 rounded-xl transition-all duration-300 font-bold text-base ${selectedRole === 'walikelas' ? 'bg-white dark:bg-slate-800 text-primary shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-700 translate-y-[-1px]' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                           >
                             <GraduationCap className={`w-3.5 h-3.5 ${selectedRole === 'walikelas' ? 'text-primary' : 'text-gray-300'}`} />
                             <span>WALI KELAS</span>
@@ -186,7 +186,7 @@ export default function LoginPage() {
                             required 
                             value={username}
                             onChange={e => setUsername(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary transition-all outline-none text-xs font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
+                            className="w-full pl-11 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary transition-all outline-none text-base font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
                             placeholder="Username" 
                           />
                         </div>
@@ -200,7 +200,7 @@ export default function LoginPage() {
                             required 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary transition-all outline-none text-xs font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
+                            className="w-full pl-11 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary transition-all outline-none text-base font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
                             placeholder="Password" 
                           />
                         </div>
@@ -212,7 +212,7 @@ export default function LoginPage() {
                         whileTap={{ scale: 0.97 }}
                         type="submit" 
                         disabled={isLoading}
-                        className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-bold text-xs tracking-[0.2em] rounded-2xl shadow-lg shadow-primary/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
+                        className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-bold text-sm tracking-[0.2em] rounded-2xl shadow-lg shadow-primary/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
                       >
                         {isLoading ? (
                           <>
@@ -230,12 +230,12 @@ export default function LoginPage() {
                   
                   {/* Footer links */}
                   <div className="flex flex-col items-center pt-5 border-t border-gray-50 dark:border-slate-800">
-                      <p className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-3">Lupa Password / Butuh Bantuan?</p>
+                      <p className="text-[11px] font-bold text-gray-300 uppercase tracking-widest mb-3">Lupa Password / Butuh Bantuan?</p>
                       <a 
                         href="https://wa.me/08123456789" 
                         target="_blank" 
                         rel="noreferrer"
-                        className="flex items-center space-x-2 text-primary hover:text-primary/80 font-bold text-xs transition-colors py-2 px-6 rounded-full bg-primary/5"
+                        className="flex items-center space-x-2 text-primary hover:text-primary/80 font-bold text-sm transition-colors py-3 px-8 rounded-full bg-primary/5"
                       >
                           <Phone className="w-4 h-4" />
                           <span>HUBUNGI ADMIN</span>

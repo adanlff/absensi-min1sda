@@ -293,7 +293,7 @@ export default function Sidebar({
           <button
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="flex-1 py-3 px-4 bg-[#D93025] hover:bg-[#c41c1c] text-white rounded-2xl transition-all shadow-lg shadow-red-200 dark:shadow-none disabled:opacity-50 flex items-center justify-center font-bold"
+            className="flex-1 py-3 px-4 bg-[#D93025] hover:bg-[#c41c1c] text-white rounded-2xl transition-all disabled:opacity-50 flex items-center justify-center font-bold"
           >
             {isLoggingOut ? (
               <>

@@ -365,7 +365,7 @@ export default function CetakAbsenClient({
                  </div>
 
                    {/* Paper Wrapper for Web UI - Hidden in Print */}
-                   <div className="mx-auto transition-all duration-300 print:hidden print-hidden-paper bg-white dark:bg-slate-900 rounded-[32px] shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-800"
+                   <div className="mx-auto transition-all duration-300 print:hidden print-hidden-paper bg-white dark:bg-slate-900 rounded-[32px] shadow-sm hover:shadow-md border border-gray-100 dark:border-slate-800 overflow-hidden"
                      style={{
                        width: '100%',
                        maxWidth: '210mm',
