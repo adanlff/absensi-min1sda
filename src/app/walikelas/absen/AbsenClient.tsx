@@ -18,6 +18,8 @@ import {
 } from '@/components/ui/Table'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
+const MotionTableRow = motion(TableRow)
+
 export default function AbsenClient({ 
   waliKelas, 
   students, 
@@ -30,11 +32,11 @@ export default function AbsenClient({
   initialSearch: string
 }) {
   const router = useRouter()
-  const MotionTableRow = motion(TableRow)
   const searchParams = useSearchParams()
   
   const [search, setSearch] = useState(initialSearch)
   const [tanggal, setTanggal] = useState(initialDate)
+  const [isSearching, setIsSearching] = useState(false)
   const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState<{
     show: boolean;
@@ -69,19 +71,23 @@ export default function AbsenClient({
   useEffect(() => {
     const handler = setTimeout(() => {
       if (search !== initialSearch || tanggal !== initialDate) {
-        const params = new URLSearchParams(searchParams.toString())
+        setIsSearching(true)
+        const params = new URLSearchParams()
         if (search) params.set('search', search)
-        else params.delete('search')
-        
         if (tanggal) params.set('tanggal', tanggal)
-        else params.delete('tanggal')
         
-        router.push(`/walikelas/absen?${params.toString()}`)
+        router.push(`/walikelas/absen?${params.toString()}`, { scroll: false })
       }
     }, 500)
     
-    return () => clearTimeout(handler)
-  }, [search, tanggal, initialSearch, initialDate, router, searchParams])
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [search, tanggal, initialSearch, initialDate, router])
+
+  useEffect(() => {
+    setIsSearching(false)
+  }, [students])
 
 
 
@@ -165,10 +171,10 @@ export default function AbsenClient({
   const today = new Date().toISOString().split('T')[0]
 
   const bulkActions = [
-    { label: 'Semua Hadir', status: 'hadir', icon: Check, className: 'bg-emerald-500 hover:bg-emerald-600 text-white' },
-    { label: 'Semua Sakit', status: 'sakit', icon: Heart, className: 'bg-green-500 hover:bg-green-600 text-white' },
-    { label: 'Semua Izin', status: 'izin', icon: FileText, className: 'bg-amber-500 hover:bg-amber-600 text-white' },
-    { label: 'Semua Alpa', status: 'alpa', icon: AlertCircle, className: 'bg-red-500 hover:bg-red-600 text-white' }
+    { label: 'Semua Hadir', status: 'hadir', icon: Check, className: 'bg-primary hover:bg-primary/90 text-white' },
+    { label: 'Semua Sakit', status: 'sakit', icon: Heart, className: 'bg-[#F4B400] hover:bg-[#F4B400]/90 text-white' },
+    { label: 'Semua Izin', status: 'izin', icon: FileText, className: 'bg-gray-500 hover:bg-gray-600 text-white' },
+    { label: 'Semua Alpa', status: 'alpa', icon: X, className: 'bg-[#D93025] hover:bg-[#D93025]/90 text-white' }
   ]
 
   return (
@@ -177,15 +183,9 @@ export default function AbsenClient({
       <PageHeader 
         title="Input Absen"
         description={`Input kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'}`}
-      >
-        <SearchBox 
-          value={search} 
-          onChange={setSearch} 
-          placeholder="Cari nama atau NIS siswa..." 
-        />
-      </PageHeader>
+      />
 
-      <Card className="mb-6 md:mb-8">
+      <Card className="mb-6 md:mb-8 shadow-none">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">
           <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
             <Calendar className="h-5 w-5 md:h-6 md:w-6 text-primary" />
@@ -223,33 +223,8 @@ export default function AbsenClient({
 
       {students.length > 0 ? (
         <>
-          <Card className="mb-6 md:mb-8">
-            <div className="flex items-center space-x-4 mb-6 md:mb-8">
-              <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-                <Zap className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Aksi Massal</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Tandai semua siswa dengan status yang sama</p>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              {bulkActions.map((btn) => (
-                <button 
-                  key={btn.status}
-                  disabled={loading} 
-                  onClick={() => handleBulkAction(btn.status)} 
-                  className={`w-full px-3 md:px-6 py-3 md:py-4 rounded-2xl font-bold transition-all disabled:opacity-50 text-xs md:text-sm flex items-center justify-center space-x-2 ${btn.className}`}
-                >
-                  <btn.icon className="h-4 w-4 md:h-5 md:w-5" />
-                  <span>{btn.label}</span>
-                </button>
-              ))}
-            </div>
-          </Card>
 
-          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
+          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 shadow-none">
             <div className="p-4 md:p-6 lg:p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
                 <div className="flex items-center space-x-4">
@@ -263,69 +238,110 @@ export default function AbsenClient({
                     </p>
                   </div>
                 </div>
-                <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-50 dark:bg-slate-950 rounded-full w-fit">
-                   <div className="w-2 h-2 bg-emerald-500 rounded-full" />
-                   <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Input Mode</span>
+                <div className="w-full md:w-auto md:min-w-[300px] relative">
+                  <SearchBox 
+                    value={search} 
+                    onChange={setSearch} 
+                    placeholder="Cari nama atau NIS siswa..." 
+                    className={isSearching ? 'opacity-70' : ''}
+                  />
+                  {isSearching && (
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bulk Actions Integrated Above Table */}
+              <div className="mb-6 md:mb-8 p-4 md:p-6 bg-gray-50/50 dark:bg-slate-900/50 rounded-[32px] border border-gray-100 dark:border-slate-800">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="p-1.5 rounded-lg bg-primary/10">
+                    <Zap className="h-4 w-4 text-primary" />
+                  </div>
+                  <h4 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider">Aksi Cepat Massal</h4>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {bulkActions.map((btn) => (
+                    <button 
+                      key={btn.status}
+                      disabled={loading} 
+                      onClick={() => handleBulkAction(btn.status)} 
+                      className={`w-full px-4 py-3 rounded-2xl font-bold transition-all disabled:opacity-50 text-[11px] md:text-xs flex items-center justify-center space-x-2 ${btn.className}`}
+                    >
+                      <btn.icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                      <span>{btn.label}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
 
               {/* Desktop Table */}
-              <div className="hidden md:block overflow-x-auto">
-                  <Table>
-                      <TableHeader>
-                          <TableRow className="border-b border-gray-100 dark:border-slate-800">
-                              <TableHead className="px-3 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12 text-center">No</TableHead>
-                              <TableHead className="px-3 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-28">NIS</TableHead>
-                              <TableHead className="px-3 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nama Siswa</TableHead>
-                              <TableHead className="px-3 py-4 text-center text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-48">Kehadiran</TableHead>
-                              <TableHead className="px-3 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-40">Keterangan</TableHead>
+              <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
+                  <Table className="table-fixed w-full">
+                      <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
+                          <TableRow>
+                              <TableHead className="w-[6%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                                 <div className="flex items-center justify-center">No</div>
+                              </TableHead>
+                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                                 <div className="flex items-center justify-center">NIS</div>
+                              </TableHead>
+                              <TableHead className="w-[36%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                                 <div className="flex items-center justify-center">Nama Siswa</div>
+                              </TableHead>
+                              <TableHead className="w-[22%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                                 <div className="flex items-center justify-center">Kehadiran</div>
+                              </TableHead>
+                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                                 <div className="flex items-center justify-center">Keterangan</div>
+                              </TableHead>
                           </TableRow>
                       </TableHeader>
                       <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
                          {students.map((student, index) => (
-                            <MotionTableRow 
+                            <TableRow 
                               key={student.id} 
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: index * 0.02 }}
-                              className="hover:bg-gray-50/50 dark:hover:bg-slate-900/50 transition-colors"
+                              className="hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors"
                             >
-                               <TableCell className="px-3 py-4 whitespace-nowrap">
-                                  <div className="flex items-center justify-center w-9 h-9 bg-primary/5 rounded-2xl">
-                                     <span className="text-primary font-bold text-sm">{student.no}</span>
+                               <TableCell className="py-4 text-center">
+                                   <p className="font-bold text-gray-900 dark:text-white text-sm">{index + 1}</p>
+                               </TableCell>
+                               <TableCell className="py-4 text-center">
+                                  <span className="text-gray-900 dark:text-white font-bold text-sm">{student.nis}</span>
+                               </TableCell>
+                               <TableCell className="py-4 text-left px-6">
+                                  <p className="font-bold text-gray-900 dark:text-white text-sm">
+                                    {student.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                                  </p>
+                               </TableCell>
+                               <TableCell className="py-4">
+                                  <div className="flex items-center justify-center">
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                                       {[
+                                         { id: 'hadir', textColor: 'text-primary' },
+                                         { id: 'sakit', textColor: 'text-[#F4B400]' },
+                                         { id: 'izin', textColor: 'text-gray-500 dark:text-gray-400' },
+                                         { id: 'alpa', textColor: 'text-[#D93025]' }
+                                       ].map(status => (
+                                          <label key={status.id} className="flex items-center space-x-2 cursor-pointer group">
+                                             <input type="radio" 
+                                               checked={attendance[student.id]?.status === status.id}
+                                               onChange={() => handleAttendanceChange(student.id, 'status', status.id)}
+                                               className="w-4 h-4 focus:ring-primary text-primary cursor-pointer accent-primary" />
+                                             <span className={`text-[11px] font-black uppercase tracking-wider ${status.textColor}`}>{status.id}</span>
+                                          </label>
+                                       ))}
+                                    </div>
                                   </div>
                                </TableCell>
-                               <TableCell className="px-3 py-4 whitespace-nowrap">
-                                  <span className="font-mono text-gray-500 dark:text-gray-400 font-semibold tracking-wider text-sm">{student.nis}</span>
-                               </TableCell>
-                               <TableCell className="px-3 py-4 whitespace-nowrap">
-                                  <p className="font-semibold text-gray-900 dark:text-white text-base">{student.nama}</p>
-                               </TableCell>
-                               <TableCell className="px-3 py-4">
-                                  <div className="grid grid-cols-2 gap-2">
-                                     {[
-                                       { id: 'hadir', color: 'emerald' },
-                                       { id: 'sakit', color: 'green' },
-                                       { id: 'izin', color: 'amber' },
-                                       { id: 'alpa', color: 'red' }
-                                     ].map(status => (
-                                        <label key={status.id} className="flex items-center space-x-2 cursor-pointer group">
-                                           <input type="radio" 
-                                             checked={attendance[student.id]?.status === status.id}
-                                             onChange={() => handleAttendanceChange(student.id, 'status', status.id)}
-                                             className={`w-4 h-4 focus:ring-${status.color}-500 text-${status.color}-600 dark:text-${status.color}-400 cursor-pointer`} />
-                                           <span className={`text-xs font-bold text-${status.color === 'emerald' ? 'emerald-700 dark:text-emerald-400' : status.color === 'green' ? 'green-700 dark:text-green-400' : status.color === 'amber' ? 'amber-700 dark:text-amber-400' : 'red-700 dark:text-red-400'} capitalize`}>{status.id}</span>
-                                        </label>
-                                     ))}
-                                  </div>
-                               </TableCell>
-                               <TableCell className="px-3 py-4">
+                               <TableCell className="py-4 px-4">
                                   <input type="text" value={attendance[student.id]?.keterangan || ''}
                                      onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
-                                     placeholder="Keterangan"
-                                     className="w-full px-3 py-2 border border-gray-100 dark:border-slate-800 focus:border-primary text-sm rounded-xl focus:outline-none transition-all bg-transparent text-gray-900 dark:text-white font-medium" />
+                                     placeholder="Keterangan..."
+                                     className="w-full px-4 py-2 bg-white dark:bg-slate-950 border border-gray-100 dark:border-slate-800 focus:border-primary text-xs rounded-xl focus:outline-none transition-all text-gray-900 dark:text-white font-bold" />
                                </TableCell>
-                            </MotionTableRow>
+                            </TableRow>
                          ))}
                       </TableBody>
                   </Table>
@@ -338,10 +354,12 @@ export default function AbsenClient({
                        <div className="flex flex-col gap-4">
                           <div className="flex items-start gap-3 flex-1">
                              <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
-                                 <span className="text-primary font-bold text-sm">{student.no}</span>
+                                 <span className="text-primary font-bold text-sm">{index + 1}</span>
                              </div>
                              <div className="flex-1 min-w-0">
-                                 <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{student.nama}</h4>
+                                 <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">
+                                   {student.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                                 </h4>
                                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
                                      <FileText className="h-3 w-3 mr-1.5 flex-shrink-0" />
                                      <span className="truncate font-mono">{student.nis}</span>
@@ -351,27 +369,27 @@ export default function AbsenClient({
                           <div className="flex flex-col gap-3 pt-3 border-t border-gray-100 dark:border-slate-800">
                              <div className="grid grid-cols-2 gap-2">
                                  {[
-                                   { id: 'hadir', color: 'emerald' },
-                                   { id: 'sakit', color: 'green' },
-                                   { id: 'izin', color: 'amber' },
-                                   { id: 'alpa', color: 'red' }
+                                   { id: 'hadir', textColor: 'text-primary' },
+                                   { id: 'sakit', textColor: 'text-[#F4B400]' },
+                                   { id: 'izin', textColor: 'text-gray-500 dark:text-gray-400' },
+                                   { id: 'alpa', textColor: 'text-[#D93025]' }
                                  ].map(status => (
                                    <label key={status.id} className="flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 cursor-pointer transition-colors">
                                       <input type="radio" 
                                         checked={attendance[student.id]?.status === status.id}
                                         onChange={() => handleAttendanceChange(student.id, 'status', status.id)}
-                                        className={`w-5 h-5 focus:ring-${status.color}-500 text-${status.color}-600 dark:text-${status.color}-400 cursor-pointer`} />
-                                      <span className={`text-xs font-bold text-${status.color === 'emerald' ? 'emerald-700 dark:text-emerald-400' : status.color === 'green' ? 'green-700 dark:text-green-400' : status.color === 'amber' ? 'amber-700 dark:text-amber-400' : 'red-700 dark:text-red-400'} capitalize`}>{status.id}</span>
+                                        className="w-5 h-5 focus:ring-primary text-primary cursor-pointer accent-primary" />
+                                      <span className={`text-xs font-bold ${status.textColor} capitalize`}>{status.id}</span>
                                    </label>
                                  ))}
                              </div>
-                             <div>
-                                 <label className="block text-xs font-semibold text-gray-700 mb-1">Keterangan</label>
-                                 <input type="text" value={attendance[student.id]?.keterangan || ''}
-                                    onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
-                                    placeholder="Tambahkan keterangan" 
-                                    className="w-full p-3 border border-gray-100 dark:border-slate-800 focus:border-primary rounded-xl text-sm focus:outline-none transition-all bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-medium" />
-                             </div>
+                               <div className="bg-white dark:bg-slate-950 p-4 rounded-xl border border-gray-100 dark:border-slate-800">
+                                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2">Keterangan</label>
+                                  <input type="text" value={attendance[student.id]?.keterangan || ''}
+                                     onChange={(e) => handleAttendanceChange(student.id, 'keterangan', e.target.value)}
+                                     placeholder="Tambahkan keterangan..." 
+                                     className="w-full p-3 border border-gray-100 dark:border-slate-800 focus:border-primary rounded-xl text-xs focus:outline-none transition-all bg-gray-50/50 dark:bg-slate-900/50 text-gray-900 dark:text-white font-bold" />
+                               </div>
                           </div>
                        </div>
                     </div>
@@ -387,12 +405,12 @@ export default function AbsenClient({
           </Card>
         </>
       ) : (
-        <Card className="p-12 md:p-20 text-center">
+        <Card className="p-12 md:p-20 text-center shadow-none">
             <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 w-fit mx-auto mb-6">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Tidak ada data siswa</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-md mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-md mx-auto font-medium">
               Belum ada siswa di kelas Anda atau Anda belum ditugaskan ke kelas manapun.
             </p>
         </Card>

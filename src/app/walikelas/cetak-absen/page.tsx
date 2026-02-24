@@ -7,8 +7,9 @@ import CetakAbsenClient from '@/app/walikelas/cetak-absen/CetakAbsenClient'
 export default async function WalikelasCetakAbsenPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const resolvedSearchParams = await searchParams
   const session = await getSession()
   if (!session || session.role !== 'walikelas') return null
 
@@ -28,10 +29,10 @@ export default async function WalikelasCetakAbsenPage({
     return <CetakAbsenClient waliKelas={waliKelas} availableSemesters={availableSemesters} attendanceData={[]} reportTitle="" />
   }
 
-  const bulan = typeof searchParams.bulan === 'string' ? searchParams.bulan : new Date().getMonth() + 1 + ''
-  const tahun = typeof searchParams.tahun === 'string' ? searchParams.tahun : new Date().getFullYear() + ''
-  const semester_id = typeof searchParams.semester_id === 'string' ? searchParams.semester_id : ''
-  const report_type = typeof searchParams.report_type === 'string' ? searchParams.report_type : 'monthly'
+  const bulan = typeof resolvedSearchParams.bulan === 'string' ? resolvedSearchParams.bulan : new Date().getMonth() + 1 + ''
+  const tahun = typeof resolvedSearchParams.tahun === 'string' ? resolvedSearchParams.tahun : new Date().getFullYear() + ''
+  const semester_id = typeof resolvedSearchParams.semester_id === 'string' ? resolvedSearchParams.semester_id : ''
+  const report_type = typeof resolvedSearchParams.report_type === 'string' ? resolvedSearchParams.report_type : 'monthly'
 
   let attendanceData: any[] = []
   let reportTitle = ''

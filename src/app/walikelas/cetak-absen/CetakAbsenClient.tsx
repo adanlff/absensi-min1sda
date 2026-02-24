@@ -66,7 +66,7 @@ export default function CetakAbsenClient({
     } else {
       if (semesterId) params.set('semester_id', semesterId)
     }
-    router.push(`/walikelas/cetak-absen?${params.toString()}`)
+    router.push(`/walikelas/cetak-absen?${params.toString()}`, { scroll: false })
   }
 
   const handlePrint = () => {

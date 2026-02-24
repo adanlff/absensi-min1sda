@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatCard } from '@/components/ui/StatCard'
-import { SearchBox } from '@/components/ui/SearchBox'
-import { DataTable } from '@/components/ui/DataTable'
 import { Card } from '@/components/ui/Card'
 import { QuickActionCard } from '@/components/ui/QuickActionCard'
 import { 
@@ -16,9 +14,16 @@ import {
   Zap, 
   ClipboardCheck, 
   Printer, 
-  UserCog, 
   Calendar
 } from 'lucide-react'
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from '@/components/ui/Table'
 
 export default function DashboardClient({ 
   waliKelas, 
@@ -46,57 +51,14 @@ export default function DashboardClient({
 
   const getStatusStyle = (status: string) => {
     switch(status.toLowerCase()) {
-      case 'sakit': return 'bg-emerald-50 text-emerald-700 border border-emerald-100'
-      case 'izin': return 'bg-amber-50 text-amber-700 border border-amber-100'
-      case 'alpa': return 'bg-red-50 text-red-700 border border-red-100'
-      default: return 'bg-gray-50 text-gray-700 border border-gray-100'
+      case 'hadir': return 'text-primary'
+      case 'sakit': return 'text-[#F4B400]'
+      case 'izin': return 'text-gray-500 dark:text-gray-400'
+      case 'alpa': return 'text-[#D93025]'
+      default: return 'text-gray-900 dark:text-white'
     }
   }
 
-  const columns = [
-    { 
-      header: 'No', 
-      accessor: (item: any) => (
-        <div className="flex items-center justify-center w-9 h-9 bg-primary/5 text-primary rounded-2xl font-bold text-sm">
-          {item.Siswa?.no}
-        </div>
-      ),
-      width: '60px',
-      className: 'text-center'
-    },
-    { 
-      header: 'NIS', 
-      accessor: (item: any) => <span className="font-mono text-gray-500 dark:text-gray-400 font-semibold tracking-wider text-sm">{item.Siswa?.nis}</span>,
-      width: '120px'
-    },
-    { 
-      header: 'Nama Siswa', 
-      accessor: (item: any) => <p className="font-semibold text-gray-900 dark:text-white text-base">{item.Siswa?.nama}</p> 
-    },
-    { 
-      header: 'Tanggal', 
-      accessor: (item: any) => (
-        <span className="text-gray-500 dark:text-gray-400 font-bold flex items-center text-sm">
-          <Calendar className="h-3.5 w-3.5 mr-1.5 text-gray-400 dark:text-slate-600" />
-          {formatDate(item.tanggal)}
-        </span>
-      ),
-      width: '140px'
-    },
-    { 
-      header: 'Status', 
-      accessor: (item: any) => (
-        <span className={`inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-bold uppercase ${getStatusStyle(item.status)}`}>
-          {item.status}
-        </span>
-      ),
-      width: '100px'
-    },
-    { 
-      header: 'Keterangan', 
-      accessor: (item: any) => <span className="text-gray-500 dark:text-gray-400 font-medium truncate max-w-[150px] inline-block text-sm">{item.keterangan || '-'}</span> 
-    }
-  ]
 
   return (
     <div className="max-w-7xl mx-auto md:max-w-none">
@@ -131,49 +93,105 @@ export default function DashboardClient({
             </div>
           </div>
 
-          <DataTable 
-            data={recentAbsences}
-            columns={columns}
-            keyExtractor={(item) => item.id}
-            emptyMessage="Tidak ada data ketidakhadiran dalam 7 hari terakhir"
-            renderMobileCard={(absence, index) => (
-              <div className="bg-gray-50/50 dark:bg-slate-900/50 rounded-[32px] p-4 border border-transparent dark:border-slate-800">
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-start gap-3 flex-1">
-                        <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
-                            <span className="text-primary font-bold text-sm">{absence.Siswa?.no}</span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">{absence.Siswa?.nama}</h4>
-                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
-                                <FileText className="h-3 w-3 mr-1.5 flex-shrink-0" />
-                                <span className="font-mono">{absence.Siswa?.nis}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="flex flex-col gap-3 pt-3 border-t border-gray-100 dark:border-slate-800">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-semibold">
-                                <Calendar className="h-3 w-3 mr-1.5 flex-shrink-0" />
-                                <span>{formatDate(absence.tanggal)}</span>
-                            </div>
-                            <span className={`inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-bold uppercase ${getStatusStyle(absence.status)}`}>
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
+              <Table className="table-fixed w-full">
+                  <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
+                      <TableRow>
+                          <TableHead className="w-[5%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                             <div className="flex items-center justify-center">No</div>
+                          </TableHead>
+                          <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                             <div className="flex items-center justify-center">NIS</div>
+                          </TableHead>
+                          <TableHead className="w-[35%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                             <div className="flex items-center justify-start px-6">Nama Siswa</div>
+                          </TableHead>
+                          <TableHead className="w-[15%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                             <div className="flex items-center justify-center">Tanggal</div>
+                          </TableHead>
+                          <TableHead className="w-[12%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                             <div className="flex items-center justify-center">Status</div>
+                          </TableHead>
+                          <TableHead className="w-[15%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                             <div className="flex items-center justify-center">Keterangan</div>
+                          </TableHead>
+                      </TableRow>
+                  </TableHeader>
+                  <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
+                     {recentAbsences.map((absence, index) => (
+                        <TableRow 
+                          key={absence.id} 
+                          className="hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors"
+                        >
+                           <TableCell className="py-4 text-center">
+                               <p className="font-bold text-gray-900 dark:text-white text-sm">{index + 1}</p>
+                           </TableCell>
+                           <TableCell className="py-4 text-center">
+                              <span className="text-gray-900 dark:text-white font-bold text-sm">{absence.Siswa?.nis}</span>
+                           </TableCell>
+                           <TableCell className="py-4 text-left px-6">
+                              <p className="font-bold text-gray-900 dark:text-white text-sm">
+                                {absence.Siswa?.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                              </p>
+                           </TableCell>
+                           <TableCell className="py-4 text-center">
+                              <span className="text-gray-900 dark:text-white font-bold text-sm">{formatDate(absence.tanggal)}</span>
+                           </TableCell>
+                           <TableCell className="py-4 text-center">
+                              <span className={`text-[11px] font-black uppercase tracking-wider ${getStatusStyle(absence.status)}`}>
                                 {absence.status}
+                              </span>
+                           </TableCell>
+                           <TableCell className="py-4 text-center truncate max-w-[150px]">
+                              <span className="text-gray-500 dark:text-gray-400 text-xs font-bold">{absence.keterangan || '-'}</span>
+                           </TableCell>
+                        </TableRow>
+                     ))}
+                  </TableBody>
+              </Table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-4">
+             {recentAbsences.map((absence, index) => (
+                <div key={absence.id} className="bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent dark:border-slate-800">
+                   <div className="flex flex-col gap-4">
+                      <div className="flex items-start gap-3 flex-1">
+                         <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
+                             <span className="text-primary font-bold text-sm">{index + 1}</span>
+                         </div>
+                         <div className="flex-1 min-w-0">
+                             <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">
+                               {absence.Siswa?.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                             </h4>
+                             <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
+                                 <FileText className="h-3 w-3 mr-1.5 flex-shrink-0" />
+                                 <span className="truncate font-mono">{absence.Siswa?.nis}</span>
+                             </div>
+                         </div>
+                      </div>
+                      <div className="flex flex-col gap-3 pt-3 border-t border-gray-100 dark:border-slate-800">
+                         <div className="flex items-center justify-between">
+                            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-bold">
+                               <Calendar className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                               <span>{formatDate(absence.tanggal)}</span>
+                            </div>
+                            <span className={`text-[10px] font-black uppercase tracking-wider ${getStatusStyle(absence.status)}`}>
+                               {absence.status}
                             </span>
-                        </div>
-                        
-                        {absence.keterangan && (
-                        <div className="text-xs text-gray-500 dark:text-gray-400 p-3 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
-                            <p className="font-bold text-[10px] uppercase text-gray-400 dark:text-gray-500 mb-1">Keterangan:</p>
-                            <p className="font-medium">{absence.keterangan}</p>
-                        </div>
-                        )}
-                    </div>
+                         </div>
+                         {absence.keterangan && (
+                           <div className="bg-white dark:bg-slate-950 p-4 rounded-xl border border-gray-100 dark:border-slate-800">
+                              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Keterangan</label>
+                              <p className="text-xs text-gray-900 dark:text-white font-bold">{absence.keterangan}</p>
+                           </div>
+                         )}
+                      </div>
+                   </div>
                 </div>
-              </div>
-            )}
-          />
+             ))}
+          </div>
         </div>
       </Card>
 

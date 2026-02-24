@@ -8,12 +8,13 @@ export const dynamic = 'force-dynamic'
 export default async function WalikelasDashboardPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const resolvedSearchParams = await searchParams
   const session = await getSession()
   if (!session || session.role !== 'walikelas') return null
 
-  const search = typeof searchParams.search === 'string' ? searchParams.search : ''
+  const search = typeof resolvedSearchParams.search === 'string' ? resolvedSearchParams.search : ''
 
   const tahunAjaranRow = await prisma.tahunAjaran.findFirst({ where: { status: 'aktif' } })
   const tahunAjaran = tahunAjaranRow ? tahunAjaranRow.tahun : '.../'
@@ -91,7 +92,7 @@ export default async function WalikelasDashboardPage({
       { tanggal: 'desc' },
       { Siswa: { no: 'asc' } }
     ],
-    take: 20
+    take: 100
   })
 
   const stats = { totalSiswa, sakit, izin, alpa }

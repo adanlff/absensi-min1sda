@@ -13,15 +13,15 @@ interface SearchBoxProps {
 export function SearchBox({ value, onChange, placeholder = 'Cari...', className = '' }: SearchBoxProps) {
   return (
     <div className={`relative group ${className}`}>
-      <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
-        <Search className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
+      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+        <Search className="h-5 w-5" />
       </div>
       <input 
         type="text" 
         value={value} 
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder} 
-        className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 focus:border-primary shadow-sm focus:outline-none text-base md:text-lg transition-all" 
+        className="block w-full h-[52px] pl-12 pr-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-sm text-gray-900 dark:text-white font-bold shadow-none" 
       />
     </div>
   )

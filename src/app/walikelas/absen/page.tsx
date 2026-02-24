@@ -8,8 +8,9 @@ export const dynamic = 'force-dynamic'
 export default async function WalikelasAbsenPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const resolvedSearchParams = await searchParams
   const session = await getSession()
   if (!session || session.role !== 'walikelas') return null
 
@@ -20,10 +21,10 @@ export default async function WalikelasAbsenPage({
   })
 
   // Get selected date or default to today
-  const selectedDateStr = typeof searchParams.tanggal === 'string' ? searchParams.tanggal : new Date().toISOString().split('T')[0]
+  const selectedDateStr = typeof resolvedSearchParams.tanggal === 'string' ? resolvedSearchParams.tanggal : new Date().toISOString().split('T')[0]
   
   // Get search parameter
-  const search = typeof searchParams.search === 'string' ? searchParams.search : ''
+  const search = typeof resolvedSearchParams.search === 'string' ? resolvedSearchParams.search : ''
 
   if (!waliKelas || !waliKelas.id_kelas) {
     return (
