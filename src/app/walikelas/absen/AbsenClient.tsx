@@ -185,10 +185,10 @@ export default function AbsenClient({
         description={`Input kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'}`}
       />
 
-      <Card className="mb-6 md:mb-8">
+      <Card className="mb-6 md:mb-8 shadow-none rounded-[32px]">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">
-          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-            <Calendar className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+            <Calendar className="h-6 w-6 text-primary" />
           </div>
           <div>
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Pilih Tanggal dan Kelas</h3>
@@ -224,12 +224,12 @@ export default function AbsenClient({
       {students.length > 0 ? (
         <>
 
-          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
+          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 shadow-none rounded-[32px]">
             <div className="p-4 md:p-6 lg:p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
                 <div className="flex items-center space-x-4">
-                  <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-                    <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+                    <Users className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Absensi</h3>
@@ -276,24 +276,23 @@ export default function AbsenClient({
                 </div>
               </div>
 
-              {/* Desktop Table */}
               <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
                   <Table className="table-fixed w-full">
                       <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
                           <TableRow>
-                              <TableHead className="w-[6%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[6%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">No</div>
                               </TableHead>
-                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">NIS</div>
                               </TableHead>
-                              <TableHead className="w-[36%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[36%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">Nama Siswa</div>
                               </TableHead>
-                              <TableHead className="w-[22%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[22%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">Kehadiran</div>
                               </TableHead>
-                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">Keterangan</div>
                               </TableHead>
                           </TableRow>
@@ -405,7 +404,7 @@ export default function AbsenClient({
           </Card>
         </>
       ) : (
-        <Card className="p-12 md:p-20 text-center">
+        <Card className="p-12 md:p-20 text-center shadow-none rounded-[32px]">
             <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 w-fit mx-auto mb-6">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
             </div>

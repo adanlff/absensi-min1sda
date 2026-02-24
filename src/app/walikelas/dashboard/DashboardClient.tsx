@@ -117,7 +117,7 @@ export default function DashboardClient({
                              <div className="flex items-center justify-center">NIS</div>
                           </TableHead>
                           <TableHead className="w-[35%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
-                             <div className="flex items-center justify-start px-6">Nama Siswa</div>
+                             <div className="flex items-center justify-center">Nama Siswa</div>
                           </TableHead>
                           <TableHead className="w-[15%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
                              <div className="flex items-center justify-center">Tanggal</div>

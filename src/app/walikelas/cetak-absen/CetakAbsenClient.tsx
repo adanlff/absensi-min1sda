@@ -56,7 +56,7 @@ export default function CetakAbsenClient({
     return (
       <div className="max-w-7xl mx-auto md:max-w-none">
         <PageHeader title="Cetak Absen" description="Cetak laporan kehadiran siswa" />
-        <Card className="text-center p-8">
+        <Card className="text-center p-8 shadow-none rounded-[32px]">
           <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-[30px] flex items-center justify-center text-red-500">
             <X className="h-10 w-10" />
           </div>
@@ -98,10 +98,10 @@ export default function CetakAbsenClient({
         />
       </div>
 
-      <Card className="mb-6 md:mb-8">
+      <Card className="mb-6 md:mb-8 shadow-none rounded-[32px]">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">
-          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-            <Filter className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+            <Filter className="h-6 w-6 text-primary" />
           </div>
           <div>
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Pilih Periode Laporan</h3>
@@ -237,10 +237,10 @@ export default function CetakAbsenClient({
         </form>
       </Card>
 
-      <Card className="mb-6 md:mb-8">
+      <Card className="mb-6 md:mb-8 shadow-none rounded-[32px]">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">
-          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-             <Printer className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+             <Printer className="h-6 w-6 text-primary" />
           </div>
           <div>
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Pengaturan Halaman</h3>
@@ -329,27 +329,18 @@ export default function CetakAbsenClient({
               </div>
             </div>
             
-            <div className="p-4 rounded-[24px] bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800">
-               <div className="flex items-start space-x-3">
-                  <Zap className="h-5 w-5 text-primary mt-0.5" />
-                  <div>
-                    <p className="text-xs font-bold text-gray-900 dark:text-white mb-0.5">Tip Cepat</p>
-                    <p className="text-[11px] text-gray-500 leading-relaxed font-medium">Times New Roman adalah standar klasik untuk laporan resmi. Gunakan ukuran font 11pt atau 12pt untuk hasil terbaca optimal.</p>
-                  </div>
-               </div>
-            </div>
           </div>
         </div>
       </Card>
 
       <AnimatePresence>
         {hasSubmitted && attendanceData.length > 0 && (
-          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 print:shadow-none print:rounded-none print:border-none">
+          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 shadow-none rounded-[32px] print:shadow-none print:rounded-none print:border-none">
              <div className="p-4 md:p-6 lg:p-8 print:p-0">
                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0 print:hidden">
                      <div className="flex items-center space-x-4">
-                        <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-                          <BarChart3 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                        <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+                          <BarChart3 className="h-6 w-6 text-primary" />
                         </div>
                         <div>
                           <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">{reportTitle}</h3>
@@ -392,7 +383,7 @@ export default function CetakAbsenClient({
                                    <TableRow className="print:border-b-0">
                                        <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[50px]">No</TableHead>
                                       <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[120px]">NIS</TableHead>
-                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-left font-bold dark:text-white">Nama Siswa</TableHead>
+                                      <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white">Nama Siswa</TableHead>
                                       <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Hadir</TableHead>
                                       <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Sakit</TableHead>
                                       <TableHead className="border border-black dark:border-slate-700 p-2 bg-gray-50 dark:bg-slate-900 text-center font-bold dark:text-white w-[60px]">Izin</TableHead>
@@ -482,7 +473,7 @@ export default function CetakAbsenClient({
 
        <AnimatePresence>
          {hasSubmitted && attendanceData.length === 0 && (
-            <Card className="p-8 md:p-16 text-center print:hidden">
+            <Card className="p-8 md:p-16 text-center shadow-none rounded-[32px] print:hidden">
              <div className="w-20 h-20 mx-auto mb-6 bg-gray-50 dark:bg-slate-800 rounded-[30px] flex items-center justify-center">
                    <BarChart3 className="h-10 w-10 text-gray-400 dark:text-slate-600" />
                </div>
