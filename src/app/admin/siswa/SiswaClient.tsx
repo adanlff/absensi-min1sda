@@ -152,13 +152,15 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
       />
 
       <Card className="mb-8 md:mb-12 relative overflow-hidden shadow-none">
-        <div className="flex items-center space-x-4 mb-6 md:mb-8">
-          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-            <CloudUpload className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-          </div>
-          <div>
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Upload Data Siswa</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Gunakan file Excel atau CSV untuk menambah data siswa secara massal</p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+              <CloudUpload className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Upload Data Siswa</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base font-medium">Gunakan file Excel atau CSV untuk menambah data siswa secara massal</p>
+            </div>
           </div>
         </div>
         
@@ -173,14 +175,14 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
                 placeholder="Pilih Kelas"
                 icon={<Building2 className="h-5 w-5" />}
                 options={kelasList.map(k => ({ value: k.id.toString(), label: k.nama_kelas }))}
-                triggerClassName="h-[58px] pl-12 pr-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 focus:border-primary focus:outline-none transition-all font-medium"
+                triggerClassName="h-[52px] pl-12 pr-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 focus:border-primary focus:outline-none transition-all font-medium"
               />
             </div>
             
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 px-1">File Excel / CSV</label>
               <div className="relative">
-                <div className="relative h-[58px] flex items-center border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl focus-within:border-primary transition-all">
+                <div className="relative h-[52px] flex items-center border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl focus-within:border-primary transition-all">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                     <FileSpreadsheet className="h-5 w-5" />
                   </div>
@@ -192,41 +194,63 @@ export default function SiswaClient({ kelasList }: { kelasList: any[] }) {
           </div>
           
           <div className="flex justify-end pt-2">
-            <Button type="submit" size="lg" loading={loading} icon={<CloudUpload className="h-5 w-5" />}>
+            <Button type="submit" size="lg" loading={loading} icon={<CloudUpload className="h-5 w-5" />} className="w-full md:w-auto h-[48px] md:h-[52px] rounded-2xl font-bold text-base px-8">
               {loading ? 'Memproses...' : 'Upload Data'}
             </Button>
           </div>
           
-          <div className="bg-primary/5 dark:bg-primary/10 p-6 rounded-[32px] border border-primary/10 dark:border-primary/20">
-            <h4 className="font-bold text-primary mb-3 flex items-center">
-              <Info className="h-5 w-5 mr-2" />
-              Format Excel / CSV yang Disarankan
-            </h4>
-            <div className="text-sm text-gray-600 dark:text-gray-400 space-y-3 font-medium">
-              <p>Pastikan file Anda memiliki kolom: <code className="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-primary/10 text-primary">NO</code> | <code className="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-primary/10 text-primary">NIS</code> | <code className="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-primary/10 text-primary">NAMA</code></p>
-              <div className="w-fit bg-white/80 dark:bg-slate-800/80 p-4 rounded-2xl border border-primary/5 font-mono text-[11px] overflow-x-auto shadow-inner">
-                <table className="border-collapse">
-                  <thead>
-                    <tr className="text-gray-400 border-b border-primary/10">
-                      <th className="text-left py-2 pr-10 font-normal w-[40px]">NO</th>
-                      <th className="text-left py-2 pr-10 font-normal w-[160px]">NIS</th>
-                      <th className="text-left py-2 font-normal">NAMA</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-primary font-bold">
-                    <tr>
-                      <td className="py-2 pr-10">1</td>
-                      <td className="py-2 pr-10">111135150001250003</td>
-                      <td className="py-2 whitespace-nowrap">ACHMAD ARVINO XAVIER WIJAYA</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-10 border-t border-primary/5">2</td>
-                      <td className="py-2 pr-10 border-t border-primary/5">111135150001250004</td>
-                      <td className="py-2 border-t border-primary/5 whitespace-nowrap">ADERA YUMNA AZKAYRA</td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div className="bg-primary/[0.03] dark:bg-primary/[0.05] p-5 md:p-8 rounded-[40px] border border-primary/10 dark:border-primary/20">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+                <Info className="h-6 w-6 text-primary" />
               </div>
+              <div>
+                <h4 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Format Excel / CSV</h4>
+                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base font-medium">Pastikan urutan kolom sesuai di bawah ini</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                { no: '1', nis: '111135150001250003', nama: 'ACHMAD ARVINO XAVIER WIJAYA', label: 'Baris 1' },
+                { no: '2', nis: '111135150001250004', nama: 'ADERA YUMNA AZKAYRA', label: 'Baris 2' }
+              ].map((example, i) => (
+                <div key={i} className="bg-white/80 dark:bg-slate-900/80 p-4 md:p-5 rounded-[32px] border border-primary/5 shadow-sm relative overflow-hidden group hover:border-primary/20 transition-all">
+                  <div className="absolute top-0 right-0 px-3 py-1 bg-primary/10 rounded-bl-[16px]">
+                    <span className="text-[9px] md:text-[10px] font-black text-primary uppercase tracking-widest">{example.label}</span>
+                  </div>
+                  
+                  <div className="space-y-4 pt-4 md:pt-2">
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="w-9 h-9 md:w-10 md:h-10 bg-primary/5 rounded-xl flex items-center justify-center text-primary font-black text-xs border border-primary/10 flex-shrink-0">
+                        {example.no}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Nama (Kolom C)</span>
+                        <p className="font-bold text-gray-900 dark:text-white text-xs md:text-sm break-words leading-relaxed">{example.nama}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col gap-1 pl-12 md:pl-14">
+                      <span className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest">NIS (Kolom B)</span>
+                      <span className="font-mono text-gray-600 dark:text-gray-400 font-bold tracking-wider text-xs md:text-sm break-all">{example.nis}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-col md:flex-row md:items-center gap-4 px-2">
+              <div className="flex gap-1.5 flex-wrap">
+                {['NO', 'NIS', 'NAMA'].map(col => (
+                  <span key={col} className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-primary/10 rounded-lg text-[10px] font-black text-primary uppercase tracking-widest">
+                    {col}
+                  </span>
+                ))}
+              </div>
+              <p className="text-[10px] md:text-[11px] text-gray-500 font-bold uppercase tracking-wider leading-relaxed">
+                * Header file opsional (Data dibaca mulai baris ke-2)
+              </p>
             </div>
           </div>
         </form>

@@ -168,22 +168,20 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
         className="mb-8 md:mb-12"
       />
 
-      <Card className="mb-8 md:mb-12">
-        <div className="flex items-center space-x-4 mb-6 md:mb-8">
-          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-            <Building2 className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Kelas</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Pilih kelas untuk mengelola data siswa</p>
-              </div>
-              <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />} className="w-full md:w-auto">
-                Tambah Kelas Baru
-              </Button>
+      <Card className="mb-8 md:mb-12 shadow-none">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+              <Building2 className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Kelas</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base font-medium">Pilih kelas untuk mengelola data siswa</p>
             </div>
           </div>
+          <Button onClick={() => setIsAddClassModalOpen(true)} icon={<Plus className="h-5 w-5" />} className="w-full md:w-auto h-[48px] md:h-[52px] rounded-2xl font-bold text-base px-6">
+            Tambah Kelas Baru
+          </Button>
         </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
@@ -236,63 +234,138 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
           >
-            <Card noPadding className="mb-8 md:mb-12 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
+            <Card noPadding className="mb-8 md:mb-12 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 shadow-none">
               <div className="p-4 md:p-6 lg:p-8">
-                <div className="flex items-center space-x-4 mb-6 md:mb-8">
-                  <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-                    <User className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                          Siswa {selectedClassInfo?.nama_kelas}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {students.length} Siswa Terdaftar</p>
-                      </div>
-                      <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />} className="w-full md:w-auto">
-                        Tambah Siswa
-                      </Button>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+                      <User className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                        Siswa {selectedClassInfo?.nama_kelas}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base font-medium">Total {students.length} Siswa Terdaftar</p>
                     </div>
                   </div>
+                  <Button onClick={() => setIsAddStudentModalOpen(true)} icon={<Plus className="h-5 w-5" />} className="w-full md:w-auto h-[48px] md:h-[52px] rounded-2xl font-bold text-base px-6">
+                    Tambah Siswa
+                  </Button>
                 </div>
 
-                <DataTable 
-                  data={students}
-                  columns={columns}
-                  keyExtractor={(item) => item.id}
-                  emptyMessage={`Belum ada data siswa di kelas ${selectedClassInfo?.nama_kelas}`}
-                  renderMobileCard={(student, index) => (
-                    <div className="bg-gray-50/50 dark:bg-slate-900/50 p-6 rounded-[32px] border border-transparent dark:border-slate-800 hover:border-primary/20 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm mb-4">
-                      <div className="flex items-center gap-5">
-                        <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-2xl flex-shrink-0 text-primary font-bold">
-                            {student.no}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <h4 className="font-semibold text-gray-900 dark:text-white text-base mb-1">{student.nama}</h4>
-                            <div className="flex items-center text-xs font-semibold text-gray-400 dark:text-gray-500">
-                              <span className="font-mono tracking-wider">{student.nis}</span>
-                            </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-end pt-5 mt-5 border-t border-gray-100 dark:border-slate-800">
-                          <Button 
-                            size="sm" 
-                            variant="ghost-danger" 
-                            onClick={() => setConfirmConfig({
-                              show: true,
-                              title: 'Hapus Siswa',
-                              message: `Apakah Anda yakin ingin menghapus data siswa ${student.nama}?`,
-                              action: () => handleAction({ action: 'delete_student', id: student.id })
-                            })} 
-                            icon={<Trash2 className="h-3 w-3" />}
-                          >
-                            Hapus
-                          </Button>
-                      </div>
+                {students.length > 0 ? (
+                  <>
+                    {/* Desktop Table */}
+                    <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
+                      <table className="table-fixed w-full border-collapse">
+                        <thead className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
+                          <tr>
+                            <th className="w-[15%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">No</div>
+                            </th>
+                            <th className="w-[25%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">NIS</div>
+                            </th>
+                            <th className="w-[40%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">Nama</div>
+                            </th>
+                            <th className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">Aksi</div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50 dark:divide-slate-800/50">
+                          {students.map((student, index) => (
+                            <motion.tr 
+                              key={student.id}
+                              initial={{ opacity: 0, y: 5 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: index * 0.02 }}
+                              className="group hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors"
+                            >
+                              <td className="py-4 text-center">
+                                <span className="inline-flex items-center justify-center w-8 h-8 bg-primary/5 text-primary rounded-xl font-bold text-xs">{student.no}</span>
+                              </td>
+                              <td className="py-4 text-center">
+                                <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
+                              </td>
+                              <td className="py-4 text-center">
+                                <p className="font-bold text-gray-900 dark:text-white text-sm">{student.nama}</p>
+                              </td>
+                              <td className="py-4">
+                                <div className="flex items-center justify-center">
+                                  <Button 
+                                    size="sm" 
+                                    variant="ghost" 
+                                    onClick={() => setConfirmConfig({
+                                      show: true,
+                                      title: 'Hapus Siswa',
+                                      message: `Apakah Anda yakin ingin menghapus data siswa ${student.nama}?`,
+                                      action: () => handleAction({ action: 'delete_student', id: student.id })
+                                    })} 
+                                    icon={<Trash2 className="h-4 w-4" />}
+                                    className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                                    title="Hapus Siswa"
+                                  />
+                                </div>
+                              </td>
+                            </motion.tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
-                  )}
-                />
+
+                    {/* Mobile Cards */}
+                    <div className="md:hidden space-y-4">
+                      {students.map((student, index) => (
+                        <motion.div 
+                          key={student.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.03 }}
+                          className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-[32px] p-5 shadow-none"
+                        >
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-4">
+                              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-black text-xs">
+                                {student.no}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Nama Siswa</span>
+                                <p className="font-bold text-gray-900 dark:text-white text-sm truncate">{student.nama}</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-col gap-1">
+                              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">NIS / NISN</span>
+                              <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
+                            </div>
+
+                            <div className="flex justify-end pt-4 border-t border-gray-200/50 dark:border-slate-800/50">
+                              <Button 
+                                size="sm" 
+                                variant="ghost" 
+                                onClick={() => setConfirmConfig({
+                                  show: true,
+                                  title: 'Hapus Siswa',
+                                  message: `Apakah Anda yakin ingin menghapus data siswa ${student.nama}?`,
+                                  action: () => handleAction({ action: 'delete_student', id: student.id })
+                                })} 
+                                icon={<Trash2 className="h-4 w-4" />}
+                                className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                                title="Hapus Siswa"
+                              />
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center py-12 border-2 border-dashed border-gray-100 dark:border-slate-800 rounded-[32px]">
+                    <p className="text-gray-400 dark:text-gray-500 font-bold text-sm">Belum ada data siswa di kelas {selectedClassInfo?.nama_kelas}</p>
+                  </div>
+                )}
               </div>
             </Card>
           </motion.div>
