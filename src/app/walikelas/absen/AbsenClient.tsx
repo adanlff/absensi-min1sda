@@ -261,15 +261,15 @@ export default function AbsenClient({
                   </div>
                   <h4 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider">Aksi Cepat Massal</h4>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-3">
                   {bulkActions.map((btn) => (
                     <button 
                       key={btn.status}
                       disabled={loading} 
                       onClick={() => handleBulkAction(btn.status)} 
-                      className={`w-full px-4 py-3 rounded-2xl font-bold transition-all disabled:opacity-50 md:text-xs flex items-center justify-center space-x-2 ${btn.className}`}
+                      className={`w-full px-4 py-3.5 rounded-2xl font-bold transition-all disabled:opacity-50 text-xs md:text-xs flex items-center justify-center space-x-3 md:space-x-2 ${btn.className}`}
                     >
-                      <btn.icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                      <btn.icon className="h-4 w-4" />
                       <span>{btn.label}</span>
                     </button>
                   ))}

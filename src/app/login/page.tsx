@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, Loader2 } from 'lucide-react'
+import { ShieldCheck, GraduationCap, User, Lock, LogIn, Phone, Loader2, Eye, EyeOff } from 'lucide-react'
+import { SiWhatsapp } from 'react-icons/si'
 import { motion, AnimatePresence } from 'framer-motion'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<'admin' | 'walikelas' | ''>('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -196,13 +198,20 @@ export default function LoginPage() {
                             <Lock className="h-4 w-4" />
                           </div>
                           <input 
-                            type="password" 
+                            type={showPassword ? 'text' : 'password'} 
                             required 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            className="w-full pl-11 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary transition-all outline-none text-base font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
+                            className="w-full pl-11 pr-12 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:border-primary transition-all outline-none text-base font-semibold placeholder:text-gray-300 dark:placeholder:text-gray-600 text-gray-900 dark:text-white placeholder:font-normal" 
                             placeholder="Password" 
                           />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-300 hover:text-primary transition-colors cursor-pointer"
+                          >
+                            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                          </button>
                         </div>
                       </div>
 
@@ -212,7 +221,7 @@ export default function LoginPage() {
                         whileTap={{ scale: 0.97 }}
                         type="submit" 
                         disabled={isLoading}
-                        className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-bold text-sm tracking-[0.2em] rounded-2xl shadow-lg shadow-primary/20 transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
+                        className="w-full py-4 bg-primary hover:bg-[#344430] text-white font-bold text-sm tracking-[0.2em] rounded-2xl transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-2"
                       >
                         {isLoading ? (
                           <>
@@ -235,9 +244,9 @@ export default function LoginPage() {
                         href="https://wa.me/08123456789" 
                         target="_blank" 
                         rel="noreferrer"
-                        className="flex items-center space-x-2 text-primary hover:text-primary/80 font-bold text-sm transition-colors py-3 px-8 rounded-full bg-primary/5"
+                        className="flex items-center space-x-2 text-primary hover:text-primary/80 font-bold text-sm transition-colors py-1"
                       >
-                          <Phone className="w-4 h-4" />
+                          <SiWhatsapp className="w-5 h-5" />
                           <span>HUBUNGI ADMIN</span>
                       </a>
                   </div>
