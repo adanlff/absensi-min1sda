@@ -24,6 +24,7 @@ import {
   TableRow, 
   TableCell 
 } from '@/components/ui/Table'
+import { Pagination } from '@/components/ui/Pagination'
 
 export default function DashboardClient({ 
   waliKelas, 
@@ -59,6 +60,21 @@ export default function DashboardClient({
     }
   }
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
+  
+  const totalPages = Math.ceil(recentAbsences.length / itemsPerPage)
+  const currentData = recentAbsences.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+
+  // Reset to page 1 if data changes
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [recentAbsences.length])
+
 
   return (
     <div className="max-w-7xl mx-auto md:max-w-none">
@@ -86,10 +102,6 @@ export default function DashboardClient({
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Data Ketidakhadiran Siswa</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">7 hari terakhir - {waliKelas.Kelas?.nama_kelas || 'Kelas Anda'}</p>
               </div>
-            </div>
-            <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/10 rounded-full w-fit border border-emerald-100 dark:border-emerald-800/50">
-               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-               <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Live Data</span>
             </div>
           </div>
 
@@ -119,13 +131,13 @@ export default function DashboardClient({
                       </TableRow>
                   </TableHeader>
                   <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
-                     {recentAbsences.map((absence, index) => (
+                     {currentData.map((absence, index) => (
                         <TableRow 
                           key={absence.id} 
                           className="hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors"
                         >
                            <TableCell className="py-4 text-center">
-                               <p className="font-bold text-gray-900 dark:text-white text-sm">{index + 1}</p>
+                               <p className="font-bold text-gray-900 dark:text-white text-sm">{(currentPage - 1) * itemsPerPage + index + 1}</p>
                            </TableCell>
                            <TableCell className="py-4 text-center">
                               <span className="text-gray-900 dark:text-white font-bold text-sm">{absence.Siswa?.nis}</span>
@@ -154,12 +166,12 @@ export default function DashboardClient({
 
           {/* Mobile Card View */}
           <div className="md:hidden space-y-4">
-             {recentAbsences.map((absence, index) => (
+             {currentData.map((absence, index) => (
                 <div key={absence.id} className="bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent dark:border-slate-800">
                    <div className="flex flex-col gap-4">
                       <div className="flex items-start gap-3 flex-1">
                          <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
-                             <span className="text-primary font-bold text-sm">{index + 1}</span>
+                             <span className="text-primary font-bold text-sm">{(currentPage - 1) * itemsPerPage + index + 1}</span>
                          </div>
                          <div className="flex-1 min-w-0">
                              <h4 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight mb-1 truncate">
@@ -192,6 +204,12 @@ export default function DashboardClient({
                 </div>
              ))}
           </div>
+
+          <Pagination 
+            currentPage={currentPage} 
+            totalPages={totalPages} 
+            onPageChange={setCurrentPage} 
+          />
         </div>
       </Card>
 

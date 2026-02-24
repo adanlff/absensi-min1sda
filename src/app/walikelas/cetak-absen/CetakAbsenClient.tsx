@@ -39,6 +39,15 @@ export default function CetakAbsenClient({
   const [semesterId, setSemesterId] = useState(initialParams?.semester_id || '')
   
   const [hasSubmitted, setHasSubmitted] = useState(!!searchParams.get('report_type'))
+  
+  // Page Settings State
+  const [pageSize, setPageSize] = useState<'A4' | 'F4'>('A4')
+  const [margins, setMargins] = useState({
+    top: 1,
+    left: 1,
+    bottom: 1,
+    right: 1
+  })
 
   if (!waliKelas || !waliKelas.id_kelas) {
     return (
@@ -102,32 +111,56 @@ export default function CetakAbsenClient({
              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 px-1">Jenis Laporan</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                <label 
-                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'monthly' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-gray-100 dark:border-slate-800 hover:border-primary/20'}`}
+                className={`flex items-center space-x-4 px-6 py-4 rounded-2xl border transition-all cursor-pointer ${
+                  reportType === 'monthly' 
+                    ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-sm' 
+                    : 'border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 hover:border-primary/20'
+                }`}
               >
-                <input type="radio" checked={reportType === 'monthly'} onChange={() => setReportType('monthly')}
-                  className="w-4 h-4 text-primary focus:ring-primary cursor-pointer" />
+                <div className="relative">
+                  <input 
+                    type="radio" 
+                    checked={reportType === 'monthly'} 
+                    onChange={() => setReportType('monthly')}
+                    className="w-5 h-5 text-primary border-gray-300 focus:ring-primary cursor-pointer transition-all" 
+                  />
+                </div>
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 rounded-xl bg-primary/10">
-                    <Calendar className="h-5 w-5 text-primary" />
+                  <div className={`p-2 rounded-xl transition-colors ${reportType === 'monthly' ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-slate-800 text-gray-400'}`}>
+                    <Calendar className="h-5 w-5" />
                   </div>
                    <div>
-                    <p className="font-bold text-gray-900 dark:text-white">Laporan Bulanan</p>
+                    <p className={`font-bold transition-colors ${reportType === 'monthly' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
+                      Laporan Bulanan
+                    </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Cetak per bulan</p>
                   </div>
                 </div>
               </label>
 
                <label 
-                className={`flex items-center space-x-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${reportType === 'semester' ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-gray-100 dark:border-slate-800 hover:border-primary/20'}`}
+                className={`flex items-center space-x-4 px-6 py-4 rounded-2xl border transition-all cursor-pointer ${
+                  reportType === 'semester' 
+                    ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-sm' 
+                    : 'border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900 hover:border-primary/20'
+                }`}
               >
-                <input type="radio" checked={reportType === 'semester'} onChange={() => setReportType('semester')}
-                  className="w-4 h-4 text-primary focus:ring-primary cursor-pointer" />
+                <div className="relative">
+                  <input 
+                    type="radio" 
+                    checked={reportType === 'semester'} 
+                    onChange={() => setReportType('semester')}
+                    className="w-5 h-5 text-primary border-gray-300 focus:ring-primary cursor-pointer transition-all" 
+                  />
+                </div>
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 rounded-xl bg-primary/10">
-                    <BookOpen className="h-5 w-5 text-primary" />
+                  <div className={`p-2 rounded-xl transition-colors ${reportType === 'semester' ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-slate-800 text-gray-400'}`}>
+                    <BookOpen className="h-5 w-5" />
                   </div>
                    <div>
-                    <p className="font-bold text-gray-900 dark:text-white">Laporan Semester</p>
+                    <p className={`font-bold transition-colors ${reportType === 'semester' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
+                      Laporan Semester
+                    </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Cetak per semester</p>
                   </div>
                 </div>
@@ -199,6 +232,66 @@ export default function CetakAbsenClient({
              </Button>
           </div>
         </form>
+      </Card>
+
+      <Card className="mb-6 md:mb-8">
+        <div className="flex items-center space-x-4 mb-6 md:mb-8">
+          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
+             <Printer className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Pengaturan Halaman</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Atur ukuran kertas dan margin cetakan</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          <div className="space-y-4">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Ukuran Kertas</label>
+            <div className="grid grid-cols-2 gap-3">
+              {(['A4', 'F4'] as const).map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => setPageSize(size)}
+                  className={`px-6 py-4 rounded-2xl font-bold transition-all border ${
+                    pageSize === size 
+                      ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
+                      : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-500 dark:text-gray-400 hover:border-primary/20'
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+             <p className="text-xs text-gray-400 px-1">F4 (210mm x 330mm) / A4 (210mm x 297mm)</p>
+          </div>
+
+          <div className="space-y-4">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Margin Halaman (cm)</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {(['top', 'bottom', 'left', 'right'] as const).map((side) => (
+                <div key={side} className="relative group">
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    value={margins[side]}
+                    onChange={(e) => setMargins({ ...margins, [side]: parseFloat(e.target.value) || 0 })}
+                    className="w-full pl-4 pr-10 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase text-gray-400 tracking-wider">
+                    {side === 'top' ? 'T' : side === 'bottom' ? 'B' : side === 'left' ? 'L' : 'R'}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-between px-1">
+               <p className="text-xs text-gray-400">Atas, Bawah, Kiri, Kanan</p>
+               <p className="text-xs font-bold text-primary">Satuan: CM</p>
+            </div>
+          </div>
+        </div>
       </Card>
 
       <AnimatePresence>
@@ -299,7 +392,10 @@ export default function CetakAbsenClient({
                 top: 0;
                 width: 100%;
             }
-            @page { margin: 10mm; size: A4 portrait; }
+            @page { 
+                margin: ${margins.top}cm ${margins.right}cm ${margins.bottom}cm ${margins.left}cm; 
+                size: ${pageSize === 'A4' ? 'A4' : '210mm 330mm'} portrait; 
+            }
         }
       `}</style>
     </div>
