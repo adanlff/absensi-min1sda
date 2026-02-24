@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { X, Filter, Calendar, BookOpen, Building2, Printer, BarChart3 } from 'lucide-react'
+import { X, Filter, Calendar, BookOpen, Building2, Printer, BarChart3, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
@@ -48,6 +48,9 @@ export default function CetakAbsenClient({
     bottom: 1,
     right: 1
   })
+  
+  const [fontFamily, setFontFamily] = useState('Inter')
+  const [fontSize, setFontSize] = useState(12)
 
   if (!waliKelas || !waliKelas.id_kelas) {
     return (
@@ -246,46 +249,94 @@ export default function CetakAbsenClient({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-          <div className="space-y-4">
-            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Ukuran Kertas</label>
-            <div className="grid grid-cols-2 gap-3">
-              {(['A4', 'F4'] as const).map((size) => (
-                <button
-                  key={size}
-                  type="button"
-                  onClick={() => setPageSize(size)}
-                  className={`px-6 py-4 rounded-2xl font-bold transition-all border ${
-                    pageSize === size 
-                      ? 'bg-primary text-white border-primary' 
-                      : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-500 dark:text-gray-400 hover:border-primary/20'
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Ukuran Kertas</label>
+              <div className="grid grid-cols-2 gap-3">
+                {(['A4', 'F4'] as const).map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => setPageSize(size)}
+                    className={`px-6 py-4 rounded-2xl font-bold transition-all border ${
+                      pageSize === size 
+                        ? 'bg-primary text-white border-primary' 
+                        : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-500 dark:text-gray-400 hover:border-primary/20'
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+               <p className="text-xs text-gray-400 px-1">F4 (210mm x 330mm) / A4 (210mm x 297mm)</p>
             </div>
-             <p className="text-xs text-gray-400 px-1">F4 (210mm x 330mm) / A4 (210mm x 297mm)</p>
-          </div>
 
-          <div className="space-y-4">
-            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Margin Halaman (cm)</label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {(['top', 'bottom', 'left', 'right'] as const).map((side) => (
-                <div key={side} className="relative group">
-                  <input
-                    type="number"
-                    step="0.1"
-                    min="0"
-                    value={margins[side]}
-                    onChange={(e) => setMargins({ ...margins, [side]: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
+            <div className="space-y-4">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Tipografi (Font)</label>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2">
+                  <StaggeredDropDown
+                    value={fontFamily}
+                    onChange={(val) => setFontFamily(val)}
+                    placeholder="Pilih Font"
+                    options={[
+                      { value: 'Inter', label: 'Inter (Modern)' },
+                      { value: 'Times New Roman', label: 'Times New Roman (Laporan)' },
+                      { value: 'Calibri', label: 'Calibri (Standar)' },
+                      { value: 'Arial', label: 'Arial (Sans-serif)' },
+                    ]}
+                    triggerClassName="pl-6 pr-4 py-4 h-[58px] rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
                   />
                 </div>
-              ))}
+                <div className="col-span-1 relative group">
+                  <input
+                    type="number"
+                    min="8"
+                    max="24"
+                    placeholder=" "
+                    value={fontSize}
+                    onChange={(e) => setFontSize(parseInt(e.target.value) || 12)}
+                    className="peer w-full px-4 py-4 h-[58px] rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
+                  />
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase text-gray-400 tracking-wider pointer-events-none transition-all duration-200 peer-focus:opacity-0 peer-focus:-translate-x-4 peer-[:not(:placeholder-shown)]:opacity-0">
+                    Ukuran
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-between px-1">
-               <p className="text-xs text-gray-400">Atas, Bawah, Kiri, Kanan</p>
-               <p className="text-xs font-bold text-gray-900 dark:text-white">Satuan: CM</p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 px-1">Margin Halaman (cm)</label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {(['top', 'bottom', 'left', 'right'] as const).map((side) => (
+                  <div key={side} className="relative group">
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="0"
+                      value={margins[side]}
+                      onChange={(e) => setMargins({ ...margins, [side]: parseFloat(e.target.value) || 0 })}
+                      className="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:outline-none transition-all text-gray-900 dark:text-white font-bold"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between px-1">
+                 <p className="text-xs text-gray-400">Atas, Bawah, Kiri, Kanan</p>
+                 <p className="text-xs font-bold text-gray-900 dark:text-white">Satuan: CM</p>
+              </div>
+            </div>
+            
+            <div className="p-4 rounded-[24px] bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800">
+               <div className="flex items-start space-x-3">
+                  <Zap className="h-5 w-5 text-primary mt-0.5" />
+                  <div>
+                    <p className="text-xs font-bold text-gray-900 dark:text-white mb-0.5">Tip Cepat</p>
+                    <p className="text-[11px] text-gray-500 leading-relaxed font-medium">Times New Roman adalah standar klasik untuk laporan resmi. Gunakan ukuran font 11pt atau 12pt untuk hasil terbaca optimal.</p>
+                  </div>
+               </div>
             </div>
           </div>
         </div>
@@ -392,6 +443,13 @@ export default function CetakAbsenClient({
             @page { 
                 margin: ${margins.top}cm ${margins.right}cm ${margins.bottom}cm ${margins.left}cm; 
                 size: ${pageSize === 'A4' ? 'A4' : '210mm 330mm'} portrait; 
+            }
+            .print-area {
+                font-family: '${fontFamily}', serif !important;
+                font-size: ${fontSize}pt !important;
+            }
+            .print-area * {
+                font-family: inherit !important;
             }
         }
       `}</style>

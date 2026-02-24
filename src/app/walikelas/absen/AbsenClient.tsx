@@ -185,7 +185,7 @@ export default function AbsenClient({
         description={`Input kehadiran siswa ${waliKelas.Kelas?.nama_kelas || 'kelas Anda'}`}
       />
 
-      <Card className="mb-6 md:mb-8 shadow-none">
+      <Card className="mb-6 md:mb-8">
         <div className="flex items-center space-x-4 mb-6 md:mb-8">
           <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
             <Calendar className="h-5 w-5 md:h-6 md:w-6 text-primary" />
@@ -224,7 +224,7 @@ export default function AbsenClient({
       {students.length > 0 ? (
         <>
 
-          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 shadow-none">
+          <Card noPadding className="mb-6 md:mb-8 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800">
             <div className="p-4 md:p-6 lg:p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 space-y-4 md:space-y-0">
                 <div className="flex items-center space-x-4">
@@ -267,7 +267,7 @@ export default function AbsenClient({
                       key={btn.status}
                       disabled={loading} 
                       onClick={() => handleBulkAction(btn.status)} 
-                      className={`w-full px-4 py-3 rounded-2xl font-bold transition-all disabled:opacity-50 text-[11px] md:text-xs flex items-center justify-center space-x-2 ${btn.className}`}
+                      className={`w-full px-4 py-3 rounded-2xl font-bold transition-all disabled:opacity-50 md:text-xs flex items-center justify-center space-x-2 ${btn.className}`}
                     >
                       <btn.icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                       <span>{btn.label}</span>
@@ -281,19 +281,19 @@ export default function AbsenClient({
                   <Table className="table-fixed w-full">
                       <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
                           <TableRow>
-                              <TableHead className="w-[6%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[6%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">No</div>
                               </TableHead>
-                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">NIS</div>
                               </TableHead>
-                              <TableHead className="w-[36%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[36%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">Nama Siswa</div>
                               </TableHead>
-                              <TableHead className="w-[22%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[22%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">Kehadiran</div>
                               </TableHead>
-                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <TableHead className="w-[18%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[10px] uppercase tracking-[0.2em]">
                                  <div className="flex items-center justify-center">Keterangan</div>
                               </TableHead>
                           </TableRow>
@@ -310,14 +310,14 @@ export default function AbsenClient({
                                <TableCell className="py-4 text-center">
                                   <span className="text-gray-900 dark:text-white font-bold text-sm">{student.nis}</span>
                                </TableCell>
-                               <TableCell className="py-4 text-left px-6">
+                               <TableCell className="py-4 text-left px-8">
                                   <p className="font-bold text-gray-900 dark:text-white text-sm">
                                     {student.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
                                   </p>
                                </TableCell>
                                <TableCell className="py-4">
                                   <div className="flex items-center justify-center">
-                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                                    <div className="grid grid-cols-2 gap-x-6 gap-y-2">
                                        {[
                                          { id: 'hadir', textColor: 'text-primary' },
                                          { id: 'sakit', textColor: 'text-[#F4B400]' },
@@ -329,7 +329,7 @@ export default function AbsenClient({
                                                checked={attendance[student.id]?.status === status.id}
                                                onChange={() => handleAttendanceChange(student.id, 'status', status.id)}
                                                className="w-4 h-4 focus:ring-primary text-primary cursor-pointer accent-primary" />
-                                             <span className={`text-[11px] font-black uppercase tracking-wider ${status.textColor}`}>{status.id}</span>
+                                             <span className={`text-[10px] font-black uppercase tracking-wider ${status.textColor}`}>{status.id}</span>
                                           </label>
                                        ))}
                                     </div>
@@ -350,7 +350,7 @@ export default function AbsenClient({
               {/* Mobile Card List */}
               <div className="md:hidden space-y-4">
                  {students.map((student, index) => (
-                    <div key={student.id} className="bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent dark:border-slate-800">
+                    <div key={student.id} className="bg-white dark:bg-slate-900 rounded-[24px] p-5 border border-gray-100 dark:border-slate-800">
                        <div className="flex flex-col gap-4">
                           <div className="flex items-start gap-3 flex-1">
                              <div className="flex items-center justify-center w-10 h-10 bg-primary/5 rounded-xl flex-shrink-0">
@@ -405,7 +405,7 @@ export default function AbsenClient({
           </Card>
         </>
       ) : (
-        <Card className="p-12 md:p-20 text-center shadow-none">
+        <Card className="p-12 md:p-20 text-center">
             <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 w-fit mx-auto mb-6">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-primary" />
             </div>
