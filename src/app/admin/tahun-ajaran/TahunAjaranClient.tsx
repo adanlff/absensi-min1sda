@@ -335,6 +335,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                 {editingSemesterId === semester.id ? (
                                   <>
                                     <Button 
+                                      size="sm"
                                       variant="success"
                                       onClick={async () => {
                                         await handleAction({ 
@@ -346,10 +347,11 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                       }}
                                       disabled={loading}
                                       icon={<Save className="h-4 w-4" />}
-                                      className="h-9 w-9 p-0 rounded-xl"
+                                      className="h-9 w-9 p-0 rounded-xl text-emerald-600 hover:bg-emerald-500 hover:text-white"
                                       title="Simpan Perubahan"
                                     />
                                     <Button 
+                                      size="sm"
                                       variant="ghost"
                                       onClick={() => setEditingSemesterId(null)}
                                       disabled={loading}
@@ -361,6 +363,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                 ) : (
                                   <>
                                     <Button 
+                                      size="sm"
                                       variant="ghost"
                                       onClick={() => {
                                         setEditingSemesterId(semester.id);
@@ -376,6 +379,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                     />
                                     {semester.status !== 'aktif' && (
                                       <Button 
+                                        size="sm"
                                         variant="ghost"
                                         onClick={() => handleAction({ action: 'activate_semester', id: semester.id })}
                                         disabled={loading}
@@ -385,6 +389,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                       />
                                     )}
                                     <Button 
+                                      size="sm"
                                       variant="ghost"
                                       onClick={() => {
                                         setConfirmConfig({
@@ -410,7 +415,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                   </div>
                 ) : (
                   <div className="text-center py-10 border-2 border-dashed border-gray-100 dark:border-slate-800 rounded-3xl">
-                    <p className="text-gray-400 dark:text-gray-500 font-bold text-sm italic">Belum ada semester yang dibuat.</p>
+                    <p className="text-gray-400 dark:text-gray-500 font-bold text-sm">Belum ada semester yang dibuat.</p>
                   </div>
                 )}
               </div>

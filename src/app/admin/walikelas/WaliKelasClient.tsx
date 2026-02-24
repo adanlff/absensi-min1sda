@@ -107,43 +107,49 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
 
   return (
     <>
-      <Card className="mb-8 md:mb-12">
-        <div className="flex items-center space-x-4 mb-6 md:mb-8">
-          <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-primary/10 flex-shrink-0">
-            <UserCheck className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Total {walikelasList.length} wali kelas terdaftar</p>
-              </div>
-              <Button 
-                onClick={() => {
-                  setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
-                  setIsCreateModalOpen(true)
-                }}
-                icon={<Plus className="h-5 w-5" />}
-                className="w-full md:w-auto"
-              >
-                Tambah Wali Kelas
-              </Button>
+      <Card className="mb-8 md:mb-12 shadow-none">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
+              <UserCheck className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">Daftar Wali Kelas</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base font-medium">Total {walikelasList.length} wali kelas terdaftar</p>
             </div>
           </div>
+          <Button 
+            onClick={() => {
+              setFormData({ id: '', nama: '', username: '', password: '', id_kelas: '' })
+              setIsCreateModalOpen(true)
+            }}
+            icon={<Plus className="h-5 w-5" />}
+            className="w-full md:w-auto h-[48px] md:h-[52px] rounded-2xl font-bold text-base px-6"
+          >
+            Tambah Wali Kelas
+          </Button>
         </div>
         
         {/* Desktop Table */}
-        <div className="hidden md:block overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-b border-gray-100 dark:border-slate-800">
-                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Nama</TableHead>
-                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Username</TableHead>
-                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Kelas</TableHead>
-                <TableHead className="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</TableHead>
+        <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
+          <Table className="table-fixed w-full">
+            <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
+              <TableRow>
+                <TableHead className="w-[30%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                  <div className="flex items-center justify-center">Nama</div>
+                </TableHead>
+                <TableHead className="w-[25%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                  <div className="flex items-center justify-center">Username</div>
+                </TableHead>
+                <TableHead className="w-[25%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                  <div className="flex items-center justify-center">Kelas</div>
+                </TableHead>
+                <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                  <div className="flex items-center justify-center">Aksi</div>
+                </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
+            <TableBody>
               {walikelasList.map((wk, index) => (
                 <MotionTableRow 
                   key={wk.id} 
@@ -152,43 +158,46 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   transition={{ delay: index * 0.03 }}
                   className="hover:bg-gray-50/50 transition-colors"
                 >
-                  <TableCell className="px-6 py-5 whitespace-nowrap">
-                    <p className="font-semibold text-gray-900 dark:text-white text-base">{wk.nama}</p>
+                  <TableCell className="py-4 text-center">
+                    <p className="font-bold text-gray-900 dark:text-white text-sm">{wk.nama}</p>
                   </TableCell>
-                  <TableCell className="px-6 py-5 whitespace-nowrap">
+                  <TableCell className="py-4 text-center">
                     <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{wk.username}</span>
                   </TableCell>
-                  <TableCell className="px-6 py-5 whitespace-nowrap">
+                  <TableCell className="py-4 text-center">
                     {wk.Kelas ? (
-                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-semibold bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light">
-                        <Building2 className="h-4 w-4 mr-2" />
+                      <span className="text-sm font-bold text-gray-900 dark:text-white">
                         {wk.Kelas.nama_kelas}
                       </span>
                     ) : (
-                      <span className="inline-flex items-center px-4 py-1.5 rounded-xl text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400">
-                        <X className="h-4 w-4 mr-2" />
-                        Tidak ada kelas
+                      <span className="text-sm font-medium text-gray-400 dark:text-gray-500">
+                        Kosong
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="px-6 py-5 whitespace-nowrap">
-                    <div className="flex items-center space-x-2">
-                      <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3.5 w-3.5" />}>
-                        Edit
-                      </Button>
+                  <TableCell className="py-4">
+                    <div className="flex items-center justify-center space-x-2">
                       <Button 
                         size="sm" 
-                        variant="ghost-danger" 
+                        variant="ghost" 
+                        onClick={() => openEditModal(wk)} 
+                        icon={<Pencil className="h-4 w-4" />}
+                        className="h-9 w-9 p-0 rounded-xl text-primary hover:bg-emerald-500 hover:text-white"
+                        title="Edit Wali Kelas"
+                      />
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
                         onClick={() => setConfirmConfig({
                           show: true,
                           title: 'Hapus Wali Kelas',
                           message: `Apakah Anda yakin ingin menghapus wali kelas ${wk.nama}?`,
                           action: () => handleAction({ action: 'delete', id: wk.id })
                         })} 
-                        icon={<Trash2 className="h-3.5 w-3.5" />}
-                      >
-                        Hapus
-                      </Button>
+                        icon={<Trash2 className="h-4 w-4" />}
+                        className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                        title="Hapus Wali Kelas"
+                      />
                     </div>
                   </TableCell>
                 </MotionTableRow>
@@ -205,45 +214,49 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03 }}
-              className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-[32px] p-4 transition-all"
+              className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-[32px] p-5 shadow-none"
             >
-              <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-3">
-                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-xl flex-shrink-0">
-                    <User className="h-5 w-5 text-primary" />
+              <div className="space-y-4">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Nama</span>
+                  <p className="font-bold text-gray-900 dark:text-white text-sm">{wk.nama}</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Username</span>
+                    <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{wk.username}</span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-gray-900 dark:text-white text-sm truncate">{wk.nama}</h4>
-                    <div className="space-y-1 mt-1">
-                      <div className="flex items-center text-xs text-gray-500 font-medium">
-                        <AtSign className="h-3 w-3 mr-1.5 flex-shrink-0" />
-                        <span className="truncate">{wk.username}</span>
-                      </div>
-                      <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 font-medium">
-                        <Building2 className="h-3 w-3 mr-1.5 flex-shrink-0" />
-                        <span className="truncate">{wk.Kelas ? wk.Kelas.nama_kelas : 'Tidak ada kelas'}</span>
-                      </div>
-                    </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Kelas</span>
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">
+                      {wk.Kelas ? wk.Kelas.nama_kelas : 'Kosong'}
+                    </span>
                   </div>
                 </div>
                 
-                <div className="flex justify-end pt-3 border-t border-gray-100 dark:border-slate-800 gap-2">
-                  <Button size="sm" variant="ghost" onClick={() => openEditModal(wk)} icon={<Pencil className="h-3 w-3" />}>
-                    Edit
-                  </Button>
+                <div className="flex justify-end pt-4 border-t border-gray-200/50 dark:border-slate-800/50 gap-2">
                   <Button 
                     size="sm" 
-                    variant="ghost-danger" 
+                    variant="ghost" 
+                    onClick={() => openEditModal(wk)} 
+                    icon={<Pencil className="h-4 w-4" />}
+                    className="h-9 w-9 p-0 rounded-xl text-primary hover:bg-emerald-500 hover:text-white"
+                    title="Edit Wali Kelas"
+                  />
+                  <Button 
+                    size="sm" 
+                    variant="ghost" 
                     onClick={() => setConfirmConfig({
                       show: true,
                       title: 'Hapus Wali Kelas',
                       message: `Apakah Anda yakin ingin menghapus wali kelas ${wk.nama}?`,
                       action: () => handleAction({ action: 'delete', id: wk.id })
                     })} 
-                    icon={<Trash2 className="h-3 w-3" />}
-                  >
-                    Hapus
-                  </Button>
+                    icon={<Trash2 className="h-4 w-4" />}
+                    className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                    title="Hapus Wali Kelas"
+                  />
                 </div>
               </div>
             </motion.div>
