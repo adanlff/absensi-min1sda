@@ -59,6 +59,17 @@ export async function POST(req: Request) {
       await prisma.semester.update({ where: { id }, data: { status: 'aktif' } })
       return NextResponse.json({ success: true, message: 'Semester berhasil diaktifkan!' })
 
+    } else if (action === 'update_semester') {
+      const { id, tanggal_mulai, tanggal_selesai } = body
+      await prisma.semester.update({
+        where: { id },
+        data: {
+          tanggal_mulai: new Date(tanggal_mulai),
+          tanggal_selesai: new Date(tanggal_selesai)
+        }
+      })
+      return NextResponse.json({ success: true, message: 'Semester berhasil diperbarui!' })
+
     } else if (action === 'delete_tahun') {
       const { id } = body
       await prisma.tahunAjaran.delete({ where: { id } })
