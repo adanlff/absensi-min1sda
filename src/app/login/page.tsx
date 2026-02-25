@@ -88,12 +88,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#f8fafc] dark:bg-slate-950 flex items-center justify-center p-4 lg:p-6 overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen lg:h-screen w-full bg-[#f8fafc] dark:bg-slate-950 flex items-center justify-center p-4 lg:p-6 transition-colors duration-300">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-6xl h-full max-h-[92vh] grid lg:grid-cols-2 overflow-hidden"
+        className="bg-white dark:bg-slate-900 rounded-[2rem] lg:rounded-[2.5rem] border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-6xl h-auto lg:h-full max-h-[95vh] lg:max-h-[92vh] grid lg:grid-cols-2 overflow-hidden"
       >
         {/* Sweet Alert Component for success notification */}
         <SweetAlert
@@ -138,19 +138,19 @@ export default function LoginPage() {
           </div>
           
           {/* Right Form Section */}
-          <div className="p-8 lg:p-12 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto lg:overflow-hidden">
+          <div className="p-6 md:p-10 lg:p-12 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto lg:overflow-hidden">
               <div className="w-full max-w-sm mx-auto space-y-6">
                   
                   {/* Mobile Logo Only */}
                   <div className="lg:hidden text-center mb-4">
-                      <div className="w-24 h-24 mx-auto bg-primary rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
+                      <div className="w-24 h-24 mx-auto bg-primary rounded-2xl flex items-center justify-center overflow-hidden">
                           <img src="/assets/gambar/min1.png" alt="MIN 1 Sidoarjo" className="w-16 h-16 object-contain" />
                       </div>
                   </div>
                   
-                  <div>
-                      <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-2">Login ke Sistem</h1>
-                      <p className="text-gray-500 dark:text-gray-400 text-base font-medium">Pilih peran dan gunakan akun Anda</p>
+                  <div className="space-y-2">
+                      <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-1">Login ke Sistem</h1>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm lg:text-base font-medium">Pilih peran dan gunakan akun Anda</p>
                   </div>
                   
                   <form onSubmit={handleSubmit} className="space-y-6">

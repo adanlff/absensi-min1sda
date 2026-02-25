@@ -240,7 +240,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                     message: `Apakah Anda yakin ingin menghapus kelas ${kelas.nama_kelas}?`,
                     action: () => handleAction({ action: 'delete_class', id: kelas.id })
                   })} 
-                  className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg z-10"
+                  className="absolute -top-2 -right-2 w-7 h-7 bg-danger hover:bg-danger/90 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -280,14 +280,22 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                 {students.length > 0 ? (
                   <>
                     {/* Desktop Table */}
-                    <div className="hidden md:block overflow-x-auto rounded-[24px]">
-                      <Table className="w-full text-left border-collapse">
+                    <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
+                      <Table className="table-fixed w-full">
                         <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
-                          <TableRow className="border-b-0">
-                            <TableHead className="w-[10%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">No</TableHead>
-                            <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">NIS</TableHead>
-                            <TableHead className="w-[50%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">Nama Siswa</TableHead>
-                            <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">Aksi</TableHead>
+                          <TableRow>
+                            <TableHead className="w-[10%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">No</div>
+                            </TableHead>
+                            <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">NIS</div>
+                            </TableHead>
+                            <TableHead className="w-[50%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">Nama Siswa</div>
+                            </TableHead>
+                            <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
+                              <div className="flex items-center justify-center">Aksi</div>
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
@@ -297,10 +305,10 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                               className="group hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors"
                             >
                               <TableCell className="py-4 text-center">
-                                <span className="inline-flex items-center justify-center w-8 h-8 bg-primary/5 text-primary rounded-xl font-bold text-xs">{index + 1}</span>
+                                <p className="font-bold text-gray-900 dark:text-white text-sm">{index + 1}</p>
                               </TableCell>
                               <TableCell className="py-4 text-center">
-                                <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
+                                <span className="text-gray-900 dark:text-white font-bold text-sm">{student.nis}</span>
                               </TableCell>
                               <TableCell className="py-4 text-left px-8">
                                 <p className="font-bold text-gray-900 dark:text-white text-sm">
