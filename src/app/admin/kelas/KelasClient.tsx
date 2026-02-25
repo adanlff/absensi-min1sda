@@ -168,7 +168,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
         className="mb-8 md:mb-12"
       />
 
-      <Card className="mb-8 md:mb-12 shadow-none">
+      <Card className="mb-8 md:mb-12 shadow-sm border-none">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
           <div className="flex items-center space-x-4">
             <div className="p-3 rounded-2xl bg-primary/10 flex-shrink-0">
@@ -195,7 +195,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
             >
               <button 
                 onClick={() => handleClassClick(kelas.id)} 
-                className={`w-full p-4 md:p-6 rounded-[32px] text-center transition-all border-2 ${selectedClassId === kelas.id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent dark:border-slate-800 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5'}`}
+                className={`w-full p-4 md:p-6 rounded-[32px] text-center transition-all ${selectedClassId === kelas.id ? 'bg-primary text-white shadow-none' : 'bg-gray-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 border-none shadow-sm hover:shadow-md'}`}
               >
                 <div className="flex flex-col items-center space-y-3">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${selectedClassId === kelas.id ? 'bg-white/20' : 'bg-primary/5'}`}>
@@ -234,7 +234,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
           >
-            <Card noPadding className="mb-8 md:mb-12 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 border-gray-100 dark:border-slate-800 shadow-none">
+            <Card noPadding className="mb-8 md:mb-12 overflow-hidden bg-gray-50/30 dark:bg-slate-900/30 shadow-sm border-none">
               <div className="p-4 md:p-6 lg:p-8">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-10">
                   <div className="flex items-center space-x-4">
@@ -256,7 +256,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                 {students.length > 0 ? (
                   <>
                     {/* Desktop Table */}
-                    <div className="hidden md:block overflow-x-auto rounded-[24px] border border-gray-100 dark:border-slate-800">
+                    <div className="hidden md:block overflow-x-auto rounded-[24px]">
                       <table className="table-fixed w-full border-collapse">
                         <thead className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
                           <tr>
@@ -323,7 +323,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.03 }}
-                          className="bg-gray-50/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-[32px] p-5 shadow-none"
+                          className="bg-gray-50/50 dark:bg-slate-900/50 rounded-[32px] p-5 shadow-sm"
                         >
                           <div className="space-y-4">
                             <div className="flex items-center gap-4">
@@ -362,7 +362,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                     </div>
                   </>
                 ) : (
-                  <div className="text-center py-12 border-2 border-dashed border-gray-100 dark:border-slate-800 rounded-[32px]">
+                  <div className="text-center py-12 bg-gray-50/50 dark:bg-slate-900/50 rounded-[32px]">
                     <p className="text-gray-400 dark:text-gray-500 font-bold text-sm">Belum ada data siswa di kelas {selectedClassInfo?.nama_kelas}</p>
                   </div>
                 )}
