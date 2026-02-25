@@ -78,6 +78,24 @@ export async function POST(req: Request) {
       }
       return NextResponse.json({ success: true, message: `Berhasil mengupload ${count} data siswa!` })
     }
+
+    else if (action === 'edit_student') {
+      const { id, no, nis, nama } = body
+      try {
+        await prisma.siswa.update({
+          where: { id: parseInt(id) },
+          data: {
+            no: parseInt(no),
+            nis,
+            nama
+          }
+        })
+        return NextResponse.json({ success: true, message: 'Data siswa berhasil diperbarui!' })
+      } catch (e: any) {
+        if (e.code === 'P2002') return NextResponse.json({ error: 'NIS sudah digunakan!' }, { status: 400 })
+        throw e
+      }
+    }
     
     else if (action === 'delete_student') {
       const { id } = body

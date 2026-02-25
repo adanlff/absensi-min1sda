@@ -8,7 +8,8 @@ import {
   Trash2, 
   Hash, 
   User, 
-  FileSpreadsheet
+  FileSpreadsheet,
+  Pencil
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/Card'
@@ -16,6 +17,14 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { DataTable } from '@/components/ui/DataTable'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from '@/components/ui/Table'
 import SweetAlert, { AlertType } from '@/components/ui/SweetAlert'
 
 export default function KelasClient({ kelasList }: { kelasList: any[] }) {
@@ -54,7 +63,9 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
   
   const [isAddClassModalOpen, setIsAddClassModalOpen] = useState(false)
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false)
+  const [isEditStudentModalOpen, setIsEditStudentModalOpen] = useState(false)
 
+  const [selectedStudent, setSelectedStudent] = useState<any>(null)
   const [namaKelas, setNamaKelas] = useState('')
   const [studentForm, setStudentForm] = useState({ no: '', nis: '', nama: '' })
 
@@ -105,8 +116,11 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
         }
         if (payload.action === 'delete_class' && selectedClassId === payload.id) {
            setSelectedClassId(null)
-           setStudents([])
+           setStudentForm({ no: '', nis: '', nama: '' })
         }
+        
+        if (selectedClassId) fetchStudents(selectedClassId)
+        router.refresh()
       } else {
         showAlert('error', 'Gagal', result.error || 'Terjadi kesalahan')
       }
@@ -115,6 +129,16 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
     } finally {
       setLoading(false)
     }
+  }
+
+  const openEditModal = (student: any) => {
+    setSelectedStudent(student)
+    setStudentForm({
+      no: student.no.toString(),
+      nis: student.nis,
+      nama: student.nama
+    })
+    setIsEditStudentModalOpen(true)
   }
 
   const selectedClassInfo = kelasList.find(k => k.id === selectedClassId)
@@ -257,46 +281,45 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                   <>
                     {/* Desktop Table */}
                     <div className="hidden md:block overflow-x-auto rounded-[24px]">
-                      <table className="table-fixed w-full border-collapse">
-                        <thead className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
-                          <tr>
-                            <th className="w-[15%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
-                              <div className="flex items-center justify-center">No</div>
-                            </th>
-                            <th className="w-[25%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
-                              <div className="flex items-center justify-center">NIS</div>
-                            </th>
-                            <th className="w-[40%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
-                              <div className="flex items-center justify-center">Nama</div>
-                            </th>
-                            <th className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">
-                              <div className="flex items-center justify-center">Aksi</div>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-50 dark:divide-slate-800/50">
+                      <Table className="w-full text-left border-collapse">
+                        <TableHeader className="bg-gray-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800">
+                          <TableRow className="border-b-0">
+                            <TableHead className="w-[10%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">No</TableHead>
+                            <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">NIS</TableHead>
+                            <TableHead className="w-[50%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">Nama Siswa</TableHead>
+                            <TableHead className="w-[20%] font-black text-gray-400 dark:text-gray-500 text-center h-12 p-0 text-[12px] uppercase tracking-[0.2em]">Aksi</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody className="divide-y divide-gray-50 dark:divide-slate-800/50">
                           {students.map((student, index) => (
-                            <motion.tr 
+                            <TableRow 
                               key={student.id}
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: index * 0.02 }}
                               className="group hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors"
                             >
-                              <td className="py-4 text-center">
-                                <span className="inline-flex items-center justify-center w-8 h-8 bg-primary/5 text-primary rounded-xl font-bold text-xs">{student.no}</span>
-                              </td>
-                              <td className="py-4 text-center">
+                              <TableCell className="py-4 text-center">
+                                <span className="inline-flex items-center justify-center w-8 h-8 bg-primary/5 text-primary rounded-xl font-bold text-xs">{index + 1}</span>
+                              </TableCell>
+                              <TableCell className="py-4 text-center">
                                 <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
-                              </td>
-                              <td className="py-4 text-center">
-                                <p className="font-bold text-gray-900 dark:text-white text-sm">{student.nama}</p>
-                              </td>
-                              <td className="py-4">
-                                <div className="flex items-center justify-center">
+                              </TableCell>
+                              <TableCell className="py-4 text-left px-8">
+                                <p className="font-bold text-gray-900 dark:text-white text-sm">
+                                  {student.nama.toLowerCase().replace(/\b\w/g, (char: string) => char.toUpperCase())}
+                                </p>
+                              </TableCell>
+                              <TableCell className="py-4">
+                                <div className="flex items-center justify-center space-x-2">
                                   <Button 
                                     size="sm" 
                                     variant="ghost" 
+                                    onClick={() => openEditModal(student)} 
+                                    icon={<Pencil className="h-4 w-4" />}
+                                    className="h-9 w-9 p-0 rounded-xl text-primary hover:bg-emerald-500 hover:text-white"
+                                    title="Edit Siswa"
+                                  />
+                                  <Button 
+                                    size="sm" 
+                                    variant="ghost-danger" 
                                     onClick={() => setConfirmConfig({
                                       show: true,
                                       title: 'Hapus Siswa',
@@ -304,15 +327,15 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                                       action: () => handleAction({ action: 'delete_student', id: student.id })
                                     })} 
                                     icon={<Trash2 className="h-4 w-4" />}
-                                    className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                                    className="h-9 w-9 p-0 rounded-xl"
                                     title="Hapus Siswa"
                                   />
                                 </div>
-                              </td>
-                            </motion.tr>
+                              </TableCell>
+                            </TableRow>
                           ))}
-                        </tbody>
-                      </table>
+                        </TableBody>
+                      </Table>
                     </div>
 
                     {/* Mobile Cards */}
@@ -328,7 +351,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                           <div className="space-y-4">
                             <div className="flex items-center gap-4">
                               <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-black text-xs">
-                                {student.no}
+                                {index + 1}
                               </div>
                               <div className="flex-1 min-w-0">
                                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Nama Siswa</span>
@@ -341,10 +364,18 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                               <span className="font-mono text-gray-500 dark:text-gray-400 font-bold tracking-wider text-sm">{student.nis}</span>
                             </div>
 
-                            <div className="flex justify-end pt-4 border-t border-gray-200/50 dark:border-slate-800/50">
+                            <div className="flex justify-end pt-4 border-t border-gray-200/50 dark:border-slate-800/50 gap-2">
                               <Button 
                                 size="sm" 
                                 variant="ghost" 
+                                onClick={() => openEditModal(student)} 
+                                icon={<Pencil className="h-4 w-4" />}
+                                className="h-9 w-9 p-0 rounded-xl text-primary hover:bg-emerald-500 hover:text-white"
+                                title="Edit Siswa"
+                              />
+                              <Button 
+                                size="sm" 
+                                variant="ghost-danger" 
                                 onClick={() => setConfirmConfig({
                                   show: true,
                                   title: 'Hapus Siswa',
@@ -352,7 +383,7 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
                                   action: () => handleAction({ action: 'delete_student', id: student.id })
                                 })} 
                                 icon={<Trash2 className="h-4 w-4" />}
-                                className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                                className="h-9 w-9 p-0 rounded-xl"
                                 title="Hapus Siswa"
                               />
                             </div>
@@ -414,6 +445,69 @@ export default function KelasClient({ kelasList }: { kelasList: any[] }) {
         onSave={() => handleAction({ action: 'add_student', ...studentForm, kelas_id: selectedClassId })}
         loading={loading}
         saveLabel="Simpan Data"
+        footerText="PASTIKAN DATA SUDAH BENAR SEBELUM DISIMPAN"
+      >
+        <CardContent className="space-y-8 py-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nomor Urut</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <Hash className="h-6 w-6" />
+                </div>
+                <input 
+                  type="number" 
+                  required 
+                  value={studentForm.no} 
+                  onChange={e => setStudentForm({ ...studentForm, no: e.target.value })}
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-mono font-bold text-lg" 
+                />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">NIS / NISN</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                  <FileSpreadsheet className="h-6 w-6" />
+                </div>
+                <input 
+                  type="text" 
+                  required 
+                  value={studentForm.nis} 
+                  onChange={e => setStudentForm({ ...studentForm, nis: e.target.value })}
+                  className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-mono font-bold text-lg" 
+                />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">Nama Lengkap Siswa</label>
+            <div className="relative group">
+              <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
+                <User className="h-6 w-6" />
+              </div>
+              <input 
+                type="text" 
+                required 
+                value={studentForm.nama} 
+                onChange={e => setStudentForm({ ...studentForm, nama: e.target.value })}
+                className="w-full pl-14 pr-6 py-4 rounded-3xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 focus:border-primary focus:outline-none transition-all font-bold text-lg" 
+                placeholder="Ex: Muhammad Alfian"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Modal>
+
+      <Modal
+        open={isEditStudentModalOpen}
+        onOpenChange={setIsEditStudentModalOpen}
+        title="Edit Data Siswa"
+        description={`Perbarui informasi data siswa di Kelas ${selectedClassInfo?.nama_kelas}`}
+        icon={<Pencil className="h-6 w-6" />}
+        onSave={() => handleAction({ action: 'edit_student', id: selectedStudent?.id, ...studentForm })}
+        loading={loading}
+        saveLabel="Simpan Perubahan"
         footerText="PASTIKAN DATA SUDAH BENAR SEBELUM DISIMPAN"
       >
         <CardContent className="space-y-8 py-8">
