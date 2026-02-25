@@ -14,6 +14,7 @@ const config: Config = {
         secondary: "#285430",
         accent: "#D9EAD3",
         orange: "#E67E22",
+        danger: "#D93025",
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],

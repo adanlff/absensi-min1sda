@@ -158,7 +158,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   transition={{ delay: index * 0.03 }}
                   className="hover:bg-gray-50/50 transition-colors"
                 >
-                  <TableCell className="py-4 text-center">
+                  <TableCell className="py-4 text-left px-8">
                     <p className="font-bold text-gray-900 dark:text-white text-sm">{wk.nama}</p>
                   </TableCell>
                   <TableCell className="py-4 text-center">
@@ -187,7 +187,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                       />
                       <Button 
                         size="sm" 
-                        variant="ghost" 
+                        variant="ghost-danger" 
                         onClick={() => setConfirmConfig({
                           show: true,
                           title: 'Hapus Wali Kelas',
@@ -195,7 +195,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                           action: () => handleAction({ action: 'delete', id: wk.id })
                         })} 
                         icon={<Trash2 className="h-4 w-4" />}
-                        className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                        className="h-9 w-9 p-0 rounded-xl"
                         title="Hapus Wali Kelas"
                       />
                     </div>
@@ -246,7 +246,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                   />
                   <Button 
                     size="sm" 
-                    variant="ghost" 
+                    variant="ghost-danger" 
                     onClick={() => setConfirmConfig({
                       show: true,
                       title: 'Hapus Wali Kelas',
@@ -254,7 +254,7 @@ export default function WaliKelasClient({ walikelasList, kelasList }: { walikela
                       action: () => handleAction({ action: 'delete', id: wk.id })
                     })} 
                     icon={<Trash2 className="h-4 w-4" />}
-                    className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white"
+                    className="h-9 w-9 p-0 rounded-xl"
                     title="Hapus Wali Kelas"
                   />
                 </div>

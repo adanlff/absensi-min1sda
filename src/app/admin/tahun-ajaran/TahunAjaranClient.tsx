@@ -396,7 +396,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                         )}
                                         <Button 
                                           size="sm"
-                                          variant="ghost"
+                                          variant="ghost-danger"
                                           onClick={() => {
                                             setConfirmConfig({
                                               show: true,
@@ -407,7 +407,7 @@ export default function TahunAjaranClient({ data }: { data: any[] }) {
                                           }}
                                           disabled={loading}
                                           icon={<Trash2 className="h-4 w-4" />}
-                                          className="h-9 w-9 p-0 rounded-xl text-red-500 hover:bg-red-500 hover:text-white border-none shadow-none"
+                                          className="h-9 w-9 p-0 rounded-xl border-none shadow-none"
                                         />
                                       </>
                                     )}
